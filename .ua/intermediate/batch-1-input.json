@@ -1,0 +1,42 @@
+{
+  "projectRoot": "d:/part2/ai-presentation",
+  "batchFiles": [
+    {
+      "path": "ai4it-web/AGENTS.md",
+      "language": "markdown",
+      "sizeLines": 9,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-web/CLAUDE.md",
+      "language": "markdown",
+      "sizeLines": 1,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-web/README.md",
+      "language": "markdown",
+      "sizeLines": 36,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-web/package.json",
+      "language": "json",
+      "sizeLines": 28,
+      "fileCategory": "config"
+    },
+    {
+      "path": "ai4it-web/tsconfig.json",
+      "language": "json",
+      "sizeLines": 34,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "ai4it-web/AGENTS.md": [],
+    "ai4it-web/CLAUDE.md": [],
+    "ai4it-web/README.md": [],
+    "ai4it-web/package.json": [],
+    "ai4it-web/tsconfig.json": []
+  }
+}

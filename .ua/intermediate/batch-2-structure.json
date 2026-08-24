@@ -1,0 +1,246 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 3
+    }
+  },
+  "results": [
+    {
+      "path": "contexts/AI4IT_Lecture_Plan.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 173,
+      "nonEmptyLines": 156,
+      "sections": [
+        {
+          "heading": "AI for ICT Team (NDDB) — Lecture Plan",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "WEEKEND 1 — How Machines Learn Patterns",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Day 1 — From a Trendline to a Neural Network",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "Day 2 — Memory, Attention, and First Contact with LLMs",
+          "level": 3,
+          "line": 43
+        },
+        {
+          "heading": "WEEKEND 2 — Making the Copilot Talk",
+          "level": 2,
+          "line": 71
+        },
+        {
+          "heading": "Day 3 — Prompt Engineering & AI Across IT",
+          "level": 3,
+          "line": 73
+        },
+        {
+          "heading": "Day 4 — Grounding the Copilot in Real Data (RAG)",
+          "level": 3,
+          "line": 93
+        },
+        {
+          "heading": "WEEKEND 3 — Making the Copilot Act",
+          "level": 2,
+          "line": 118
+        },
+        {
+          "heading": "Day 5 — Tool Calling & Agents (Code, then No-Code)",
+          "level": 3,
+          "line": 120
+        },
+        {
+          "heading": "Day 6 — Governance, the Real Infra, and Capstone",
+          "level": 3,
+          "line": 137
+        },
+        {
+          "heading": "Coverage check",
+          "level": 2,
+          "line": 162
+        },
+        {
+          "heading": "Interactive webpages needed",
+          "level": 2,
+          "line": 165
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 12
+      }
+    },
+    {
+      "path": "contexts/day1_opener_content_guide.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 142,
+      "nonEmptyLines": 85,
+      "sections": [
+        {
+          "heading": "Day 1 Opener — Instructor Content Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Before you even open the laptop: the psychology of the first 5 minutes",
+          "level": 2,
+          "line": 9
+        },
+        {
+          "heading": "Section 0 — Cold Open (≈2 min)",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "Section 1 — Evolution of AI (≈5 min)",
+          "level": 2,
+          "line": 35
+        },
+        {
+          "heading": "Section 2 — Key Terminology (≈3 min)",
+          "level": 2,
+          "line": 57
+        },
+        {
+          "heading": "Section 3 — AI vs ML vs DL vs Generative AI (≈7 min)",
+          "level": 2,
+          "line": 70
+        },
+        {
+          "heading": "Section 4 — Narrow vs General vs Super AI (≈5 min)",
+          "level": 2,
+          "line": 87
+        },
+        {
+          "heading": "Section 5 — Current Trends + AI in Enterprise IT (≈6 min)",
+          "level": 2,
+          "line": 102
+        },
+        {
+          "heading": "Section 6 — Bridge to Course Map (≈2 min)",
+          "level": 2,
+          "line": 116
+        },
+        {
+          "heading": "Quick reference: facts + sources (for your own confidence, not for the slides)",
+          "level": 2,
+          "line": 127
+        },
+        {
+          "heading": "One instructor-level meta-tip",
+          "level": 2,
+          "line": 140
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 11
+      }
+    },
+    {
+      "path": "contexts/day1_opener_spec.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 144,
+      "nonEmptyLines": 101,
+      "sections": [
+        {
+          "heading": "Build Spec: Day 1 Opener — \"What is AI, Really?\"",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. Delivery mode & technical requirements",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "2. Visual style guide",
+          "level": 2,
+          "line": 16
+        },
+        {
+          "heading": "3. Content structure — 7 sections, ~30 minutes total",
+          "level": 2,
+          "line": 28
+        },
+        {
+          "heading": "Section 0 — Cold open (≈2 min)",
+          "level": 3,
+          "line": 34
+        },
+        {
+          "heading": "Section 1 — Evolution of AI (≈5 min)",
+          "level": 3,
+          "line": 46
+        },
+        {
+          "heading": "Section 2 — Key terminology, fast (≈3 min)",
+          "level": 3,
+          "line": 61
+        },
+        {
+          "heading": "Section 3 — AI vs ML vs DL vs Generative AI (≈7 min)",
+          "level": 3,
+          "line": 77
+        },
+        {
+          "heading": "Section 4 — Narrow vs General vs Super AI (≈5 min)",
+          "level": 3,
+          "line": 92
+        },
+        {
+          "heading": "Section 5 — Current AI trends + AI in Enterprise IT (≈6 min)",
+          "level": 3,
+          "line": 106
+        },
+        {
+          "heading": "Section 6 — Bridge to the course map (≈2 min)",
+          "level": 3,
+          "line": 122
+        },
+        {
+          "heading": "4. Explicit non-goals (so Antigravity doesn't over-build)",
+          "level": 2,
+          "line": 131
+        },
+        {
+          "heading": "5. Definition of done",
+          "level": 2,
+          "line": 139
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 13
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "projectRoot": "d:/part2/ai-presentation",
+  "batchFiles": [
+    {
+      "path": "contexts/AI4IT_Lecture_Plan.md",
+      "language": "markdown",
+      "sizeLines": 173,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "contexts/day1_opener_content_guide.md",
+      "language": "markdown",
+      "sizeLines": 142,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "contexts/day1_opener_spec.md",
+      "language": "markdown",
+      "sizeLines": 144,
+      "fileCategory": "docs"
+    }
+  ],
+  "batchImportData": {
+    "contexts/AI4IT_Lecture_Plan.md": [],
+    "contexts/day1_opener_content_guide.md": [],
+    "contexts/day1_opener_spec.md": []
+  }
+}

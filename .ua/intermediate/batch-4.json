@@ -1,0 +1,168 @@
+{
+  "nodes": [
+    {
+      "id": "file:ai4it-web/src/app/layout.tsx",
+      "type": "file",
+      "name": "layout.tsx",
+      "filePath": "ai4it-web/src/app/layout.tsx",
+      "summary": "Root layout component configuring global fonts, metadata, and sidebar container.",
+      "tags": [
+        "layout",
+        "root",
+        "nextjs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:ai4it-web/src/app/layout.tsx:RootLayout",
+      "type": "function",
+      "name": "RootLayout",
+      "filePath": "ai4it-web/src/app/layout.tsx",
+      "summary": "React server component wrapping application pages with navigation frame.",
+      "tags": [
+        "layout",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-web/src/app/page.module.css",
+      "type": "file",
+      "name": "page.module.css",
+      "filePath": "ai4it-web/src/app/page.module.css",
+      "summary": "CSS module styles for interactive presentation homepage.",
+      "tags": [
+        "styles",
+        "css-module"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-web/src/app/page.tsx",
+      "type": "file",
+      "name": "page.tsx",
+      "filePath": "ai4it-web/src/app/page.tsx",
+      "summary": "Interactive Next.js presentation deck and taxonomy navigator for Day 1 AI concepts.",
+      "tags": [
+        "page",
+        "home",
+        "presentation",
+        "nextjs"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:ai4it-web/src/app/page.tsx:Home",
+      "type": "function",
+      "name": "Home",
+      "filePath": "ai4it-web/src/app/page.tsx",
+      "summary": "Interactive slide deck component with timeline, concentric circles, and AI taxonomy.",
+      "tags": [
+        "component",
+        "react"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:ai4it-web/src/components/Sidebar.tsx",
+      "type": "file",
+      "name": "Sidebar.tsx",
+      "filePath": "ai4it-web/src/components/Sidebar.tsx",
+      "summary": "Navigation sidebar highlighting active lecture modules and demos.",
+      "tags": [
+        "navigation",
+        "sidebar",
+        "component"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:ai4it-web/src/components/Sidebar.tsx:Sidebar",
+      "type": "function",
+      "name": "Sidebar",
+      "filePath": "ai4it-web/src/components/Sidebar.tsx",
+      "summary": "Sidebar rendering module links.",
+      "tags": [
+        "component",
+        "react"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-web/src/components/sidebar.css",
+      "type": "file",
+      "name": "sidebar.css",
+      "filePath": "ai4it-web/src/components/sidebar.css",
+      "summary": "Styles for the collapsible sidebar.",
+      "tags": [
+        "styles",
+        "sidebar"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:day1_opener.html",
+      "type": "file",
+      "name": "day1_opener.html",
+      "filePath": "day1_opener.html",
+      "summary": "Standalone single-file HTML presentation slide deck for Day 1 opening lecture with built-in styling and animations.",
+      "tags": [
+        "html",
+        "standalone",
+        "presentation",
+        "deck"
+      ],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:ai4it-web/src/app/layout.tsx",
+      "target": "file:ai4it-web/src/components/Sidebar.tsx",
+      "type": "imports",
+      "weight": 1
+    },
+    {
+      "source": "file:ai4it-web/src/app/layout.tsx",
+      "target": "file:ai4it-web/src/app/globals.css",
+      "type": "imports",
+      "weight": 1
+    },
+    {
+      "source": "file:ai4it-web/src/app/page.tsx",
+      "target": "file:ai4it-web/src/app/page.module.css",
+      "type": "imports",
+      "weight": 1
+    },
+    {
+      "source": "file:ai4it-web/src/components/Sidebar.tsx",
+      "target": "file:ai4it-web/src/components/sidebar.css",
+      "type": "imports",
+      "weight": 1
+    },
+    {
+      "source": "file:ai4it-web/src/app/layout.tsx",
+      "target": "function:ai4it-web/src/app/layout.tsx:RootLayout",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:ai4it-web/src/app/page.tsx",
+      "target": "function:ai4it-web/src/app/page.tsx:Home",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:ai4it-web/src/components/Sidebar.tsx",
+      "target": "function:ai4it-web/src/components/Sidebar.tsx:Sidebar",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:day1_opener.html",
+      "target": "document:contexts/day1_opener_spec.md",
+      "type": "implements",
+      "weight": 1
+    }
+  ]
+}

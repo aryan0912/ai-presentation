@@ -1,0 +1,1261 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 23,
+  "filesSkipped": [
+    "ai4it-backend/.python-version",
+    "ai4it-web/src/app/globals.css"
+  ],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 23,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 14,
+      "failed": 0,
+      "skipped": 9
+    }
+  },
+  "results": [
+    {
+      "path": ".agent/skills/backend/fastapi-step-tracer/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 51,
+      "nonEmptyLines": 41,
+      "sections": [
+        {
+          "heading": "FastAPI Step Tracer Skill: Python State Streaming & Telemetry",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Patterns & Standards",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "1. Step-by-Step State Response Format",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "2. Streaming Epoch Updates (SSE / StreamingResponse)",
+          "level": 3,
+          "line": 27
+        },
+        {
+          "heading": "3. Structured Logging & Error Handling",
+          "level": 3,
+          "line": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": ".agent/skills/backend/graphify/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 41,
+      "nonEmptyLines": 35,
+      "sections": [
+        {
+          "heading": "Graphify Skill: AST Codebase Mapping & Dependency Graphing",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Core Responsibilities",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Quick CLI / Python Inspection Snippet",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "Architectural Guidelines",
+          "level": 2,
+          "line": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": ".agent/skills/backend/numpy-linalg-export/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 64,
+      "nonEmptyLines": 54,
+      "sections": [
+        {
+          "heading": "NumPy LinAlg Export Skill: Matrix Serialization & Geometric Calculations",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Serialization Conventions",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "1. Robust NumPy to JSON Converter",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "2. SVG Decision Boundary & Geometric Path Generation",
+          "level": 3,
+          "line": 35
+        },
+        {
+          "heading": "3. Tensor Heatmaps & Attention Matrix Serialization",
+          "level": 3,
+          "line": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/framer-motion-stepper/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 93,
+      "nonEmptyLines": 83,
+      "sections": [
+        {
+          "heading": "Framer Motion Stepper Skill: Animated State Transitions",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Animation Guidelines",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "1. Step-by-Step State Stepper with Framer Motion",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "2. Animated Neural Network Node Pulsing",
+          "level": 3,
+          "line": 62
+        },
+        {
+          "heading": "3. Fallback / Anime.js DOM Interpolation",
+          "level": 3,
+          "line": 80
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/math-typography/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "sections": [
+        {
+          "heading": "Math Typography Skill: KaTeX & Mathematical Presentation",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "KaTeX & Typography Standards",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "1. KaTeX Integration Pattern",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "2. Standard Mathematical Tokens for AI Course Modules",
+          "level": 3,
+          "line": 30
+        },
+        {
+          "heading": "3. Responsive Typography & Accent Formatting",
+          "level": 3,
+          "line": 42
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 5
+      }
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/recharts-visualizer/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 84,
+      "nonEmptyLines": 76,
+      "sections": [
+        {
+          "heading": "Recharts Visualizer Skill: Interactive Charts & Tensor Heatmaps",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Visualization Patterns",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "1. Training Loss & Metric Progression (Recharts)",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "2. Attention Weight & 2D Tensor Heatmap",
+          "level": 3,
+          "line": 45
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/shadcn-components/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 64,
+      "nonEmptyLines": 55,
+      "sections": [
+        {
+          "heading": "Shadcn Components Skill: UI Primitives & Design System",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Design Tokens & Standards",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "1. Color Palette & Dark Mode Glassmorphism",
+          "level": 3,
+          "line": 12
+        },
+        {
+          "heading": "2. Glass Panel Container Pattern",
+          "level": 3,
+          "line": 22
+        },
+        {
+          "heading": "3. Accessible Metric & Stat Card Pattern",
+          "level": 3,
+          "line": 42
+        },
+        {
+          "heading": "4. Interactive Sliders & Button Controls",
+          "level": 3,
+          "line": 62
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 6
+      }
+    },
+    {
+      "path": "ai4it-backend/README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": "ai4it-backend/app/api/routes/linear_regression.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "get_regression_service",
+          "startLine": 8,
+          "endLine": 9,
+          "params": []
+        },
+        {
+          "name": "step_linear_regression",
+          "startLine": 12,
+          "endLine": 19,
+          "params": [
+            "state",
+            "service"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "get_regression_service",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "step_linear_regression",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "get_regression_service",
+          "callee": "LinearRegressionService",
+          "lineNumber": 9
+        },
+        {
+          "caller": "step_linear_regression",
+          "callee": "Depends",
+          "lineNumber": 14
+        },
+        {
+          "caller": "step_linear_regression",
+          "callee": "service.calculate_gradient_step",
+          "lineNumber": 17
+        },
+        {
+          "caller": "step_linear_regression",
+          "callee": "HTTPException",
+          "lineNumber": 19
+        },
+        {
+          "caller": "step_linear_regression",
+          "callee": "str",
+          "lineNumber": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-backend/app/api/routes/neural_network.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "get_nn_service",
+          "startLine": 8,
+          "endLine": 9,
+          "params": []
+        },
+        {
+          "name": "forward_pass_nn",
+          "startLine": 12,
+          "endLine": 16,
+          "params": [
+            "state",
+            "service"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "get_nn_service",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "forward_pass_nn",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "get_nn_service",
+          "callee": "NeuralNetworkService",
+          "lineNumber": 9
+        },
+        {
+          "caller": "forward_pass_nn",
+          "callee": "Depends",
+          "lineNumber": 14
+        },
+        {
+          "caller": "forward_pass_nn",
+          "callee": "service.perform_forward_pass",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-backend/app/main.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "create_app",
+          "startLine": 5,
+          "endLine": 25,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "create_app",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "create_app",
+          "callee": "FastAPI",
+          "lineNumber": 6
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.add_middleware",
+          "lineNumber": 9
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 18
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.include_router",
+          "lineNumber": 19
+        },
+        {
+          "caller": "create_app",
+          "callee": "app.get",
+          "lineNumber": 21
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-backend/app/models/linear_regression.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "DataPoint",
+          "startLine": 4,
+          "endLine": 6,
+          "methods": [],
+          "properties": [
+            "x",
+            "y"
+          ]
+        },
+        {
+          "name": "RegressionState",
+          "startLine": 8,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "m",
+            "c",
+            "learning_rate",
+            "data"
+          ]
+        },
+        {
+          "name": "RegressionStepResult",
+          "startLine": 14,
+          "endLine": 21,
+          "methods": [],
+          "properties": [
+            "old_m",
+            "old_c",
+            "new_m",
+            "new_c",
+            "loss",
+            "grad_m",
+            "grad_c"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DataPoint",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "RegressionState",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "RegressionStepResult",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "ai4it-backend/app/models/neural_network.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "NNState",
+          "startLine": 4,
+          "endLine": 5,
+          "methods": [],
+          "properties": [
+            "neurons"
+          ]
+        },
+        {
+          "name": "NNForwardPassResult",
+          "startLine": 7,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "boundary_path",
+            "complexity_score",
+            "hidden_activations"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NNState",
+          "line": 4,
+          "isDefault": false
+        },
+        {
+          "name": "NNForwardPassResult",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "ai4it-backend/app/services/base.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "IRegressionService",
+          "startLine": 3,
+          "endLine": 6,
+          "methods": [
+            "calculate_gradient_step"
+          ],
+          "properties": []
+        },
+        {
+          "name": "INeuralNetworkService",
+          "startLine": 8,
+          "endLine": 11,
+          "methods": [
+            "perform_forward_pass"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IRegressionService",
+          "line": 3,
+          "isDefault": false
+        },
+        {
+          "name": "INeuralNetworkService",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "ai4it-backend/app/services/linear_regression.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 42,
+      "nonEmptyLines": 34,
+      "classes": [
+        {
+          "name": "LinearRegressionService",
+          "startLine": 4,
+          "endLine": 42,
+          "methods": [
+            "calculate_gradient_step"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LinearRegressionService",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "calculate_gradient_step",
+          "callee": "len",
+          "lineNumber": 11
+        },
+        {
+          "caller": "calculate_gradient_step",
+          "callee": "ValueError",
+          "lineNumber": 13
+        },
+        {
+          "caller": "calculate_gradient_step",
+          "callee": "RegressionStepResult",
+          "lineNumber": 34
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "ai4it-backend/app/services/neural_network.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "NeuralNetworkService",
+          "startLine": 5,
+          "endLine": 34,
+          "methods": [
+            "perform_forward_pass",
+            "_generate_boundary"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NeuralNetworkService",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "perform_forward_pass",
+          "callee": "self._generate_boundary",
+          "lineNumber": 16
+        },
+        {
+          "caller": "perform_forward_pass",
+          "callee": "np.random.rand(n).tolist",
+          "lineNumber": 18
+        },
+        {
+          "caller": "perform_forward_pass",
+          "callee": "np.random.rand",
+          "lineNumber": 18
+        },
+        {
+          "caller": "perform_forward_pass",
+          "callee": "NNForwardPassResult",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "ai4it-backend/pyproject.toml",
+      "language": "toml",
+      "fileCategory": "config",
+      "totalLines": 12,
+      "nonEmptyLines": 12,
+      "sections": [
+        {
+          "heading": "project",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "ai4it-web/eslint.config.mjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 16,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/next.config.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 5,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 197,
+      "nonEmptyLines": 177,
+      "functions": [
+        {
+          "name": "LinearRegressionDemo",
+          "startLine": 15,
+          "endLine": 197,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LinearRegressionDemo",
+          "line": 15,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 16
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 17
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 18
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 19
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 20
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 21
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useState",
+          "lineNumber": 22
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useRef",
+          "lineNumber": 23
+        },
+        {
+          "caller": "calculateLocalLoss",
+          "callee": "dataPoints.forEach",
+          "lineNumber": 28
+        },
+        {
+          "caller": "calculateLocalLoss",
+          "callee": "Math.abs",
+          "lineNumber": 30
+        },
+        {
+          "caller": "calculateLocalLoss",
+          "callee": "anime",
+          "lineNumber": 33
+        },
+        {
+          "caller": "calculateLocalLoss",
+          "callee": "anime",
+          "lineNumber": 42
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "useEffect",
+          "lineNumber": 53
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "setLoss",
+          "lineNumber": 54
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "calculateLocalLoss",
+          "lineNumber": 54
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setIsStepping",
+          "lineNumber": 58
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "fetch",
+          "lineNumber": 60
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "JSON.stringify",
+          "lineNumber": 63
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "res.json",
+          "lineNumber": 71
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setM",
+          "lineNumber": 73
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setC",
+          "lineNumber": 74
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setLoss",
+          "lineNumber": 75
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setGradM",
+          "lineNumber": 76
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setGradC",
+          "lineNumber": 77
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "console.error",
+          "lineNumber": 80
+        },
+        {
+          "caller": "takeGradientStep",
+          "callee": "setIsStepping",
+          "lineNumber": 82
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "[...Array(10)].map",
+          "lineNumber": 91
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "Array",
+          "lineNumber": 91
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "dataPoints.map",
+          "lineNumber": 102
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "m.toFixed",
+          "lineNumber": 134
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "c.toFixed",
+          "lineNumber": 134
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "loss.toFixed",
+          "lineNumber": 141
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "gradM.toFixed",
+          "lineNumber": 148
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "gradC.toFixed",
+          "lineNumber": 149
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "setM",
+          "lineNumber": 162
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "parseFloat",
+          "lineNumber": 162
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "setC",
+          "lineNumber": 175
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "parseFloat",
+          "lineNumber": 175
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "setLearningRate",
+          "lineNumber": 188
+        },
+        {
+          "caller": "LinearRegressionDemo",
+          "callee": "parseFloat",
+          "lineNumber": 188
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/src/app/day1/linear-regression/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 29,
+      "functions": [
+        {
+          "name": "LinearRegressionPage",
+          "startLine": 3,
+          "endLine": 33,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LinearRegressionPage",
+          "line": 3,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 154,
+      "nonEmptyLines": 133,
+      "functions": [
+        {
+          "name": "NeuralNetworkDemo",
+          "startLine": 5,
+          "endLine": 154,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NeuralNetworkDemo",
+          "line": 5,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "useState",
+          "lineNumber": 6
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "useState",
+          "lineNumber": 7
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "useState",
+          "lineNumber": 8
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "useState",
+          "lineNumber": 9
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "useRef",
+          "lineNumber": 10
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "useEffect",
+          "lineNumber": 12
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "setIsCalculating",
+          "lineNumber": 14
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "fetch",
+          "lineNumber": 16
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "JSON.stringify",
+          "lineNumber": 19
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "res.json",
+          "lineNumber": 22
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "setActivations",
+          "lineNumber": 24
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "setComplexity",
+          "lineNumber": 25
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "anime",
+          "lineNumber": 28
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "anime",
+          "lineNumber": 37
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "anime.stagger",
+          "lineNumber": 41
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "console.error",
+          "lineNumber": 47
+        },
+        {
+          "caller": "fetchBackendMath",
+          "callee": "setIsCalculating",
+          "lineNumber": 49
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "fetchBackendMath",
+          "lineNumber": 52
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "setNeurons",
+          "lineNumber": 68
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "Math.min",
+          "lineNumber": 68
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "setNeurons",
+          "lineNumber": 76
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "Math.max",
+          "lineNumber": 76
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "[1, 2, 3].map",
+          "lineNumber": 95
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "[...Array(neurons)].map",
+          "lineNumber": 100
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "Array",
+          "lineNumber": 100
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "activations[i].toFixed",
+          "lineNumber": 102
+        },
+        {
+          "caller": "NeuralNetworkDemo",
+          "callee": "complexity.toFixed",
+          "lineNumber": 120
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/src/app/day1/neural-network/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 46,
+      "functions": [
+        {
+          "name": "NeuralNetworkPage",
+          "startLine": 3,
+          "endLine": 52,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "NeuralNetworkPage",
+          "line": 3,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

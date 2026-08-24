@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "id": "document:contexts/AI4IT_Lecture_Plan.md",
+      "type": "document",
+      "name": "AI4IT_Lecture_Plan.md",
+      "filePath": "contexts/AI4IT_Lecture_Plan.md",
+      "summary": "Comprehensive 3-weekend AI for ICT lecture curriculum covering ML, Neural Networks, RAG, Agents, and Governance.",
+      "tags": [
+        "curriculum",
+        "lecture-plan",
+        "contexts"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:contexts/day1_opener_content_guide.md",
+      "type": "document",
+      "name": "day1_opener_content_guide.md",
+      "filePath": "contexts/day1_opener_content_guide.md",
+      "summary": "Instructor presentation talking points and psychological framing for Day 1 opening.",
+      "tags": [
+        "instructor-guide",
+        "day1",
+        "contexts"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:contexts/day1_opener_spec.md",
+      "type": "document",
+      "name": "day1_opener_spec.md",
+      "filePath": "contexts/day1_opener_spec.md",
+      "summary": "Technical specification and interactive UI layout requirements for the Day 1 Opener deck.",
+      "tags": [
+        "spec",
+        "day1",
+        "contexts"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:contexts/day1_opener_spec.md",
+      "target": "document:contexts/day1_opener_content_guide.md",
+      "type": "references",
+      "weight": 1
+    },
+    {
+      "source": "document:contexts/day1_opener_content_guide.md",
+      "target": "document:contexts/AI4IT_Lecture_Plan.md",
+      "type": "references",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "projectRoot": "d:/part2/ai-presentation",
+  "batchFiles": [
+    {
+      "path": ".agent/skills/backend/fastapi-step-tracer/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 51,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/backend/graphify/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 41,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/backend/numpy-linalg-export/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 64,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/framer-motion-stepper/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 93,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/math-typography/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 44,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/recharts-visualizer/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 84,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/shadcn-components/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 64,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-backend/.python-version",
+      "language": "unknown",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/README.md",
+      "language": "markdown",
+      "sizeLines": 0,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-backend/app/api/routes/linear_regression.py",
+      "language": "python",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/api/routes/neural_network.py",
+      "language": "python",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/main.py",
+      "language": "python",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/models/linear_regression.py",
+      "language": "python",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/models/neural_network.py",
+      "language": "python",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/services/base.py",
+      "language": "python",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/services/linear_regression.py",
+      "language": "python",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/services/neural_network.py",
+      "language": "python",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/pyproject.toml",
+      "language": "toml",
+      "sizeLines": 12,
+      "fileCategory": "config"
+    },
+    {
+      "path": "ai4it-web/eslint.config.mjs",
+      "language": "javascript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/next.config.ts",
+      "language": "typescript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+      "language": "typescript",
+      "sizeLines": 197,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/linear-regression/page.tsx",
+      "language": "typescript",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx",
+      "language": "typescript",
+      "sizeLines": 154,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/neural-network/page.tsx",
+      "language": "typescript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/globals.css",
+      "language": "css",
+      "sizeLines": 92,
+      "fileCategory": "markup"
+    }
+  ],
+  "batchImportData": {
+    ".agent/skills/backend/fastapi-step-tracer/SKILL.md": [],
+    ".agent/skills/backend/graphify/SKILL.md": [],
+    ".agent/skills/backend/numpy-linalg-export/SKILL.md": [],
+    ".agent/skills/frontend-ui-ux/framer-motion-stepper/SKILL.md": [],
+    ".agent/skills/frontend-ui-ux/math-typography/SKILL.md": [],
+    ".agent/skills/frontend-ui-ux/recharts-visualizer/SKILL.md": [],
+    ".agent/skills/frontend-ui-ux/shadcn-components/SKILL.md": [],
+    "ai4it-backend/.python-version": [],
+    "ai4it-backend/README.md": [],
+    "ai4it-backend/app/api/routes/linear_regression.py": [],
+    "ai4it-backend/app/api/routes/neural_network.py": [],
+    "ai4it-backend/app/main.py": [],
+    "ai4it-backend/app/models/linear_regression.py": [],
+    "ai4it-backend/app/models/neural_network.py": [],
+    "ai4it-backend/app/services/base.py": [],
+    "ai4it-backend/app/services/linear_regression.py": [],
+    "ai4it-backend/app/services/neural_network.py": [],
+    "ai4it-backend/pyproject.toml": [],
+    "ai4it-web/eslint.config.mjs": [],
+    "ai4it-web/next.config.ts": [],
+    "ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx": [],
+    "ai4it-web/src/app/day1/linear-regression/page.tsx": [],
+    "ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx": [],
+    "ai4it-web/src/app/day1/neural-network/page.tsx": [],
+    "ai4it-web/src/app/globals.css": []
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "scriptCompleted": true,
+  "contentDigest": "79df518f878216fff4b3226184c9e21a5c5303c82cdd87f211ec2c07d34d5c14",
+  "files": [
+    {
+      "path": ".agent/skills/backend/fastapi-step-tracer/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 51,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/backend/graphify/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 41,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/backend/numpy-linalg-export/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 64,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/framer-motion-stepper/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 93,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/math-typography/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 44,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/recharts-visualizer/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 84,
+      "fileCategory": "docs"
+    },
+    {
+      "path": ".agent/skills/frontend-ui-ux/shadcn-components/SKILL.md",
+      "language": "markdown",
+      "sizeLines": 64,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-backend/.python-version",
+      "language": "unknown",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/README.md",
+      "language": "markdown",
+      "sizeLines": 0,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-backend/app/api/routes/linear_regression.py",
+      "language": "python",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/api/routes/neural_network.py",
+      "language": "python",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/main.py",
+      "language": "python",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/models/linear_regression.py",
+      "language": "python",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/models/neural_network.py",
+      "language": "python",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/services/base.py",
+      "language": "python",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/services/linear_regression.py",
+      "language": "python",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/app/services/neural_network.py",
+      "language": "python",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-backend/pyproject.toml",
+      "language": "toml",
+      "sizeLines": 12,
+      "fileCategory": "config"
+    },
+    {
+      "path": "ai4it-web/AGENTS.md",
+      "language": "markdown",
+      "sizeLines": 9,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-web/CLAUDE.md",
+      "language": "markdown",
+      "sizeLines": 1,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-web/README.md",
+      "language": "markdown",
+      "sizeLines": 36,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ai4it-web/eslint.config.mjs",
+      "language": "javascript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/next.config.ts",
+      "language": "typescript",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/package.json",
+      "language": "json",
+      "sizeLines": 28,
+      "fileCategory": "config"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+      "language": "typescript",
+      "sizeLines": 197,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/linear-regression/page.tsx",
+      "language": "typescript",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx",
+      "language": "typescript",
+      "sizeLines": 154,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/day1/neural-network/page.tsx",
+      "language": "typescript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/globals.css",
+      "language": "css",
+      "sizeLines": 92,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "ai4it-web/src/app/layout.tsx",
+      "language": "typescript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/page.module.css",
+      "language": "css",
+      "sizeLines": 150,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "ai4it-web/src/app/page.tsx",
+      "language": "typescript",
+      "sizeLines": 469,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/components/Sidebar.tsx",
+      "language": "typescript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/components/sidebar.css",
+      "language": "css",
+      "sizeLines": 71,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "ai4it-web/tsconfig.json",
+      "language": "json",
+      "sizeLines": 34,
+      "fileCategory": "config"
+    },
+    {
+      "path": "contexts/AI4IT_Lecture_Plan.md",
+      "language": "markdown",
+      "sizeLines": 173,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "contexts/day1_opener_content_guide.md",
+      "language": "markdown",
+      "sizeLines": 142,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "contexts/day1_opener_spec.md",
+      "language": "markdown",
+      "sizeLines": 144,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "day1_opener.html",
+      "language": "html",
+      "sizeLines": 657,
+      "fileCategory": "markup"
+    }
+  ],
+  "totalFiles": 39,
+  "filteredByIgnore": 0,
+  "estimatedComplexity": "moderate",
+  "stats": {
+    "filesScanned": 39,
+    "byCategory": {
+      "docs": 14,
+      "code": 18,
+      "config": 3,
+      "markup": 4
+    },
+    "byLanguage": {
+      "markdown": 14,
+      "unknown": 1,
+      "python": 8,
+      "toml": 1,
+      "javascript": 1,
+      "typescript": 8,
+      "json": 2,
+      "css": 3,
+      "html": 1
+    }
+  }
+}

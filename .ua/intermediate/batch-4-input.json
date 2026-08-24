@@ -1,0 +1,49 @@
+{
+  "projectRoot": "d:/part2/ai-presentation",
+  "batchFiles": [
+    {
+      "path": "ai4it-web/src/app/layout.tsx",
+      "language": "typescript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/app/page.module.css",
+      "language": "css",
+      "sizeLines": 150,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "ai4it-web/src/app/page.tsx",
+      "language": "typescript",
+      "sizeLines": 469,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/components/Sidebar.tsx",
+      "language": "typescript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ai4it-web/src/components/sidebar.css",
+      "language": "css",
+      "sizeLines": 71,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "day1_opener.html",
+      "language": "html",
+      "sizeLines": 657,
+      "fileCategory": "markup"
+    }
+  ],
+  "batchImportData": {
+    "ai4it-web/src/app/layout.tsx": [],
+    "ai4it-web/src/app/page.module.css": [],
+    "ai4it-web/src/app/page.tsx": [],
+    "ai4it-web/src/components/Sidebar.tsx": [],
+    "ai4it-web/src/components/sidebar.css": [],
+    "day1_opener.html": []
+  }
+}

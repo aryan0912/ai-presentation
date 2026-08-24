@@ -1,0 +1,162 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [
+    "ai4it-web/src/app/page.module.css",
+    "ai4it-web/src/components/sidebar.css",
+    "day1_opener.html"
+  ],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "ai4it-web/src/app/layout.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 28,
+      "functions": [
+        {
+          "name": "RootLayout",
+          "startLine": 14,
+          "endLine": 31,
+          "params": [
+            "{\r\n  children,\r\n}"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "metadata",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "RootLayout",
+          "line": 14,
+          "isDefault": true
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/src/app/page.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 469,
+      "nonEmptyLines": 436,
+      "functions": [
+        {
+          "name": "Home",
+          "startLine": 7,
+          "endLine": 469,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Home",
+          "line": 7,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Home",
+          "callee": "useState",
+          "lineNumber": 8
+        },
+        {
+          "caller": "Home",
+          "callee": "useState",
+          "lineNumber": 9
+        },
+        {
+          "caller": "Home",
+          "callee": "['Algorithm', 'Model', 'Training', 'Inference', 'Dataset'].map",
+          "lineNumber": 294
+        },
+        {
+          "caller": "Home",
+          "callee": "['ai', 'ml', 'dl', 'gen'].map",
+          "lineNumber": 320
+        },
+        {
+          "caller": "Home",
+          "callee": "setActiveCircle",
+          "lineNumber": 324
+        },
+        {
+          "caller": "Home",
+          "callee": "['narrow', 'general', 'super'].map",
+          "lineNumber": 376
+        },
+        {
+          "caller": "Home",
+          "callee": "setActiveSpec",
+          "lineNumber": 380
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "ai4it-web/src/components/Sidebar.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 38,
+      "functions": [
+        {
+          "name": "Sidebar",
+          "startLine": 6,
+          "endLine": 41,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Sidebar",
+          "line": 6,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Sidebar",
+          "callee": "usePathname",
+          "lineNumber": 7
+        },
+        {
+          "caller": "Sidebar",
+          "callee": "links.map",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

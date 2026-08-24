@@ -1,0 +1,81 @@
+{
+  "nodes": [
+    {
+      "id": "document:ai4it-web/AGENTS.md",
+      "type": "document",
+      "name": "AGENTS.md",
+      "filePath": "ai4it-web/AGENTS.md",
+      "summary": "Next.js routing, styling, and framework guidance for web agents.",
+      "tags": [
+        "guidelines",
+        "agents",
+        "docs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ai4it-web/CLAUDE.md",
+      "type": "document",
+      "name": "CLAUDE.md",
+      "filePath": "ai4it-web/CLAUDE.md",
+      "summary": "Claude workspace guidance file.",
+      "tags": [
+        "claude",
+        "docs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ai4it-web/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "ai4it-web/README.md",
+      "summary": "Frontend documentation for Next.js AI presentation application.",
+      "tags": [
+        "frontend",
+        "readme",
+        "docs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:ai4it-web/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "ai4it-web/package.json",
+      "summary": "Frontend npm package configuration defining dependencies like React, Lucide, Recharts, and Katex.",
+      "tags": [
+        "npm",
+        "package",
+        "config"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:ai4it-web/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "ai4it-web/tsconfig.json",
+      "summary": "TypeScript compiler options and path aliases for the Next.js app.",
+      "tags": [
+        "typescript",
+        "config"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:ai4it-web/package.json",
+      "target": "document:ai4it-web/README.md",
+      "type": "documents",
+      "weight": 1
+    },
+    {
+      "source": "config:ai4it-web/tsconfig.json",
+      "target": "config:ai4it-web/package.json",
+      "type": "configures",
+      "weight": 1
+    }
+  ]
+}
