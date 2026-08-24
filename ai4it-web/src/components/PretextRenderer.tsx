@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState, useRef, useMemo } from 'react';
-import { prepare, layoutWithLines } from '@chenglou/pretext';
+import { prepareWithSegments, layoutWithLines } from '@chenglou/pretext';
 
 interface PretextRendererProps {
   text: string;
@@ -34,7 +34,7 @@ export default function PretextRenderer({
       if (!containerRef.current) return;
       const width = containerRef.current.clientWidth || 600;
       try {
-        const prep = prepare(text, font);
+        const prep = prepareWithSegments(text, font);
         const result = layoutWithLines(prep, width, lineHeight);
         setLines(result.lines.map((l) => l.text));
       } catch (err) {
