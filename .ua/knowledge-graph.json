@@ -889,6 +889,34 @@
       "type": "implements",
       "weight": 1,
       "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/page.tsx",
+      "target": "document:contexts/day1_opener_spec.md",
+      "type": "implements",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/page.tsx",
+      "target": "file:day1_opener.html",
+      "type": "references",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+      "target": "endpoint:ai4it-backend/app/api/routes/linear_regression.py:step_linear_regression",
+      "type": "calls",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx",
+      "target": "endpoint:ai4it-backend/app/api/routes/neural_network.py:forward_pass_nn",
+      "type": "calls",
+      "weight": 1,
+      "direction": "forward"
     }
   ],
   "layers": [

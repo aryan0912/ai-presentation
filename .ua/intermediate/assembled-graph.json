@@ -1,4 +1,25 @@
 {
+  "version": "1.0.0",
+  "project": {
+    "name": "ai-presentation",
+    "languages": [
+      "Python",
+      "TypeScript",
+      "HTML",
+      "CSS",
+      "Markdown"
+    ],
+    "frameworks": [
+      "FastAPI",
+      "Next.js",
+      "React",
+      "NumPy",
+      "Recharts"
+    ],
+    "description": "AI for ICT Team Presentation, Interactive Visualizers, and Computational Backend",
+    "analyzedAt": "2026-08-24T06:16:25.211Z",
+    "gitCommitHash": "053512e0973e159b5d25512be76f7980cfb23a43"
+  },
   "nodes": [
     {
       "id": "document:ai4it-web/AGENTS.md",
@@ -868,6 +889,169 @@
       "type": "implements",
       "weight": 1,
       "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/page.tsx",
+      "target": "document:contexts/day1_opener_spec.md",
+      "type": "implements",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/page.tsx",
+      "target": "file:day1_opener.html",
+      "type": "references",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+      "target": "endpoint:ai4it-backend/app/api/routes/linear_regression.py:step_linear_regression",
+      "type": "calls",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "file:ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx",
+      "target": "endpoint:ai4it-backend/app/api/routes/neural_network.py:forward_pass_nn",
+      "type": "calls",
+      "weight": 1,
+      "direction": "forward"
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:curriculum-and-context",
+      "name": "Curriculum & Contexts",
+      "description": "Lecture syllabus, pedagogical guidelines, topic notes, and opening slide specifications.",
+      "nodeIds": [
+        "document:contexts/AI4IT_Lecture_Plan.md",
+        "document:contexts/day1_opener_content_guide.md",
+        "document:contexts/day1_opener_spec.md"
+      ]
+    },
+    {
+      "id": "layer:agent-skills",
+      "name": "Agent Capabilities & Skills",
+      "description": "Prompt skills and engineering conventions for FastAPI, NumPy, Framer Motion, KaTeX, and Recharts.",
+      "nodeIds": [
+        "document:.agent/skills/backend/fastapi-step-tracer/SKILL.md",
+        "document:.agent/skills/backend/graphify/SKILL.md",
+        "document:.agent/skills/backend/numpy-linalg-export/SKILL.md",
+        "document:.agent/skills/frontend-ui-ux/framer-motion-stepper/SKILL.md",
+        "document:.agent/skills/frontend-ui-ux/math-typography/SKILL.md",
+        "document:.agent/skills/frontend-ui-ux/recharts-visualizer/SKILL.md",
+        "document:.agent/skills/frontend-ui-ux/shadcn-components/SKILL.md"
+      ]
+    },
+    {
+      "id": "layer:backend-api-and-math",
+      "name": "Backend API & Numerical Services",
+      "description": "FastAPI application, route endpoints, Pydantic schemas, and NumPy regression/neural network calculation engines.",
+      "nodeIds": [
+        "config:ai4it-backend/.python-version",
+        "config:ai4it-backend/pyproject.toml",
+        "document:ai4it-backend/README.md",
+        "file:ai4it-backend/app/main.py",
+        "file:ai4it-backend/app/api/routes/linear_regression.py",
+        "file:ai4it-backend/app/api/routes/neural_network.py",
+        "file:ai4it-backend/app/models/linear_regression.py",
+        "file:ai4it-backend/app/models/neural_network.py",
+        "file:ai4it-backend/app/services/base.py",
+        "file:ai4it-backend/app/services/linear_regression.py",
+        "file:ai4it-backend/app/services/neural_network.py"
+      ]
+    },
+    {
+      "id": "layer:frontend-web-application",
+      "name": "Frontend Web Application",
+      "description": "Next.js 15 interactive presentation deck, visualization pages, sidebar navigation, and styling.",
+      "nodeIds": [
+        "config:ai4it-web/package.json",
+        "config:ai4it-web/tsconfig.json",
+        "config:ai4it-web/eslint.config.mjs",
+        "config:ai4it-web/next.config.ts",
+        "document:ai4it-web/AGENTS.md",
+        "document:ai4it-web/CLAUDE.md",
+        "document:ai4it-web/README.md",
+        "file:ai4it-web/src/app/layout.tsx",
+        "file:ai4it-web/src/app/page.tsx",
+        "file:ai4it-web/src/app/globals.css",
+        "file:ai4it-web/src/app/page.module.css",
+        "file:ai4it-web/src/components/Sidebar.tsx",
+        "file:ai4it-web/src/components/sidebar.css",
+        "file:ai4it-web/src/app/day1/linear-regression/page.tsx",
+        "file:ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+        "file:ai4it-web/src/app/day1/neural-network/page.tsx",
+        "file:ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx"
+      ]
+    },
+    {
+      "id": "layer:standalone-presentations",
+      "name": "Standalone Slide Decks",
+      "description": "Zero-dependency single-file HTML presentation slide decks.",
+      "nodeIds": [
+        "file:day1_opener.html"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Curriculum & Pedagogical Plan",
+      "description": "Start with the 3-weekend AI4IT syllabus and Day 1 opener specifications to understand the instructional objectives.",
+      "nodeIds": [
+        "document:contexts/AI4IT_Lecture_Plan.md",
+        "document:contexts/day1_opener_spec.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Standalone Day 1 Interactive Opener",
+      "description": "Examine day1_opener.html, the zero-dependency deck introducing AI, ML, Deep Learning, and GenAI concepts with embedded animations.",
+      "nodeIds": [
+        "file:day1_opener.html"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Next.js Presentation Webapp",
+      "description": "Inspect the Next.js frontend application structure, layouts, sidebar navigation, and interactive topic navigator.",
+      "nodeIds": [
+        "file:ai4it-web/src/app/layout.tsx",
+        "file:ai4it-web/src/app/page.tsx",
+        "file:ai4it-web/src/components/Sidebar.tsx"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Interactive Linear Regression & Neural Network Demos",
+      "description": "Explore the frontend live visualizer components that plot gradient descent curves and neuron layer activations.",
+      "nodeIds": [
+        "file:ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
+        "file:ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "FastAPI Computational Backend",
+      "description": "Trace the FastAPI backend API endpoints, Pydantic state models, and NumPy mathematical services providing step calculations.",
+      "nodeIds": [
+        "file:ai4it-backend/app/main.py",
+        "file:ai4it-backend/app/api/routes/linear_regression.py",
+        "file:ai4it-backend/app/services/linear_regression.py",
+        "file:ai4it-backend/app/services/neural_network.py"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Agent Skills & Engineering Standards",
+      "description": "Review the localized agent skills in .agent/skills that govern state streaming, linear algebra export, and UI stepper patterns.",
+      "nodeIds": [
+        "document:.agent/skills/backend/fastapi-step-tracer/SKILL.md",
+        "document:.agent/skills/backend/numpy-linalg-export/SKILL.md",
+        "document:.agent/skills/frontend-ui-ux/framer-motion-stepper/SKILL.md"
+      ]
     }
   ]
 }
