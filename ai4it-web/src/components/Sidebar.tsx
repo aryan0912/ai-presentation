@@ -1,40 +1,119 @@
 'use client';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ChevronDown, ChevronRight, MapPin, Activity } from 'lucide-react';
 import './sidebar.css';
+
+interface NavItem {
+  href: string;
+  label: string;
+  minutes: string;
+}
+
+interface NavGroup {
+  title: string;
+  items: NavItem[];
+  defaultOpen?: boolean;
+}
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
+    'OPENING': true,
+    'DAY 1 · Patterns': true,
+    'DAY 2 · Memory & Attention': false,
+  });
 
-  const links = [
-    { href: '/', label: 'Welcome & Overview' },
-    { href: '/day1/linear-regression', label: '1. Linear Regression' },
-    { href: '/day1/neural-network', label: '2. Neural Networks' },
-    { href: '/day2/rnn', label: '3. RNN & Memory' },
-    { href: '/day2/lstm', label: '4. LSTM Gates' },
-    { href: '/day2/transformer', label: '5. Transformers' },
-    { href: '/day2/embeddings', label: '6. Embeddings' },
+  const navGroups: NavGroup[] = [
+    {
+      title: 'OPENING',
+      defaultOpen: true,
+      items: [
+        { href: '/', label: 'Welcome & Overview', minutes: '30m' },
+        { href: '/course-map', label: 'The 6-Day Map', minutes: '10m' },
+        { href: '/day1/dairy-ai', label: 'AI in Dairy Ecosystem', minutes: '20m' },
+        { href: '/antigravity', label: 'Antigravity Setup', minutes: '30m' },
+      ],
+    },
+    {
+      title: 'DAY 1 · Patterns',
+      defaultOpen: true,
+      items: [
+        { href: '/day1/linear-regression', label: '1. Linear Regression', minutes: '65m' },
+        { href: '/day1/neural-network', label: '2. Neural Networks', minutes: '75m' },
+        { href: '/day1/case-study', label: '3. Case Study: AI in IT', minutes: '30m' },
+        { href: '/day1/sequence-problem', label: '4. When Order Matters', minutes: '20m' },
+        { href: '/day1/lab', label: '5. Lab: You Try It', minutes: '15m' },
+        { href: '/day1/poc-vs-production', label: '6. POC vs Production', minutes: '10m' },
+      ],
+    },
+    {
+      title: 'DAY 2 · Memory & Attention',
+      defaultOpen: false,
+      items: [
+        { href: '/day2/rnn', label: '1. RNN & Time Memory', minutes: '45m' },
+        { href: '/day2/lstm', label: '2. LSTM Gates', minutes: '45m' },
+        { href: '/day2/embeddings', label: '3. Vector Embeddings', minutes: '45m' },
+        { href: '/day2/transformer', label: '4. Attention & Transformers', minutes: '60m' },
+      ],
+    },
   ];
+
+  const toggleGroup = (title: string) => {
+    setOpenGroups((prev) => ({ ...prev, [title]: !prev[title] }));
+  };
 
   return (
     <aside className="sidebar glass-panel">
       <div className="sidebar-header">
         <h2>AI4IT Workshop</h2>
-        <p className="subtitle">Weekend 1: Patterns</p>
+        <p className="subtitle">NDDB ICT Training · 6 Days</p>
       </div>
+
       <nav className="sidebar-nav">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`nav-link ${pathname === link.href ? 'active' : ''}`}
-          >
-            {link.label}
-          </Link>
-        ))}
+        {navGroups.map((group) => {
+          const isOpen = openGroups[group.title] ?? true;
+          return (
+            <div key={group.title} className="nav-group">
+              <div
+                className="nav-group-header"
+                onClick={() => toggleGroup(group.title)}
+              >
+                <span>{group.title}</span>
+                {isOpen ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+              </div>
+
+              {isOpen && (
+                <div className="space-y-0.5 mt-0.5">
+                  {group.items.map((item) => {
+                    const isActive = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`nav-link ${isActive ? 'active' : ''}`}
+                      >
+                        <span className="truncate pr-2">{item.label}</span>
+                        <span className="minute-badge shrink-0">{item.minutes}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
+
       <div className="sidebar-footer">
-        <p>The Copilot Thread</p>
+        <div className="flex items-center gap-1.5 text-slate-400">
+          <Activity size={13} className="text-emerald-400" />
+          <span>Day 1: ~305 min teaching</span>
+        </div>
+        <Link href="/status" className="text-slate-500 hover:text-slate-300 font-mono text-[11px]">
+          /status
+        </Link>
       </div>
     </aside>
   );

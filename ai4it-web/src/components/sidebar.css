@@ -11,61 +11,113 @@
   border-bottom: none;
   border-left: none;
   z-index: 100;
+  overflow: hidden;
 }
 
 .sidebar-header {
-  padding: 2rem;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
   border-bottom: 1px solid var(--glass-border);
+  flex-shrink: 0;
 }
 
 .sidebar-header h2 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   background: linear-gradient(to right, #60a5fa, #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .sidebar-nav {
-  padding: 2rem 1rem;
+  padding: 1rem 0.75rem;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.25rem;
+  overflow-y: auto;
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-group-header {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.68rem;
+  font-family: monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.nav-group-header:hover {
+  color: #94a3b8;
 }
 
 .nav-link {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 8px;
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+  font-size: 0.85rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
 }
 
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
-  transform: translateX(4px);
+  transform: translateX(2px);
 }
 
 .nav-link.active {
   background: rgba(59, 130, 246, 0.15);
   color: #60a5fa;
+  font-weight: 600;
   border-left: 3px solid #3b82f6;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
+.minute-badge {
+  font-size: 0.65rem;
+  font-family: monospace;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #64748b;
+}
+
+.nav-link.active .minute-badge {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+}
+
 .sidebar-footer {
-  padding: 2rem;
+  padding: 1rem 1.5rem;
   border-top: 1px solid var(--glass-border);
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

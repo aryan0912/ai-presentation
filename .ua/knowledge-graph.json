@@ -670,6 +670,160 @@
         "deck"
       ],
       "complexity": "complex"
+    },
+    {
+      "id": "document:contexts/og_requirements.md",
+      "type": "document",
+      "name": "og_requirements.md",
+      "filePath": "contexts/og_requirements.md",
+      "summary": "Client contractual training course specification and curriculum document for NDDB ICT team.",
+      "tags": [
+        "contract",
+        "curriculum",
+        "nddb",
+        "contexts"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:contexts/day1_expansion_spec.md",
+      "type": "document",
+      "name": "day1_expansion_spec.md",
+      "filePath": "contexts/day1_expansion_spec.md",
+      "summary": "Build specification for Day 1 expansion: course map, antigravity orientation, dairy ecosystem, and real linear regression.",
+      "tags": [
+        "spec",
+        "day1",
+        "expansion",
+        "contexts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:ai4it-web/src/app/course-map/page.tsx",
+      "type": "file",
+      "name": "course-map/page.tsx",
+      "filePath": "ai4it-web/src/app/course-map/page.tsx",
+      "summary": "The 6-Day Architecture Map and Reference Chilling Center Copilot specification cards.",
+      "tags": [
+        "page",
+        "course-map",
+        "nextjs",
+        "copilot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:ai4it-web/src/app/day1/dairy-ai/page.tsx",
+      "type": "file",
+      "name": "day1/dairy-ai/page.tsx",
+      "filePath": "ai4it-web/src/app/day1/dairy-ai/page.tsx",
+      "summary": "AI in the Dairy Ecosystem: supply chain stages, future reality check, and edge AI constraints.",
+      "tags": [
+        "page",
+        "dairy-ai",
+        "day1",
+        "nextjs"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:ai4it-web/src/app/antigravity/page.tsx",
+      "type": "file",
+      "name": "antigravity/page.tsx",
+      "filePath": "ai4it-web/src/app/antigravity/page.tsx",
+      "summary": "Google Antigravity setup verification, live demo script, and 4-question judging rubric.",
+      "tags": [
+        "page",
+        "antigravity",
+        "setup",
+        "nextjs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-web/src/app/day1/case-study/page.tsx",
+      "type": "file",
+      "name": "day1/case-study/page.tsx",
+      "filePath": "ai4it-web/src/app/day1/case-study/page.tsx",
+      "summary": "Case studies in IT: server metric anomaly detection with circadian baselines and capacity forecasting.",
+      "tags": [
+        "page",
+        "case-study",
+        "day1",
+        "aiops"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:ai4it-web/src/app/day1/sequence-problem/page.tsx",
+      "type": "file",
+      "name": "day1/sequence-problem/page.tsx",
+      "filePath": "ai4it-web/src/app/day1/sequence-problem/page.tsx",
+      "summary": "When order matters: input shuffle interactive showing feedforward permutation invariance and memory limits.",
+      "tags": [
+        "page",
+        "sequence-problem",
+        "day1",
+        "nextjs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-web/src/app/day1/lab/page.tsx",
+      "type": "file",
+      "name": "day1/lab/page.tsx",
+      "filePath": "ai4it-web/src/app/day1/lab/page.tsx",
+      "summary": "Day 1 Lab challenge: live RMSE leaderboard competition for ticket volume fitting and Antigravity handoff.",
+      "tags": [
+        "page",
+        "lab",
+        "day1",
+        "hands-on"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:ai4it-web/src/app/day1/poc-vs-production/page.tsx",
+      "type": "file",
+      "name": "day1/poc-vs-production/page.tsx",
+      "filePath": "ai4it-web/src/app/day1/poc-vs-production/page.tsx",
+      "summary": "POC vs. Production Note #1: architectural contrast between browser demo and enterprise deployment.",
+      "tags": [
+        "page",
+        "poc-vs-production",
+        "day1",
+        "architecture"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-web/src/app/status/page.tsx",
+      "type": "file",
+      "name": "status/page.tsx",
+      "filePath": "ai4it-web/src/app/status/page.tsx",
+      "summary": "System diagnostics dashboard testing FastAPI backend reachability and local JS fallback health.",
+      "tags": [
+        "page",
+        "status",
+        "diagnostics",
+        "nextjs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:ai4it-backend/app/api/routes/datasets.py",
+      "type": "file",
+      "name": "datasets.py",
+      "filePath": "ai4it-backend/app/api/routes/datasets.py",
+      "summary": "FastAPI route serving canonical workshop datasets (milk-7day, seasonal-curve, anscombe, tickets, disk-usage).",
+      "tags": [
+        "backend",
+        "api",
+        "datasets",
+        "fastapi"
+      ],
+      "complexity": "simple"
     }
   ],
   "edges": [
@@ -959,7 +1113,8 @@
         "file:ai4it-backend/app/models/neural_network.py",
         "file:ai4it-backend/app/services/base.py",
         "file:ai4it-backend/app/services/linear_regression.py",
-        "file:ai4it-backend/app/services/neural_network.py"
+        "file:ai4it-backend/app/services/neural_network.py",
+        "file:ai4it-backend/app/api/routes/datasets.py"
       ]
     },
     {
@@ -983,7 +1138,15 @@
         "file:ai4it-web/src/app/day1/linear-regression/page.tsx",
         "file:ai4it-web/src/app/day1/linear-regression/LinearRegressionDemo.tsx",
         "file:ai4it-web/src/app/day1/neural-network/page.tsx",
-        "file:ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx"
+        "file:ai4it-web/src/app/day1/neural-network/NeuralNetworkDemo.tsx",
+        "file:ai4it-web/src/app/course-map/page.tsx",
+        "file:ai4it-web/src/app/day1/dairy-ai/page.tsx",
+        "file:ai4it-web/src/app/antigravity/page.tsx",
+        "file:ai4it-web/src/app/day1/case-study/page.tsx",
+        "file:ai4it-web/src/app/day1/sequence-problem/page.tsx",
+        "file:ai4it-web/src/app/day1/lab/page.tsx",
+        "file:ai4it-web/src/app/day1/poc-vs-production/page.tsx",
+        "file:ai4it-web/src/app/status/page.tsx"
       ]
     },
     {

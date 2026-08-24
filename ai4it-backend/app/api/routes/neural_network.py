@@ -1,5 +1,9 @@
-from fastapi import APIRouter, Depends
-from app.models.neural_network import NNState, NNForwardPassResult
+from fastapi import APIRouter, Depends, HTTPException
+from app.models.neural_network import (
+    NNState, NNForwardPassResult,
+    BoundaryRequest, BoundaryResult,
+    TrainRequest, TrainResult
+)
 from app.services.neural_network import NeuralNetworkService
 from app.services.base import INeuralNetworkService
 
@@ -13,4 +17,27 @@ def forward_pass_nn(
     state: NNState, 
     service: INeuralNetworkService = Depends(get_nn_service)
 ):
-    return service.perform_forward_pass(state)
+    try:
+        return service.perform_forward_pass(state)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.post("/boundary", response_model=BoundaryResult)
+def compute_decision_boundary(
+    req: BoundaryRequest,
+    service: INeuralNetworkService = Depends(get_nn_service)
+):
+    try:
+        return service.compute_boundary(req)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.post("/train", response_model=TrainResult)
+def train_neural_network(
+    req: TrainRequest,
+    service: INeuralNetworkService = Depends(get_nn_service)
+):
+    try:
+        return service.train_network(req)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))

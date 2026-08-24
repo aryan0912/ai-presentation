@@ -1,469 +1,487 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { BrainCircuit, Cpu, ShieldAlert, Sparkles, Database, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import {
+  BrainCircuit,
+  Cpu,
+  ShieldAlert,
+  Sparkles,
+  Database,
+  ArrowRight,
+  Layers,
+  HardDrive,
+  Radio,
+  Map,
+  CheckCircle2,
+  HelpCircle,
+  TrendingUp,
+  RotateCw
+} from 'lucide-react';
+import PretextRenderer from '@/components/PretextRenderer';
+import NestedRings from '@/components/NestedRings';
 
 export default function Home() {
-  const [activeCircle, setActiveCircle] = useState('ai');
-  const [activeSpec, setActiveSpec] = useState('narrow');
+  const [activeSpec, setActiveSpec] = useState<'narrow' | 'general' | 'super'>('narrow');
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
 
-  const circleData: Record<string, { title: string, desc: string, ex: string }> = {
-    'ai': {
-      title: 'AI (Artificial Intelligence)',
-      desc: 'Any system that mimics intelligent behavior.',
-      ex: 'Example: a rule-based alert system that pages on-call staff.'
+  const toggleFlip = (index: number) => {
+    setFlippedCards((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  const specData = {
+    narrow: {
+      title: 'Narrow AI (ANI - Artificial Narrow Intelligence)',
+      badge: '100% of Today’s Production AI',
+      desc: 'AI that excels at specific, bounded tasks: spam filtering, tabular regression, chess, ChatGPT, computer vision, code generation. Every system in enterprise production today belongs here.',
+      takeaway: 'Not a limitation: Narrow AI already delivers billions in business value daily.'
     },
-    'ml': {
-      title: 'ML (Machine Learning)',
-      desc: 'AI that learns patterns from data rather than being explicitly programmed.',
-      ex: 'Example: predicting disk failure from historical SMART data.'
+    general: {
+      title: 'General AI (AGI - Artificial General Intelligence)',
+      badge: 'Hypothetical / Active Research',
+      desc: 'Hypothetical AI that possesses human-level cognitive ability across any domain, capable of self-directed learning and transfer reasoning without retraining. Timelines are actively debated.',
+      takeaway: 'Does not exist today in any laboratory or vendor product.'
     },
-    'dl': {
-      title: 'DL (Deep Learning)',
-      desc: 'ML using layered neural networks, good at complex patterns.',
-      ex: 'Example: detecting anomalies in network traffic images/graphs.'
-    },
-    'gen': {
-      title: 'Generative AI',
-      desc: 'Deep learning that creates new content — text, code, images.',
-      ex: 'Example: Copilot writing a shell script from a plain-English request.'
+    super: {
+      title: 'Super AI (ASI - Artificial Superintelligence)',
+      badge: 'Theoretical Horizon',
+      desc: 'Hypothetical AI that vastly exceeds human cognitive ability across science, creativity, and wisdom. Purely speculative philosophical concept.',
+      takeaway: 'Mentioned only to complete the theoretical academic taxonomy.'
     }
   };
 
-  const specData: Record<string, { title: string, desc: string }> = {
-    'narrow': {
-      title: 'Narrow AI (ANI)',
-      desc: 'AI that does one task well: spam filters, recommendation engines, ChatGPT, image recognition. Everything in production today is this.'
+  const terminologyCards = [
+    {
+      term: 'Model',
+      phonetic: 'The Trained Artifact',
+      desc: 'A mathematical function with millions (or billions) of tunable parameters (weights and biases) that maps inputs to outputs.',
+      analogy: 'Think of it as a compiled binary file containing the learned logic.'
     },
-    'general': {
-      title: 'General AI (AGI)',
-      desc: 'Hypothetical AI with human-level reasoning across any task. Does not exist yet. Actively researched, timelines are disputed.'
+    {
+      term: 'Training',
+      phonetic: 'The Optimization Process',
+      desc: 'The computational process of adjusting model parameters iteratively via gradient descent until prediction error is minimized.',
+      analogy: 'Like running compiler passes and calibration runs against historical logs.'
     },
-    'super': {
-      title: 'Super AI (ASI)',
-      desc: 'Hypothetical AI that surpasses human intelligence across all domains. Purely theoretical/speculative — no working example, mentioned here only to complete the picture.'
+    {
+      term: 'Inference',
+      phonetic: 'Serving Predictions',
+      desc: 'Running a frozen, trained model against new, live operational data to produce an instant prediction or classification.',
+      analogy: 'Executing the compiled software during production runtime.'
+    },
+    {
+      term: 'Weights & Biases',
+      phonetic: 'The Tunable Parameters',
+      desc: 'The numerical coefficients inside matrix layers that dictate the strength of connections between features.',
+      analogy: 'When a model has "70B parameters", it literally has 70 billion floating-point numbers.'
+    },
+    {
+      term: 'Dataset',
+      phonetic: 'The Ground Truth Grounding',
+      desc: 'Curated historical observations split into Training (learning patterns), Validation (tuning hyperparameters), and Test (honest evaluation) sets.',
+      analogy: 'The raw telemetry, sensor logs, and labeled records fed to the algorithms.'
+    }
+  ];
+
+  const sectionVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: 'easeOut', staggerChildren: 0.15 }
     }
   };
 
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.8, ease: "easeOut", staggerChildren: 0.2 } 
-    }
-  };
-
-  const childVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100 } }
+  const childVariants: Variants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
   };
 
   return (
-    <div style={{ overflowX: 'hidden' }}>
-      <style>{`
-        /* Glassmorphism utility classes from skills */
-        .glass-card {
-          background: rgba(15, 23, 42, 0.6);
-          backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 16px;
-          box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);
-        }
-        
-        .scroll-section {
-          min-height: 85vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          margin-bottom: 6rem;
-          position: relative;
-        }
-
-        /* Timeline */
-        .timeline {
-          position: relative;
-          padding-left: 2rem;
-          border-left: 2px solid rgba(255,255,255,0.1);
-          display: flex;
-          flex-direction: column;
-          gap: 2.5rem;
-          margin-top: 2rem;
-        }
-        .timeline-item {
-          position: relative;
-        }
-        .timeline-dot {
-          position: absolute;
-          left: -2.65rem;
-          top: 0.5rem;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          box-shadow: 0 0 15px currentColor;
-        }
-
-        /* Flip Cards */
-        .flip-cards-container {
-          display: flex;
-          gap: 1.5rem;
-          flex-wrap: wrap;
-          margin-top: 2rem;
-        }
-        .flip-card {
-          width: 220px;
-          height: 280px;
-          perspective: 1000px;
-          cursor: pointer;
-        }
-        .flip-card-inner {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-style: preserve-3d;
-        }
-        .flip-card:hover .flip-card-inner {
-          transform: rotateY(180deg);
-        }
-        .flip-card-front, .flip-card-back {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          backface-visibility: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 1.5rem;
-          text-align: center;
-        }
-        .flip-card-front {
-          font-size: 1.5rem;
-          font-weight: 600;
-        }
-        .flip-card-back {
-          background: #3b82f6;
-          color: white;
-          transform: rotateY(180deg);
-          font-size: 1.1rem;
-          font-weight: 400;
-          box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Nested Circles */
-        .nested-circles-wrapper {
-          display: flex;
-          align-items: center;
-          gap: 4rem;
-          margin-top: 3rem;
-        }
-        .circles-container {
-          position: relative;
-          width: 450px;
-          height: 450px;
-        }
-        .circle {
-          position: absolute;
-          border-radius: 50%;
-          border: 2px dashed rgba(255,255,255,0.2);
-          display: flex;
-          justify-content: center;
-          padding-top: 1.5rem;
-          font-size: 1.2rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-          cursor: pointer;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          background: rgba(15, 23, 42, 0.3);
-        }
-        .circle:hover, .circle.active {
-          border-color: #60a5fa;
-          background: rgba(59, 130, 246, 0.15);
-          color: #60a5fa;
-          border-style: solid;
-          box-shadow: 0 0 30px rgba(59, 130, 246, 0.2) inset;
-        }
-        .circle-ai { width: 450px; height: 450px; top: 0; left: 0; }
-        .circle-ml { width: 350px; height: 350px; top: 100px; left: 50px; }
-        .circle-dl { width: 250px; height: 250px; top: 200px; left: 100px; }
-        .circle-gen { width: 150px; height: 150px; top: 300px; left: 150px; align-items: center; padding-top: 0; }
-
-        /* Spectrum */
-        .spectrum-bar {
-          height: 12px;
-          background: linear-gradient(90deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%);
-          border-radius: 6px;
-          margin-bottom: 2rem;
-          position: relative;
-        }
-        .zone-labels {
-          display: flex;
-          justify-content: space-between;
-        }
-        .zone-label {
-          flex: 1;
-          text-align: center;
-          font-size: 1.25rem;
-          font-weight: 600;
-          color: var(--text-secondary);
-          cursor: pointer;
-          transition: color 0.3s;
-          padding: 1rem;
-        }
-        .zone-label.active, .zone-label:hover {
-          color: #fff;
-        }
-
-        /* Trends Grid */
-        .trends-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2rem;
-          margin-top: 3rem;
-        }
-        .trend-card {
-          padding: 2rem;
-          transition: all 0.3s ease;
-        }
-        .trend-card:hover {
-          transform: translateY(-5px);
-          border-color: rgba(255, 255, 255, 0.2);
-          box-shadow: 0 12px 40px 0 rgba(0,0,0,0.3);
-        }
-      `}</style>
-
-      {/* Decorative ambient background glows */}
-      <div style={{ position: 'absolute', top: '10%', right: '5%', width: '400px', height: '400px', background: 'rgba(59, 130, 246, 0.1)', filter: 'blur(100px)', borderRadius: '50%', zIndex: -1 }} />
-      <div style={{ position: 'absolute', top: '40%', left: '-5%', width: '300px', height: '300px', background: 'rgba(168, 85, 247, 0.1)', filter: 'blur(100px)', borderRadius: '50%', zIndex: -1 }} />
-
-      {/* Section 0: Cold Open */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants}>
-        <motion.h1 variants={childVariants} style={{ fontSize: '4.5rem', fontWeight: 700, marginBottom: '1rem', background: 'linear-gradient(to right, #60a5fa, #c084fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>What is AI, really?</motion.h1>
-        <motion.p variants={childVariants} style={{ fontSize: '2rem', color: 'var(--text-secondary)' }}>Before we build anything — let's get the map right.</motion.p>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1.5 }}
-          viewport={{ once: true }}
-          style={{ fontSize: '1.5rem', color: '#60a5fa', marginTop: '3rem', fontWeight: 500 }}
-        >
-          If you had to explain AI to someone in one sentence — what would you say?
-        </motion.p>
-      </motion.div>
-
-      {/* Section 1: Evolution */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants}>
-        <motion.h2 variants={childVariants} style={{ fontSize: '3rem', marginBottom: '1rem' }}>Evolution of AI</motion.h2>
-        <div className="timeline">
-          <motion.div variants={childVariants} className="timeline-item glass-card" style={{ padding: '1.5rem', marginLeft: '1rem' }}>
-            <div className="timeline-dot" style={{ background: '#60a5fa', color: '#60a5fa' }} />
-            <h3 style={{ fontSize: '1.5rem', color: '#60a5fa' }}>Pre-Dawn & Rule-Based Systems <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}>(1940s–1980s)</span></h3>
-            <p style={{ color: '#e2e8f0', fontSize: '1.1rem', marginTop: '0.5rem' }}>"If-this-then-that" logic, hand-coded by humans. No learning involved.</p>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem', fontStyle: 'italic' }}>Curious Insight: Alan Turing's Bombe machine breaking the Enigma code in WWII was arguably an early form of this. Later, ELIZA (1966) fooled people into thinking a rule-based script was a real psychotherapist!</p>
-          </motion.div>
-          
-          <motion.div variants={childVariants} className="timeline-item glass-card" style={{ padding: '1.5rem', marginLeft: '1rem' }}>
-            <div className="timeline-dot" style={{ background: '#a78bfa', color: '#a78bfa' }} />
-            <h3 style={{ fontSize: '1.5rem', color: '#a78bfa' }}>Machine Learning <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}>(1990s–2000s)</span></h3>
-            <p style={{ color: '#e2e8f0', fontSize: '1.1rem', marginTop: '0.5rem' }}>Systems start learning patterns from data instead of being explicitly programmed.</p>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem', fontStyle: 'italic' }}>Curious Insight: In 1997, IBM's Deep Blue beat world chess champion Garry Kasparov, proving machines could out-calculate human grandmasters, though it still didn't "learn" like modern AI.</p>
-          </motion.div>
-          
-          <motion.div variants={childVariants} className="timeline-item glass-card" style={{ padding: '1.5rem', marginLeft: '1rem' }}>
-            <div className="timeline-dot" style={{ background: '#f472b6', color: '#f472b6' }} />
-            <h3 style={{ fontSize: '1.5rem', color: '#f472b6' }}>Deep Learning <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}>(2010s)</span></h3>
-            <p style={{ color: '#e2e8f0', fontSize: '1.1rem', marginTop: '0.5rem' }}>Neural networks with many layers; breakthroughs in image and speech recognition.</p>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem', fontStyle: 'italic' }}>Curious Insight: In 2012, an AI called AlexNet looked at millions of images and dropped the error rate in image recognition so drastically (26% to 15%) that it single-handedly sparked the modern AI boom.</p>
-          </motion.div>
-          
-          <motion.div variants={childVariants} className="timeline-item glass-card" style={{ padding: '1.5rem', marginLeft: '1rem' }}>
-            <div className="timeline-dot" style={{ background: '#34d399', color: '#34d399' }} />
-            <h3 style={{ fontSize: '1.5rem', color: '#34d399' }}>Generative AI <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}>(2020s)</span></h3>
-            <p style={{ color: '#e2e8f0', fontSize: '1.1rem', marginTop: '0.5rem' }}>Models that don't just classify or predict — they create text, code, images, and more.</p>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem', fontStyle: 'italic' }}>Curious Insight: ChatGPT hit 100 million users in just two months—making it the fastest-growing consumer application in internet history at the time.</p>
-          </motion.div>
+    <div className="space-y-24 pb-24">
+      
+      {/* Cold Open / Hero */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="min-h-[75vh] flex flex-col justify-center max-w-5xl"
+      >
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-400 text-xs font-mono font-bold w-fit mb-6">
+          <span>NDDB ICT Intensive AI Workshop · 6 Days</span>
         </div>
-        <motion.p variants={childVariants} style={{ fontStyle: 'italic', color: 'var(--text-secondary)', marginTop: '3rem', fontSize: '1.2rem' }}>Each era didn't replace the last — it built on it. Today's AI still uses ideas from every stage above.</motion.p>
+
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6">
+          What is AI, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">Really?</span>
+        </h1>
+
+        <PretextRenderer
+          text="A grounded, mathematically honest introduction to Artificial Intelligence for IT infrastructure, dairy operations, and enterprise systems engineers."
+          className="text-xl sm:text-2xl text-slate-300 max-w-3xl leading-relaxed mb-8"
+        />
+
+        <div className="flex flex-wrap items-center gap-4">
+          <Link href="/course-map" className="button-primary text-base px-6 py-3">
+            <Map size={18} /> View 6-Day Architecture Map
+          </Link>
+          <Link href="/day1/linear-regression" className="button-secondary text-base px-6 py-3">
+            Start Day 1: Linear Regression <ArrowRight size={18} />
+          </Link>
+        </div>
       </motion.div>
 
-      {/* Section 2: Terminology */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants}>
-        <motion.h2 variants={childVariants} style={{ fontSize: '3rem', marginBottom: '1rem' }}>Key Terminology</motion.h2>
-        <motion.div variants={childVariants} className="flip-cards-container">
-          {['Algorithm', 'Model', 'Training', 'Inference', 'Dataset'].map((term, i) => {
-            const desc = [
-              'A step-by-step set of rules a computer follows to solve a problem.',
-              'The trained result — what you get after an algorithm has learned from data.',
-              'The process of showing a model examples so it learns patterns.',
-              'Using an already-trained model to make a prediction on new data.',
-              'The examples used to train (or test) a model.'
-            ][i];
+      {/* Section 1: Evolution of AI */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10%' }}
+        variants={sectionVariants}
+        className="space-y-8"
+      >
+        <div>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-400">Chronological Evolution</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-1">From Rules to Foundations</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-mono text-slate-500 font-bold block mb-1">1950s–1980s</span>
+              <h3 className="text-lg font-bold text-white mb-2">Rule-Based Systems</h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Expert systems, decision trees, hardcoded logic. If/else statements written manually by human domain specialists.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-500">
+              Legacy Expert Systems
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-mono text-purple-400 font-bold block mb-1">1990s–2010s</span>
+              <h3 className="text-lg font-bold text-white mb-2">Machine Learning</h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Statistical algorithms (regression, random forests, SVMs) that discover mathematical formulas directly from data.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-purple-300">
+              Today's Focus (Day 1)
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-mono text-pink-400 font-bold block mb-1">2010s–2020</span>
+              <h3 className="text-lg font-bold text-white mb-2">Deep Learning</h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Multi-layer neural networks enabled by GPUs and massive datasets. Computer vision, speech recognition, and embeddings.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-pink-300">
+              Weekend 1 · Day 2
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-blue-950/30 border border-blue-500/40 hover:border-blue-400 transition-all flex flex-col justify-between">
+            <div>
+              <span className="text-xs font-mono text-emerald-400 font-bold block mb-1">2020–Present</span>
+              <h3 className="text-lg font-bold text-white mb-2">Generative AI &amp; LLMs</h3>
+              <p className="text-xs text-slate-200 leading-relaxed">
+                Transformers, Large Language Models (LLMs), multimodal reasoning, RAG architectures, and autonomous IT agents.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-blue-800/40 text-[11px] font-mono text-emerald-300">
+              Weekends 2 &amp; 3 (Days 3–6)
+            </div>
+          </div>
+        </div>
+
+        <p className="text-sm text-slate-400 italic font-mono">
+          "We did not discard the older techniques — modern AI architectures stack on top of them. Linear regression is running inside every transformer layer."
+        </p>
+      </motion.section>
+
+      {/* Section 2: Interactive Flip Cards (Core Terminology) */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10%' }}
+        variants={sectionVariants}
+        className="space-y-8"
+      >
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-400">Fundamental Vocabulary</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-1">Core Terminology (Click to Flip)</h2>
+          </div>
+          <span className="text-xs font-mono text-slate-500 hidden sm:block">5 Essential Concepts</span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {terminologyCards.map((card, i) => {
+            const isFlipped = !!flippedCards[i];
             return (
-              <div key={term} className="flip-card">
-                <div className="flip-card-inner">
-                  <div className="flip-card-front glass-card">{term}</div>
-                  <div className="flip-card-back glass-card" style={{ background: '#3b82f6', border: 'none' }}>{desc}</div>
+              <div
+                key={card.term}
+                onClick={() => toggleFlip(i)}
+                className="cursor-pointer h-[220px] [perspective:1000px]"
+              >
+                <div
+                  className={`relative w-full h-full duration-500 [transform-style:preserve-3d] transition-transform ${
+                    isFlipped ? '[transform:rotateY(180deg)]' : ''
+                  }`}
+                >
+                  {/* Front Side */}
+                  <div className="absolute inset-0 [backface-visibility:hidden] p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between hover:border-blue-500/50 transition-colors">
+                    <div>
+                      <span className="text-[10px] font-mono text-blue-400 uppercase font-bold block mb-1">Term #{i + 1}</span>
+                      <h4 className="text-xl font-bold text-white mb-1">{card.term}</h4>
+                      <span className="text-[11px] text-slate-400 font-mono block">{card.phonetic}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono pt-3 border-t border-slate-800">
+                      <span>Click to flip</span>
+                      <RotateCw size={12} className="text-slate-400" />
+                    </div>
+                  </div>
+
+                  {/* Back Side */}
+                  <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] p-5 rounded-2xl bg-blue-950 border border-blue-400/60 flex flex-col justify-between text-xs text-slate-200">
+                    <p className="leading-relaxed font-sans">{card.desc}</p>
+                    <p className="text-[11px] text-sky-300 font-mono italic pt-2 border-t border-blue-900/60">{card.analogy}</p>
+                  </div>
                 </div>
               </div>
             );
           })}
-        </motion.div>
-        <motion.p variants={childVariants} style={{ fontStyle: 'italic', color: 'var(--text-secondary)', marginTop: '3rem', fontSize: '1.2rem' }}>You'll hear these five words constantly for the next 6 days. That's all they mean.</motion.p>
-      </motion.div>
+        </div>
+      </motion.section>
 
-      {/* Section 3: Nested Rings */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants}>
-        <motion.h2 variants={childVariants} style={{ fontSize: '3rem' }}>The Nested Rings</motion.h2>
-        <motion.div variants={childVariants} className="nested-circles-wrapper">
-          <div className="circles-container">
-            {['ai', 'ml', 'dl', 'gen'].map((key) => (
-              <div 
-                key={key}
-                className={`circle circle-${key} ${activeCircle === key ? 'active' : ''}`} 
-                onMouseEnter={() => setActiveCircle(key)}
-              >
-                {key === 'ai' ? 'AI' : key === 'ml' ? 'ML' : key === 'dl' ? 'DL' : 'GenAI'}
-              </div>
-            ))}
+      {/* Section 3: The Nested Rings (Inscribed Circles) */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10%' }}
+        variants={sectionVariants}
+        className="space-y-6"
+      >
+        <div>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Taxonomy &amp; Hierarchy</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-1">The Nested Rings of AI</h2>
+          <p className="text-sm text-slate-400 mt-1">
+            Every ring is a strict mathematical subset of the one containing it:
+          </p>
+        </div>
+
+        {/* Dedicated Inscribed Rings Visualizer */}
+        <NestedRings />
+      </motion.section>
+
+      {/* Section 4: Spectrum of Capability */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10%' }}
+        variants={sectionVariants}
+        className="space-y-8"
+      >
+        <div>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-pink-400">Enterprise Reality Check</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-1">The Spectrum of Capability</h2>
+        </div>
+
+        <div className="p-8 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-6">
+          {/* 3 Step Spectrum Track */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-xs">
+            {(['narrow', 'general', 'super'] as const).map((key) => {
+              const active = activeSpec === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setActiveSpec(key)}
+                  className={`p-4 rounded-2xl text-left border transition-all ${
+                    active
+                      ? 'bg-blue-950/60 border-blue-400 text-white shadow-lg'
+                      : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="font-bold text-sm text-sky-300">
+                      {key === 'narrow' ? '1. Narrow AI (ANI)' : key === 'general' ? '2. General AI (AGI)' : '3. Super AI (ASI)'}
+                    </span>
+                    {key === 'narrow' && (
+                      <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 text-[10px] font-bold border border-emerald-800">
+                        WE ARE HERE
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[11px] text-slate-400 block">{specData[key].badge}</span>
+                </button>
+              );
+            })}
           </div>
-          
+
+          {/* Active Detail Display */}
           <AnimatePresence mode="wait">
-            <motion.div 
-              key={activeCircle}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="glass-card" 
-              style={{ flex: 1, padding: '2.5rem', minHeight: '280px' }}
-            >
-              <h3 style={{ fontSize: '2rem', color: '#60a5fa', marginBottom: '1rem' }}>{circleData[activeCircle].title}</h3>
-              <p style={{ fontSize: '1.25rem', marginBottom: '2rem' }}>{circleData[activeCircle].desc}</p>
-              <div style={{ borderLeft: '4px solid #60a5fa', paddingLeft: '1.5rem', fontStyle: 'italic', color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
-                {circleData[activeCircle].ex}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-        <motion.p variants={childVariants} style={{ fontStyle: 'italic', color: 'var(--text-secondary)', marginTop: '3rem', fontSize: '1.2rem' }}>Every ring is a subset of the one before it. Generative AI is a very specific, very recent slice of a much older field.</motion.p>
-      </motion.div>
-
-      {/* Section 4: Spectrum */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants}>
-        <motion.h2 variants={childVariants} style={{ fontSize: '3rem', marginBottom: '3rem' }}>The Spectrum of Capability</motion.h2>
-        
-        <motion.div variants={childVariants} style={{ position: 'relative' }}>
-          <motion.div 
-            animate={{ 
-              x: activeSpec === 'narrow' ? '16%' : activeSpec === 'general' ? '50%' : '84%', 
-              y: [0, -10, 0] 
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 20, y: { repeat: Infinity, duration: 1.5 } }}
-            style={{ position: 'absolute', top: '-40px', left: 0, transform: 'translateX(-50%)', fontSize: '1.5rem', color: '#60a5fa', fontWeight: 'bold' }}
-          >
-            👉 we are here
-          </motion.div>
-
-          <div className="spectrum-bar">
-            {/* Markers */}
-            <div style={{ position: 'absolute', top: -5, bottom: -5, left: '0', width: 2, background: 'rgba(255,255,255,0.2)' }} />
-            <div style={{ position: 'absolute', top: -5, bottom: -5, left: '50%', width: 2, background: 'rgba(255,255,255,0.2)' }} />
-            <div style={{ position: 'absolute', top: -5, bottom: -5, right: '0', width: 2, background: 'rgba(255,255,255,0.2)' }} />
-          </div>
-
-          <div className="zone-labels">
-            {['narrow', 'general', 'super'].map(key => (
-              <div 
-                key={key}
-                className={`zone-label ${activeSpec === key ? 'active' : ''}`} 
-                onMouseEnter={() => setActiveSpec(key)}
-              >
-                {key === 'narrow' ? 'Narrow AI (ANI)' : key === 'general' ? 'General AI (AGI)' : 'Super AI (ASI)'}
-              </div>
-            ))}
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={activeSpec}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="glass-card" 
-              style={{ marginTop: '2rem', padding: '2.5rem' }}
+              className="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-3"
             >
-              <h3 style={{ fontSize: '2rem', color: '#a78bfa', marginBottom: '1rem' }}>{specData[activeSpec].title}</h3>
-              <p style={{ fontSize: '1.25rem' }}>{specData[activeSpec].desc}</p>
+              <h4 className="text-xl font-bold text-white">{specData[activeSpec].title}</h4>
+              <p className="text-sm text-slate-300 leading-relaxed">{specData[activeSpec].desc}</p>
+              <div className="p-3 rounded-xl bg-blue-950/30 border border-blue-500/30 text-xs font-mono text-blue-200">
+                <strong>Executive Takeaway: </strong> {specData[activeSpec].takeaway}
+              </div>
             </motion.div>
           </AnimatePresence>
-        </motion.div>
-        <motion.p variants={childVariants} style={{ fontStyle: 'italic', color: 'var(--text-secondary)', marginTop: '3rem', fontSize: '1.2rem' }}>Everything we build this week — including the Copilot — is Narrow AI. That's not a limitation to apologize for; it's the entire industry today.</motion.p>
-      </motion.div>
-
-      {/* Section 5: Trends */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants}>
-        <motion.h2 variants={childVariants} style={{ fontSize: '3rem' }}>Current Trends in Enterprise IT</motion.h2>
-        <div className="trends-grid">
-          
-          <motion.div variants={childVariants} className="trend-card glass-card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <Sparkles className="text-blue-400" size={28} />
-              <h3 style={{ fontSize: '1.5rem', margin: 0 }}>LLMs & Copilots</h3>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', minHeight: '3rem' }}>Large language models embedded directly into developer and ops tools.</p>
-            <div style={{ color: '#60a5fa', fontSize: '0.95rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>In IT: code review, log summarization, ticket drafting.</div>
-          </motion.div>
-
-          <motion.div variants={childVariants} className="trend-card glass-card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <Cpu className="text-purple-400" size={28} />
-              <h3 style={{ fontSize: '1.5rem', margin: 0 }}>AI Agents</h3>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', minHeight: '3rem' }}>Models that don't just answer — they take actions via tools.</p>
-            <div style={{ color: '#c084fc', fontSize: '0.95rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>In IT: an agent that reads an alert, checks a runbook, and opens a ticket itself.</div>
-          </motion.div>
-
-          <motion.div variants={childVariants} className="trend-card glass-card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <Database className="text-emerald-400" size={28} />
-              <h3 style={{ fontSize: '1.5rem', margin: 0 }}>RAG (Retrieval-Augmented)</h3>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', minHeight: '3rem' }}>Models grounded in your own private documents/data, not just public training data.</p>
-            <div style={{ color: '#34d399', fontSize: '0.95rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>In IT: an assistant that actually knows your SOPs.</div>
-          </motion.div>
-
-          <motion.div variants={childVariants} className="trend-card glass-card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <ShieldAlert className="text-pink-400" size={28} />
-              <h3 style={{ fontSize: '1.5rem', margin: 0 }}>AI in Cybersecurity</h3>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', minHeight: '3rem' }}>Pattern-based threat and anomaly detection at machine speed.</p>
-            <div style={{ color: '#f472b6', fontSize: '0.95rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>In IT: flagging unusual login patterns before a human would notice.</div>
-          </motion.div>
-
-          <motion.div variants={childVariants} className="trend-card glass-card" style={{ gridColumn: '1 / -1', maxWidth: '600px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <BrainCircuit className="text-amber-400" size={28} />
-              <h3 style={{ fontSize: '1.5rem', margin: 0 }}>Multi-model Flexibility</h3>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Teams increasingly avoid locking into one AI vendor.</p>
-            <div style={{ color: '#fbbf24', fontSize: '0.95rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>In IT: routing requests across multiple model providers for cost/reliability.</div>
-          </motion.div>
         </div>
-        <motion.p variants={childVariants} style={{ fontStyle: 'italic', color: 'var(--text-secondary)', marginTop: '3rem', fontSize: '1.2rem', textAlign: 'center' }}>Every one of these trends — copilots, agents, RAG, multi-model routing — is something we will build, piece by piece, over the next 6 days.</motion.p>
-      </motion.div>
+      </motion.section>
 
-      {/* Section 6: Bridge */}
-      <motion.div className="scroll-section" initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-20%" }} variants={sectionVariants} style={{ minHeight: '60vh', textAlign: 'center' }}>
-        <motion.h2 variants={childVariants} style={{ fontSize: '4rem', marginBottom: '1rem' }}>That's the map.<br/>Now let's start the journey.</motion.h2>
-        <motion.p variants={childVariants} style={{ fontSize: '1.5rem', color: 'var(--text-secondary)', marginBottom: '4rem' }}>Next: the 6-day roadmap, and the system we'll build together — the Chilling Center Copilot.</motion.p>
-        <motion.div variants={childVariants}>
-          <Link href="/day1/linear-regression" className="button-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', padding: '1rem 3rem' }}>
-            Begin Day 1: Linear Regression <ArrowRight size={24} />
+      {/* Section 5: Current Enterprise Trends */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10%' }}
+        variants={sectionVariants}
+        className="space-y-8"
+      >
+        <div>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-400">Market &amp; Industry Direction</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-1">Current Trends in Enterprise IT</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 text-blue-400 mb-3">
+                <Sparkles size={22} />
+                <h4 className="text-lg font-bold text-white">LLMs &amp; Copilots</h4>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Large language models embedded directly into developer IDEs and terminal shells for code review and log parsing.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-blue-300">
+              IT Use: Script drafting &amp; log digestion
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 text-purple-400 mb-3">
+                <Cpu size={22} />
+                <h4 className="text-lg font-bold text-white">Autonomous Agents</h4>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Models that do not merely answer questions — they take actions via system tools, REST APIs, and database queries.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-purple-300">
+              IT Use: Automated alert diagnosis &amp; remediation
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 text-emerald-400 mb-3">
+                <Database size={22} />
+                <h4 className="text-lg font-bold text-white">RAG Architectures</h4>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Retrieval-Augmented Generation grounding models in NDDB private documentation and SOPs to prevent hallucinations.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-emerald-300">
+              IT Use: Datacenter runbook retrieval
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 text-indigo-400 mb-3">
+                <Layers size={22} />
+                <h4 className="text-lg font-bold text-white">Multi-Modal Models</h4>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Unified neural networks that ingest text, server rack diagrams, telemetry charts, and system screenshots simultaneously.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-indigo-300">
+              IT Use: Diagnostic screenshot analysis
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-sky-500/40 hover:border-sky-400 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 text-sky-400 mb-3">
+                <Radio size={22} />
+                <h4 className="text-lg font-bold text-white">Edge AI Deployment</h4>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Small, efficient models running directly on local chilling center micro-servers with zero cloud dependency.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-sky-300">
+              Dairy Use: BMC intake scoring during WAN outage
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900/60 border border-amber-500/40 hover:border-amber-400 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2.5 text-amber-400 mb-3">
+                <HardDrive size={22} />
+                <h4 className="text-lg font-bold text-white">Small Language Models (SLMs)</h4>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                High-efficiency 1B–3B parameter models running on standard CPU servers with zero external token costs and complete data privacy.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-amber-300">
+              IT Use: On-prem privacy-preserving log parsing
+            </div>
+          </div>
+        </div>
+
+        {/* Enterprise IT Framing Quote */}
+        <div className="p-6 rounded-2xl bg-slate-950 border border-blue-500/30 text-xs md:text-sm text-slate-300 leading-relaxed font-mono">
+          <strong className="text-white block mb-1">
+            "Shifting enterprise IT from a reactive cost centre to a proactive, automated intelligence hub."
+          </strong>
+          That is the strategic promise. By Day 6, you will be equipped to evaluate and architect exactly how to execute this for NDDB.
+        </div>
+      </motion.section>
+
+      {/* Section 6: Next Steps / Curriculum Transition */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10%' }}
+        variants={sectionVariants}
+        className="p-10 rounded-3xl border border-purple-500/40 bg-gradient-to-br from-purple-950/40 via-slate-950 to-blue-950/40 text-center space-y-6"
+      >
+        <span className="text-xs font-mono uppercase tracking-widest text-purple-400 font-bold">
+          Ready to Begin Weekend 1
+        </span>
+        <h2 className="text-3xl md:text-5xl font-extrabold text-white">
+          Explore the Roadmap &amp; Reference Architecture
+        </h2>
+        <p className="text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          See the 6-day curriculum arc, the 3-phase journey (Predict → Generate → Operate), and our reference system: the <strong>Chilling Center Copilot</strong>.
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-4 pt-2">
+          <Link href="/course-map" className="button-primary text-base px-8 py-3">
+            <Map size={18} /> The 6-Day Course Map
           </Link>
-        </motion.div>
-      </motion.div>
+          <Link href="/day1/dairy-ai" className="button-secondary text-base px-8 py-3">
+            AI in Dairy Ecosystem <ArrowRight size={18} />
+          </Link>
+        </div>
+      </motion.section>
+
     </div>
   );
 }
