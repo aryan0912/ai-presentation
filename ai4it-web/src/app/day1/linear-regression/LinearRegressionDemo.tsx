@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Chart, { ChartPoint } from '@/components/Chart';
 import BackendBadge from '@/components/BackendBadge';
+import LossSurfaceHeatmap from '@/components/LossSurfaceHeatmap';
 import {
   stepLinearRegressionApi,
   computeLossSurfaceApi,
@@ -10,7 +11,7 @@ import {
   LossSurfaceResult,
   FALLBACK_DATASETS
 } from '@/lib/api';
-import { Play, RotateCcw, Zap, AlertTriangle, CheckCircle2, TrendingUp } from 'lucide-react';
+import { Play, RotateCcw, Zap, AlertTriangle, CheckCircle2, TrendingUp, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface LinearRegressionDemoProps {
   initialData?: DataPoint[];
@@ -33,10 +34,12 @@ export default function LinearRegressionDemo({
   const [isAutoFitting, setIsAutoFitting] = useState<boolean>(false);
   const [isDiverging, setIsDiverging] = useState<boolean>(false);
   const [errorMode, setErrorMode] = useState<'linear' | 'squared'>('squared');
+  const [showStepInspector, setShowStepInspector] = useState<boolean>(false);
 
-  // Loss Surface Data
+  // Loss Surface & Convergence History Data
   const [surfaceData, setSurfaceData] = useState<LossSurfaceResult | null>(null);
-  const [history, setHistory] = useState<{ m: number; c: number; loss: number }[]>([]);
+  const [history, setHistory] = useState<{ step: number; m: number; c: number; loss: number; dL_dm?: number; dL_dc?: number }[]>([]);
+  const tableScrollRef = useRef<HTMLDivElement | null>(null);
 
   // Calculate loss locally on change
   const currentLoss = useMemo(() => {
@@ -61,12 +64,20 @@ export default function LinearRegressionDemo({
     });
   }, [data]);
 
+  // Auto-scroll Step History table on new entries
+  useEffect(() => {
+    if (tableScrollRef.current) {
+      tableScrollRef.current.scrollTop = tableScrollRef.current.scrollHeight;
+    }
+  }, [history.length]);
+
   // Reset to initial baseline
   const handleReset = () => {
     setIsAutoFitting(false);
     setIsDiverging(false);
     setM(0);
     setC(2000);
+    setLearningRate(0.02);
     setHistory([]);
   };
 
@@ -77,7 +88,10 @@ export default function LinearRegressionDemo({
     const { result } = await fitLinearRegressionApi(data);
     setM(Number(result.m.toFixed(2)));
     setC(Number(result.c.toFixed(2)));
-    setHistory((prev) => [...prev, { m: result.m, c: result.c, loss: result.mse }]);
+    setHistory((prev) => [
+      ...prev,
+      { step: prev.length + 1, m: result.m, c: result.c, loss: result.mse }
+    ]);
   };
 
   // Perform single gradient step
@@ -92,7 +106,18 @@ export default function LinearRegressionDemo({
 
     setM(Number(result.new_m.toFixed(2)));
     setC(Number(result.new_c.toFixed(2)));
-    setHistory((prev) => [...prev.slice(-40), { m: result.new_m, c: result.new_c, loss: result.loss }]);
+    
+    setHistory((prev) => [
+      ...prev.slice(-45),
+      {
+        step: prev.length + 1,
+        m: result.new_m,
+        c: result.new_c,
+        loss: result.loss,
+        dL_dm: result.grad_m ?? (m - result.new_m) / stepLR,
+        dL_dc: result.grad_c ?? (c - result.new_c) / stepLR,
+      }
+    ]);
   };
 
   // Auto-fit loop with requestAnimationFrame
@@ -143,6 +168,9 @@ export default function LinearRegressionDemo({
 
   // Next-day prediction (x=8)
   const tomorrowPrediction = Math.round(m * 8 + c);
+
+  // Latest gradient calculation values
+  const lastStep = history.length > 0 ? history[history.length - 1] : null;
 
   return (
     <div className="space-y-6">
@@ -322,79 +350,14 @@ export default function LinearRegressionDemo({
               </div>
             </div>
 
-            {/* SVG Loss Landscape Heatmap */}
-            <div className="relative w-full h-[300px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
-              <svg viewBox="0 0 400 300" className="w-full h-full">
-                {/* Render Contour/Heatmap cells if available */}
-                {surfaceData &&
-                  surfaceData.surface.map((row, rIdx) => {
-                    const cellHeight = 300 / surfaceData.surface.length;
-                    return row.map((val, cIdx) => {
-                      const cellWidth = 400 / row.length;
-                      // Normalize loss to 0..1 for color
-                      const norm = Math.min(1, Math.max(0, Math.log(val + 1) / Math.log(200000)));
-                      // Hue from blue (low) to purple/red (high)
-                      const hue = (1 - norm) * 220; // 220 = blue, 0 = red
-                      return (
-                        <rect
-                          key={`cell-${rIdx}-${cIdx}`}
-                          x={cIdx * cellWidth}
-                          y={rIdx * cellHeight}
-                          width={cellWidth + 0.5}
-                          height={cellHeight + 0.5}
-                          fill={`hsl(${hue}, 70%, ${15 + (1 - norm) * 25}%)`}
-                        />
-                      );
-                    });
-                  })}
-
-                {/* Contour Iso-lines Simulation */}
-                <ellipse cx="230" cy="180" rx="35" ry="25" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="3 3" />
-                <ellipse cx="230" cy="180" rx="75" ry="55" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="3 3" />
-                <ellipse cx="230" cy="180" rx="125" ry="90" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-
-                {/* Global Minimum Star */}
-                <circle cx="230" cy="180" r="4" fill="#34d399" />
-                <text x="230" y="170" textAnchor="middle" fill="#34d399" fontSize="9" fontWeight="bold">
-                  Optimal Basin (Minimum Loss)
-                </text>
-
-                {/* Trajectory line from history */}
-                {history.length > 1 && (
-                  <path
-                    d={history.reduce((acc, pt, i) => {
-                      // Map m: -40..120 -> 0..400; c: 1600..2600 -> 300..0
-                      const px = ((pt.m - -40) / 160) * 400;
-                      const py = 300 - ((pt.c - 1600) / 1000) * 300;
-                      return i === 0 ? `M ${px} ${py}` : `${acc} L ${px} ${py}`;
-                    }, '')}
-                    fill="none"
-                    stroke="#f59e0b"
-                    strokeWidth="2"
-                    strokeDasharray="2 2"
-                  />
-                )}
-
-                {/* Current Parameter Marker */}
-                {(() => {
-                  const px = Math.min(390, Math.max(10, ((m - -40) / 160) * 400));
-                  const py = Math.min(290, Math.max(10, 300 - ((c - 1600) / 1000) * 300));
-                  return (
-                    <g>
-                      <circle cx={px} cy={py} r="10" fill="rgba(245, 158, 11, 0.4)" className="animate-ping" />
-                      <circle cx={px} cy={py} r="6" fill="#f59e0b" stroke="#ffffff" strokeWidth="2" />
-                      <text x={px} y={py - 12} textAnchor="middle" fill="#f59e0b" fontSize="10" fontWeight="bold">
-                        (m={m}, c={c})
-                      </text>
-                    </g>
-                  );
-                })()}
-              </svg>
-
-              <div className="absolute bottom-2 left-2 text-[10px] font-mono text-slate-400 bg-slate-950/80 px-2 py-1 rounded">
-                X: Slope (m) | Y: Intercept (c)
-              </div>
-            </div>
+            {/* Reusable Loss Surface Heatmap */}
+            <LossSurfaceHeatmap
+              surfaceData={surfaceData}
+              currentM={m}
+              currentC={c}
+              history={history}
+              isDiverging={isDiverging}
+            />
           </div>
 
           <div className="mt-4 pt-3 border-t border-slate-800/80 text-xs text-slate-300 leading-relaxed font-mono">
@@ -404,6 +367,122 @@ export default function LinearRegressionDemo({
         </div>
 
       </div>
+
+      {/* Real-Time Step Math Inspector (Shows Exact Arithmetic for Last Step) */}
+      <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+        <button
+          onClick={() => setShowStepInspector(!showStepInspector)}
+          className="w-full flex items-center justify-between text-xs font-mono font-bold text-slate-300 hover:text-white"
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-amber-400">Step Calculation Math Inspector</span>
+            <span className="text-slate-500 font-normal">
+              {lastStep ? `(Step #${lastStep.step}: m=${lastStep.m.toFixed(2)}, c=${lastStep.c.toFixed(2)})` : '(Click Single Step to view calculations)'}
+            </span>
+          </div>
+          {showStepInspector ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+        </button>
+
+        {showStepInspector && (
+          <div className="mt-4 pt-3 border-t border-slate-800/80 space-y-3 font-mono text-xs text-slate-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-slate-500 block text-[10px]">Current Parameters:</span>
+                <span className="text-sky-300 font-bold">m = {m.toFixed(2)}, c = {c.toFixed(2)}</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-slate-500 block text-[10px]">Evaluated MSE Loss:</span>
+                <span className="text-rose-300 font-bold">{Math.round(loss).toLocaleString()}</span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-slate-500 block text-[10px]">Weight Gradient (∂L/∂m):</span>
+                <span className="text-purple-300 font-bold">
+                  {lastStep?.dL_dm !== undefined ? lastStep.dL_dm.toFixed(2) : '—'}
+                </span>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <span className="text-slate-500 block text-[10px]">Bias Gradient (∂L/∂c):</span>
+                <span className="text-purple-300 font-bold">
+                  {lastStep?.dL_dc !== undefined ? lastStep.dL_dc.toFixed(2) : '—'}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] text-slate-400">
+              <strong className="text-slate-300">Computer's Update Arithmetic: </strong>
+              <code>m_next = {m.toFixed(2)} - ({learningRate} × {lastStep?.dL_dm?.toFixed(2) ?? '0.00'})</code> &nbsp;|&nbsp; 
+              <code>c_next = {c.toFixed(2)} - ({learningRate} × {lastStep?.dL_dc?.toFixed(2) ?? '0.00'})</code>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* NEW: Loss vs. Epochs / Iterations Convergence Curve */}
+      {history.length > 1 && (
+        <div className="p-6 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
+            <div>
+              <span className="text-xs font-mono text-emerald-400 font-bold uppercase">
+                Model Convergence Curve
+              </span>
+              <h4 className="text-sm font-bold text-white">Loss vs. Steps / Epochs</h4>
+            </div>
+            <span className="text-[10px] font-mono text-slate-400">
+              Initial: {Math.round(history[0].loss).toLocaleString()} &rarr; Final: {Math.round(history[history.length - 1].loss).toLocaleString()}
+            </span>
+          </div>
+
+          <Chart
+            points={history.map((h) => ({ x: h.step, y: h.loss }))}
+            lines={[
+              {
+                points: history.map((h) => ({ x: h.step, y: h.loss })),
+                color: '#34d399',
+                strokeWidth: 2.5,
+                label: 'MSE Loss Trajectory',
+              },
+            ]}
+            xLabel="Training Step / Epoch (Click Auto-Fit to watch curve plateau)"
+            yLabel="Loss (MSE)"
+            height={200}
+          />
+          <p className="text-[11px] text-slate-400 font-mono">
+            Notice how loss plummets rapidly in the first 2-3 steps, then smoothly flattens out (converges) as the parameters settle into the valley basin!
+          </p>
+        </div>
+      )}
+
+      {/* Step History Log — auto-scrollable audit trail */}
+      {history.length > 0 && (
+        <div className="p-4 rounded-2xl bg-slate-950/90 border border-slate-800">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-bold text-white">Step History — every update, in order</h4>
+            <span className="text-[10px] font-mono text-slate-500">{history.length} step{history.length === 1 ? '' : 's'} recorded</span>
+          </div>
+          <div ref={tableScrollRef} className="overflow-x-auto max-h-48 overflow-y-auto">
+            <table className="w-full text-center border-collapse text-[11px] font-mono">
+              <thead className="sticky top-0 bg-slate-950">
+                <tr className="border-b border-slate-800 text-slate-400">
+                  <th className="py-1.5 px-3">Step #</th>
+                  <th className="py-1.5 px-3">m (weight)</th>
+                  <th className="py-1.5 px-3">c (bias)</th>
+                  <th className="py-1.5 px-3">Loss (MSE)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                {history.map((h, idx) => (
+                  <tr key={idx} className={idx === history.length - 1 ? 'text-emerald-400 font-bold' : ''}>
+                    <td className="py-1 px-3">{h.step}</td>
+                    <td className="py-1 px-3">{h.m.toFixed(2)}</td>
+                    <td className="py-1 px-3">{h.c.toFixed(2)}</td>
+                    <td className="py-1 px-3">{Math.round(h.loss).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Metrics Summary Strip */}
       <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
