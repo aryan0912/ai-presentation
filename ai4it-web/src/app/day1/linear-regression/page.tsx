@@ -71,14 +71,15 @@ export default function LinearRegressionPage() {
       </div>
 
       {/* BEAT 1: The Raw Observations (10 min) */}
-      <ConceptBeat
-        kind="problem"
-        number="1"
-        title="The Raw Observations (7 Days of Chilling Data)"
-        subtitle="Before we write any formula, look at the physical reality on the ground."
-        time="10 min"
-        phase="predict"
-      >
+      <div id="beat-1">
+        <ConceptBeat
+          kind="problem"
+          number="1"
+          title="The Raw Observations (7 Days of Chilling Data)"
+          subtitle="Before we write any formula, look at the physical reality on the ground."
+          time="10 min"
+          phase="predict"
+        >
         <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur-xl">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-mono text-sky-400 font-bold uppercase">
@@ -177,6 +178,7 @@ export default function LinearRegressionPage() {
           A Bulk Milk Chilling Center holds thousands of litres of perishable raw milk. If tomorrow's intake reaches 2,450L but you only dispatched a 2,000L insulated tanker, the chilling storage will overflow and spoil. If you over-dispatch a 5,000L multi-axle tanker, diesel and cooling electricity are wasted.
         </DairyAngle>
       </ConceptBeat>
+      </div>
 
       {/* TAXONOMY CARD: Supervised / Unsupervised / GenAI (5 min) */}
       <section className="p-8 rounded-3xl border border-purple-500/30 bg-purple-950/20 backdrop-blur-xl space-y-6">

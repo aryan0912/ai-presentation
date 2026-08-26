@@ -2,13 +2,27 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, ChevronRight, MapPin, Activity } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronRight,
+  MapPin,
+  Activity,
+  ChevronLeft,
+  Sparkles,
+  Layers,
+  BrainCircuit,
+  TrendingUp,
+  Cpu,
+  Server
+} from 'lucide-react';
 import './sidebar.css';
+import { usePresentation } from './PresentationContext';
 
 interface NavItem {
   href: string;
   label: string;
   minutes: string;
+  icon?: any;
 }
 
 interface NavGroup {
@@ -19,6 +33,7 @@ interface NavGroup {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { isSidebarCollapsed, toggleSidebar } = usePresentation();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     'OPENING': true,
     'DAY 1 · Patterns': true,
@@ -64,11 +79,34 @@ export default function Sidebar() {
     setOpenGroups((prev) => ({ ...prev, [title]: !prev[title] }));
   };
 
+  if (isSidebarCollapsed) {
+    return (
+      <aside className="sidebar-collapsed">
+        <button
+          onClick={toggleSidebar}
+          className="p-3 rounded-xl hover:bg-slate-800 text-sky-400 hover:text-white transition-all m-2"
+          title="Expand Sidebar ([)"
+        >
+          <ChevronRight size={20} />
+        </button>
+      </aside>
+    );
+  }
+
   return (
     <aside className="sidebar glass-panel">
-      <div className="sidebar-header">
-        <h2>AI4IT Workshop</h2>
-        <p className="subtitle">NDDB ICT Training · 6 Days</p>
+      <div className="sidebar-header flex items-center justify-between">
+        <div>
+          <h2>AI4IT Workshop</h2>
+          <p className="subtitle">NDDB ICT Training · 6 Days</p>
+        </div>
+        <button
+          onClick={toggleSidebar}
+          className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors"
+          title="Collapse Sidebar ([)"
+        >
+          <ChevronLeft size={16} />
+        </button>
       </div>
 
       <nav className="sidebar-nav">
@@ -107,7 +145,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
-        <div className="flex items-center gap-1.5 text-slate-400">
+        <div className="flex items-center gap-1.5 text-slate-400 font-mono text-xs">
           <Activity size={13} className="text-emerald-400" />
           <span>Day 1: ~305 min teaching</span>
         </div>
@@ -118,3 +156,4 @@ export default function Sidebar() {
     </aside>
   );
 }
+
