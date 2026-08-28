@@ -147,7 +147,7 @@ export default function TextToVectorPipelineViz() {
                   <div className="p-2 bg-slate-900 rounded font-mono text-[11px] text-slate-300 border border-slate-800 space-y-1">
                     {t.denseVec.map((v, vIdx) => (
                       <div key={vIdx} className="flex justify-between">
-                        <span className="text-slate-500">dim_{vIdx}:</span>
+                        <span className="text-slate-500">dim<sub>{vIdx}</sub>:</span>
                         <span className={`font-bold ${v > 0 ? 'text-emerald-400' : 'text-rose-400'}`}>{v.toFixed(2)}</span>
                       </div>
                     ))}

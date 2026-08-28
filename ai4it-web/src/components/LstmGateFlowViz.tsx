@@ -13,7 +13,7 @@ export default function LstmGateFlowViz() {
       color: '#f43f5e',
       border: 'border-rose-500',
       bg: 'bg-rose-950/40',
-      formula: 'f_t = \\sigma(W_f \\cdot [h_{t-1}, x_t] + b_f)',
+      formula: 'f_t = sigmoid(W_f * [h[t-1], x_t] + b_f)',
       purpose: 'Multiplies old cell state by a decimal between 0 (discard completely) and 1 (retain completely).',
       analogy: 'Silences transient baseline CPU fluctuations so they do not trigger alert alarms.',
     },
@@ -23,7 +23,7 @@ export default function LstmGateFlowViz() {
       color: '#38bdf8',
       border: 'border-sky-500',
       bg: 'bg-sky-950/40',
-      formula: 'i_t = \\sigma(W_i \\cdot [h_{t-1}, x_t] + b_i) \\quad \\text{and} \\quad \\tilde{C}_t = \\tanh(W_c \\cdot [h_{t-1}, x_t] + b_c)',
+      formula: 'i_t = sigmoid(W_i * [h[t-1], x_t] + b_i)  and  C~_t = tanh(W_c * [h[t-1], x_t] + b_c)',
       purpose: 'Decides what critical new information to write into the long-term cell state highway.',
       analogy: 'Writes a confirmed critical chilling compressor breakdown into the incident log.',
     },
@@ -33,7 +33,7 @@ export default function LstmGateFlowViz() {
       color: '#34d399',
       border: 'border-emerald-500',
       bg: 'bg-emerald-950/40',
-      formula: 'o_t = \\sigma(W_o \\cdot [h_{t-1}, x_t] + b_o) \\quad \\implies \\quad h_t = o_t \\cdot \\tanh(C_t)',
+      formula: 'o_t = sigmoid(W_o * [h[t-1], x_t] + b_o)  =>  h_t = o_t * tanh(C_t)',
       purpose: 'Filters the permanent cell state to decide what immediate hidden vector h_t to emit.',
       analogy: 'Dispatches an immediate alert page to on-call engineers while storing the root cause.',
     },
@@ -112,13 +112,13 @@ export default function LstmGateFlowViz() {
           {/* Top Highway: Cell State Conveyor C_{t-1} -> C_t */}
           <line x1="20" y1="90" x2="720" y2="90" stroke="url(#cellHighwayGrad)" strokeWidth="4" />
           <polygon points="715,85 730,90 715,95" fill="#c084fc" />
-          <text x="30" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C_{'{t-1}'} (Past Long Memory)</text>
+          <text x="30" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C<tspan baselineShift="sub" fontSize="9">t-1</tspan> (Past Long Memory)</text>
           <text x="610" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C_t (New Long Memory)</text>
 
           {/* Bottom Hidden State Highway h_{t-1} -> h_t */}
           <line x1="20" y1="250" x2="720" y2="250" stroke="#38bdf8" strokeWidth="2.5" strokeDasharray="4 4" />
           <polygon points="715,246 728,250 715,254" fill="#38bdf8" />
-          <text x="30" y="272" fill="#38bdf8" fontSize="10" fontWeight="bold">h_{'{t-1}'} (Short Memory)</text>
+          <text x="30" y="272" fill="#38bdf8" fontSize="10" fontWeight="bold">h<tspan baselineShift="sub" fontSize="8">t-1</tspan> (Short Memory)</text>
           <text x="640" y="272" fill="#38bdf8" fontSize="10" fontWeight="bold">h_t (Output State)</text>
 
           {/* Input Vector x_t coming up */}

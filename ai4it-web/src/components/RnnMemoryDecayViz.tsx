@@ -119,7 +119,7 @@ export default function RnnMemoryDecayViz() {
       {/* Polish 1: High-Fidelity SVG Unrolled Recurrent Network Diagram */}
       <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 flex flex-col items-center justify-center relative overflow-hidden shadow-inner">
         <div className="text-[10px] text-slate-400 font-mono mb-2 flex items-center justify-between w-full">
-          <span>Unrolled Computational Graph in Time: h_t = tanh(W &middot; h_{'{t-1}'} + U &middot; x_t)</span>
+          <span>Unrolled Computational Graph in Time: h<sub>t</sub> = tanh(W &middot; h<sub>t-1</sub> + U &middot; x<sub>t</sub>)</span>
           <span className="text-sky-300 font-bold">Focus: Day {currentStep}</span>
         </div>
 
@@ -175,7 +175,7 @@ export default function RnnMemoryDecayViz() {
                       fontSize="9"
                       fontWeight="bold"
                     >
-                      h_{stepNum - 1}
+                      h<tspan baselineShift="sub" fontSize="7">{stepNum - 1}</tspan>
                     </text>
                   </g>
                 )}
@@ -193,7 +193,7 @@ export default function RnnMemoryDecayViz() {
                 />
                 <circle cx={cx} cy={205} r="14" fill="#0f172a" stroke={isSpike ? '#f59e0b' : '#475569'} strokeWidth="1.5" />
                 <text x={cx} y={209} textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="bold">
-                  x_{stepNum}
+                  x<tspan baselineShift="sub" fontSize="7">{stepNum}</tspan>
                 </text>
                 <text x={cx} y={230} textAnchor="middle" fill={isSpike ? '#fbbf24' : '#94a3b8'} fontSize="8" fontWeight="bold">
                   {dataItem.val}L
@@ -242,7 +242,7 @@ export default function RnnMemoryDecayViz() {
                 />
                 <circle cx={cx} cy={20} r="12" fill="#0f172a" stroke={isCurrent ? '#38bdf8' : '#334155'} strokeWidth="1.5" />
                 <text x={cx} y={24} textAnchor="middle" fill="#38bdf8" fontSize="8" fontWeight="bold">
-                  y_{stepNum}
+                  y<tspan baselineShift="sub" fontSize="7">{stepNum}</tspan>
                 </text>
               </g>
             );
@@ -274,7 +274,7 @@ export default function RnnMemoryDecayViz() {
         {/* Memory Retention Gauge (4 Cols) */}
         <div className="md:col-span-4 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1 text-center">
           <span className="text-[10px] text-slate-400 uppercase font-bold block">
-            Day 4 Signal in $h_{`{${currentStep}}`}$:
+            Day 4 Signal in h<sub className="font-mono">{currentStep}</sub>:
           </span>
           <div className={`text-2xl font-black ${currentInfluence > 50 ? 'text-emerald-400' : currentInfluence > 15 ? 'text-amber-400' : 'text-rose-400'}`}>
             {currentInfluence}%
@@ -293,7 +293,7 @@ export default function RnnMemoryDecayViz() {
       {/* Honest Pedagogical Explanation */}
       <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-xs text-slate-300 font-sans leading-relaxed">
         <strong className="text-sky-300 font-mono block mb-1">The Vanishing Past Phenomenon:</strong>
-        Because $h_t$ is repeatedly squashed through continuous matrix multiplications ($W$), the gradient and influence of Day 4 exponentially decays into noise by Week 3. This critical failure directly motivated the creation of <strong>LSTMs (Hop 2)</strong>!
+        Because h<sub>t</sub> is repeatedly squashed through continuous matrix multiplications (W), the gradient and influence of Day 4 exponentially decays into noise by Week 3. This critical failure directly motivated the creation of <strong>LSTMs (Hop 2)</strong>!
       </div>
 
     </div>

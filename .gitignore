@@ -40,3 +40,8 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+#videos and contents
+*.mp4
+*.mov
+delivery/
