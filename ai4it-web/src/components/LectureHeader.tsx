@@ -60,6 +60,33 @@ export default function LectureHeader() {
       { id: 'section-d', label: 'D. Reconciled' },
       { id: 'section-e', label: 'E. Break Time' },
     ],
+    '/day2/rnn': [
+      { id: 'hop-1-problem', label: '1. Cliffhanger' },
+      { id: 'hop-1-decay', label: '2. 28-Day Decay' },
+    ],
+    '/day2/lstm': [
+      { id: 'hop-2-problem', label: '1. Overwriting' },
+      { id: 'hop-2-gates', label: '2. Cell Highway' },
+    ],
+    '/day2/transformer': [
+      { id: 'hop-3-problem', label: '1. Speed Limit' },
+      { id: 'hop-3-parallel', label: '2. Matrix Payoff' },
+      { id: 'hop-3-attention', label: '3. Hand Attention' },
+    ],
+    '/day2/embeddings': [
+      { id: 'tokenization', label: '1. Subwords' },
+      { id: 'embeddings', label: '2. 2D Vector Map' },
+    ],
+    '/day2/chatgpt-case-study': [
+      { id: 'pipeline', label: '1. 3 Stages' },
+      { id: 'current-problem', label: '2. Hop 4 Problem' },
+    ],
+    '/day2/hands-on': [
+      { id: 'ollama', label: '1. Ollama' },
+      { id: 'huggingface', label: '2. Quant & License' },
+      { id: 'openrouter', label: '3. OpenRouter' },
+      { id: 'synthesis', label: '4. Closing Synthesis' },
+    ],
   };
 
   const currentBeats = pageBeats[pathname] || [];

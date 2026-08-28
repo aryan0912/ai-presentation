@@ -64,13 +64,15 @@ export default function Sidebar() {
       ],
     },
     {
-      title: 'DAY 2 · Memory & Attention',
-      defaultOpen: false,
+      title: 'DAY 2 · Memory, Attention & LLMs',
+      defaultOpen: true,
       items: [
-        { href: '/day2/rnn', label: '1. RNN & Time Memory', minutes: '45m' },
-        { href: '/day2/lstm', label: '2. LSTM Gates', minutes: '45m' },
-        { href: '/day2/embeddings', label: '3. Vector Embeddings', minutes: '45m' },
-        { href: '/day2/transformer', label: '4. Attention & Transformers', minutes: '60m' },
+        { href: '/day2/rnn', label: '1. RNN: Model Memory', minutes: '15m' },
+        { href: '/day2/lstm', label: '2. LSTM: Gated Memory', minutes: '15m' },
+        { href: '/day2/transformer', label: '3. Transformers & Attention', minutes: '45m' },
+        { href: '/day2/embeddings', label: '4. Embeddings & Tokens', minutes: '20m' },
+        { href: '/day2/chatgpt-case-study', label: '5. Case Study: ChatGPT', minutes: '20m' },
+        { href: '/day2/hands-on', label: '6. Hands-On & Synthesis', minutes: '90m' },
       ],
     },
   ];
