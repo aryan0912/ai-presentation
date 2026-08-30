@@ -94,9 +94,14 @@ export default function PocVsProductionPage() {
           </p>
         </div>
 
-        <Link href="/course-map" className="button-primary shrink-0">
-          Return to Course Map <ArrowRight size={16} />
-        </Link>
+        <div className="flex flex-col gap-2 shrink-0">
+          <Link href="/course-map" className="button-secondary text-center">
+            Return to Course Map
+          </Link>
+          <Link href="/day2/nlp-intro" className="button-primary flex items-center justify-center gap-2">
+            Start Day 2 <ArrowRight size={16} />
+          </Link>
+        </div>
       </div>
 
     </div>

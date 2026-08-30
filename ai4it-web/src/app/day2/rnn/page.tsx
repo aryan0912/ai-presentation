@@ -14,7 +14,7 @@ export default function RnnPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2 text-xs font-mono text-sky-400 bg-sky-950/40 border border-sky-800/40 px-3 py-1 rounded-full w-fit mb-3">
-          <span>Day 2 Topic 1 · Hop 1 (NN &rarr; RNN)</span>
+          <span>Day 2 Topic 2 · Hop 1 (NN &rarr; RNN)</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
           1. Recurrent Neural Networks: Giving the Model a Memory
@@ -71,15 +71,15 @@ export default function RnnPage() {
           <RnnMemoryDecayViz />
         </div>
 
-        <DairyAngle title="The 3-Week Festival Problem in Milk Collection">
-          If a major regional festival occurred 3 weeks ago, an RNN's hidden state will have overwritten that surge with recent days' normal data. By the time it predicts today, the memory of that multi-week cycle is almost completely lost.
+        <DairyAngle title="The Long-Document Translation Problem">
+          If the subject of a paragraph is introduced in the first sentence ("tanker"), an RNN's hidden state will have overwritten that subject with recent filler words by the time it reaches the last sentence. When translating the verb at the end, the memory of the original subject is almost completely lost.
         </DairyAngle>
       </ConceptBeat>
 
       {/* Next Hop Link */}
       <div className="pt-6 border-t border-slate-800/80 flex items-center justify-between">
-        <Link href="/day1/neural-network" className="text-slate-400 hover:text-white font-mono text-xs flex items-center gap-1.5">
-          &larr; Back to Day 1 Neural Networks
+        <Link href="/day2/nlp-intro" className="text-slate-400 hover:text-white font-mono text-xs flex items-center gap-1.5">
+          &larr; Back to NLP & MT Intro
         </Link>
         <Link
           href="/day2/lstm"

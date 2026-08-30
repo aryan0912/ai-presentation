@@ -7,7 +7,10 @@ import InstructorNote from '@/components/InstructorNote';
 import AttentionArithmeticPlayer from '@/components/AttentionArithmeticPlayer';
 import TransformerArchitectureViz from '@/components/TransformerArchitectureViz';
 import QkvSpotlightViz from '@/components/QkvSpotlightViz';
-import { DairyAngle, InfraAngle } from '@/components/DomainAngles';
+import PositionalEncodingViz from '@/components/PositionalEncodingViz';
+import ScaledDotProductViz from '@/components/ScaledDotProductViz';
+import MultiHeadViz from '@/components/MultiHeadViz';
+import { InfraAngle } from '@/components/DomainAngles';
 
 export default function TransformerPage() {
   return (
@@ -26,7 +29,7 @@ export default function TransformerPage() {
         </p>
 
         <InstructorNote
-          timing="~45 minutes total (Hop 3 + Attention By Hand §5–§6)"
+          timing="~90 minutes total (Doubled budget for deep paper alignment)"
           aloudQuestion="Remember Saturday's matrix multiplication Wx + b? Why is computing a matrix of 100 neurons in parallel fundamentally faster than running a 100-step loop?"
           expectedWrongAnswers={[
             "Thinking attention requires reading words in order. Emphasize that attention processes the entire sentence at once, which is why positional encoding is needed."
@@ -56,34 +59,59 @@ export default function TransformerPage() {
         </div>
       </ConceptBeat>
 
-      {/* The Transformer Architecture Blueprint */}
+      {/* Beat 2: Positional Encoding */}
       <ConceptBeat
         kind="reveal"
         number="2"
-        title="The Full Transformer Block Blueprint"
-        subtitle="From input embeddings and Multi-Head Attention to Feed-Forward and Softmax output."
-        time="12 min"
+        title="Positional Encoding: Injecting Time into Geometry"
+        subtitle="Because attention reads everything at once, we must stamp each word with a timestamp."
+        time="15 min"
         phase="predict"
       >
-        <TransformerArchitectureViz />
+        <div className="space-y-6">
+          <p className="text-xs md:text-sm text-slate-300 leading-relaxed font-sans">
+            Unlike RNNs, the Transformer does not have a sequential loop. It reads the entire sentence in parallel. To prevent the model from treating sentences as a scrambled bag of words, we inject sine and cosine waves of varying frequencies into the word embeddings.
+          </p>
+          <PositionalEncodingViz />
+        </div>
       </ConceptBeat>
 
-      {/* Q, K, V Spotlight Visualizer */}
+      {/* Beat 3: Scaled Dot-Product Attention & QKV */}
       <ConceptBeat
         kind="reveal"
         number="3"
-        title="Query, Key, Value (Q, K, V): The Three Lenses"
+        title="Scaled Dot-Product Attention (Q, K, V)"
         subtitle="The database search metaphor that routes information between tokens."
-        time="10 min"
+        time="25 min"
         phase="predict"
       >
-        <QkvSpotlightViz />
+        <div className="space-y-6">
+          <QkvSpotlightViz />
+          <ScaledDotProductViz />
+        </div>
       </ConceptBeat>
 
-      {/* §5 & §6 Deep-Dive: Attention By Hand */}
+      {/* Beat 4: Multi-Head Attention */}
       <ConceptBeat
         kind="reveal"
         number="4"
+        title="Multi-Head Attention"
+        subtitle="Splitting the embedding dimension to look for multiple things at once."
+        time="15 min"
+        phase="predict"
+      >
+        <div className="space-y-6">
+          <p className="text-xs md:text-sm text-slate-300 leading-relaxed font-sans">
+            Instead of performing a single attention function, the model projects the queries, keys, and values $h$ times in parallel. This allows one head to focus on grammar, another on entity tracking, and another on sentiment.
+          </p>
+          <MultiHeadViz />
+        </div>
+      </ConceptBeat>
+
+      {/* Beat 5: §5 & §6 Deep-Dive: Attention By Hand */}
+      <ConceptBeat
+        kind="reveal"
+        number="5"
         title="Attention, By Hand (Exact 3-Token Arithmetic)"
         subtitle="Computing live dot products, softmax weights, and vector blending for 'tanker is late'."
         time="15 min"
@@ -101,6 +129,22 @@ export default function TransformerPage() {
           Because every token computes an attention score with every other token in the prompt, doubling context length from 4,000 to 8,000 tokens quadruples the dot-product matrix operations. This is why high-context LLMs demand massive GPU high-bandwidth memory (HBM3).
         </InfraAngle>
       </ConceptBeat>
+
+      {/* Beat 6: The Full Transformer Block Blueprint */}
+      <ConceptBeat
+        kind="reveal"
+        number="6"
+        title="The Full Architecture"
+        subtitle="Bringing it all together: From input embeddings to Softmax output."
+        time="12 min"
+        phase="predict"
+      >
+        <div className="space-y-6">
+          <TransformerArchitectureViz />
+        </div>
+      </ConceptBeat>
+
+
 
       {/* Next Hop Link */}
       <div className="pt-6 border-t border-slate-800/80 flex items-center justify-between">

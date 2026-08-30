@@ -1,257 +1,242 @@
 'use client';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layers, ArrowUp, Cpu, Sparkles, HelpCircle, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Play, RotateCcw } from 'lucide-react';
 
 export default function TransformerArchitectureViz() {
-  const [activeLayer, setActiveLayer] = useState<string>('mha');
+  const [step, setStep] = useState(0);
+  const totalSteps = 5;
 
-  const layerDetails: Record<string, { title: string; subtitle: string; desc: string; math: string; why: string; tensorShape: string }> = {
-    embed: {
-      title: '1. Input Embeddings + Positional Encoding',
-      subtitle: 'Converting Tokens to Coordinates with Temporal Wave Signals',
-      desc: 'Words are converted to dense vectors (e.g. d_model = 4096) via embedding matrix W_E. Because Attention has no inherent order, fixed sinusoidal wave frequencies (or learned rotary embeddings / RoPE) are added so the model can distinguish first from last.',
-      math: 'x_i = Embedding(w_i) + PositionalEncoding(i)',
-      tensorShape: '[Batch Size, Sequence Length (N), d_model]',
-      why: 'Because Self-Attention operates on all words in parallel with no loop, order must be injected directly into the geometric coordinates.',
-    },
-    mha: {
-      title: '2. Multi-Head Self-Attention (The Core Engine)',
-      subtitle: 'Dynamic All-to-All Token Information Routing',
-      desc: 'Every token projects into Query (Q), Key (K), and Value (V) via learned linear layers (W_Q, W_K, W_V). Softmax of the scaled dot products (QK^T / sqrt(d_k)) creates an attention heatmap that dynamically pools values together across 32+ independent attention heads.',
-      math: 'Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) * V',
-      tensorShape: '[Batch Size, Num Heads, Sequence Length, Head Dim]',
-      why: 'Allows words to look at every other word simultaneously in a single parallel matrix multiply. Head 1 tracks grammar; Head 2 tracks entity references.',
-    },
-    norm1: {
-      title: '3. Add & Layer Normalization (Residual Highway)',
-      subtitle: 'Preserving Information Flow & Preventing Gradient Vanishing',
-      desc: 'A residual skip-connection adds the original input x directly to the attention output, followed by Layer Normalization across the feature dimension. This creates a clean gradient highway directly from output to input.',
-      math: 'x_norm = LayerNorm(x + MultiHeadAttention(x))',
-      tensorShape: '[Batch Size, Sequence Length, d_model]',
-      why: 'Allows training 100+ layer deep transformers without gradients exploding or vanishing (same discovery as ResNet).',
-    },
-    ffn: {
-      title: '4. Position-Wise Feed-Forward Network (FFN)',
-      subtitle: 'Deep Non-Linear Knowledge Processing per Token',
-      desc: 'A 2-layer multi-layer perceptron (MLP) applied independently to every token position: expands dimension to 4x d_model with SwiGLU / GeLU activation, then projects back down.',
-      math: 'FFN(x) = GELU(x * W_1 + b_1) * W_2 + b_2',
-      tensorShape: '[Batch Size, Sequence Length, d_model]',
-      why: 'Self-Attention routes and mixes information between tokens; the FFN layer processes and stores factual knowledge within each individual token.',
-    },
-    output: {
-      title: '5. Output Projection & Softmax Generation',
-      subtitle: 'Predicting the Next Token Across the 50,000+ Word Vocabulary',
-      desc: 'The final hidden state vector is projected via matrix W_vocab onto the full vocabulary size (e.g. 50,000 logits). Softmax converts these logits into a true probability distribution predicting the next word.',
-      math: 'P(w[t+1] | w[1:t]) = softmax(W_vocab * h_t)',
-      tensorShape: '[Batch Size, Sequence Length, Vocab Size (50k)]',
-      why: 'This is the exact generation step used in ChatGPT, Claude, and Llama to emit responses one token at a time!',
-    },
+  const nextStep = () => setStep((s) => Math.min(s + 1, totalSteps - 1));
+  const reset = () => setStep(0);
+
+  const stepsInfo = [
+    "Step 0: Inputs & Positional Encoding. Words are embedded into vectors, and sine/cosine waves are added to inject time/position into the geometry.",
+    "Step 1: The Encoder Stack (Nx). Tokens run through Self-Attention (sharing context) and a Feed-Forward network, surrounded by residual Add & Norm connections.",
+    "Step 2: The Decoder Stack (Nx). Starts with Masked Self-Attention, preventing the model from looking at future words during generation.",
+    "Step 3: The Cross-Attention Bridge. The Decoder takes its current state as Queries, and searches the Encoder's final output (Keys/Values) to find relevant source context.",
+    "Step 4: Final Output. A Linear layer expands the vector back to vocabulary size, and Softmax turns those scores into probabilities for the next word!"
+  ];
+
+  const getStepVisuals = (stepIndex: number) => {
+    return {
+      inputsActive: stepIndex === 0 || stepIndex > 0,
+      encoderActive: stepIndex >= 1,
+      decoderActive: stepIndex >= 2,
+      crossAttentionActive: stepIndex >= 3,
+      outputActive: stepIndex >= 4
+    };
   };
 
-  const selected = layerDetails[activeLayer] || layerDetails['mha'];
+  const visuals = getStepVisuals(step);
 
   return (
-    <div className="p-6 md:p-8 rounded-3xl bg-slate-950/95 border border-purple-500/30 space-y-6 select-none font-mono text-xs shadow-2xl relative overflow-hidden">
-      {/* Neon border line */}
-      <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-sky-400 via-purple-500 to-emerald-400 animate-pulse" />
+    <div className="p-6 md:p-8 rounded-3xl bg-slate-950/95 border border-purple-500/30 space-y-6 select-none font-sans text-xs shadow-2xl relative overflow-hidden">
+      {/* Top neon indicator */}
+      <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-sky-500 via-purple-500 to-rose-500 animate-pulse" />
 
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+      {/* Header & Controls */}
+      <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
-            <span className="text-[11px] font-bold text-purple-400 uppercase tracking-wider">
-              Architecture Blueprint · &ldquo;Attention Is All You Need&rdquo; (Vaswani et al.)
-            </span>
+          <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <span className="text-purple-400 font-mono">Transformer</span> Architecture (Figure 1)
+          </h3>
+          <div className="text-slate-400 font-sans text-sm mt-1">
+            The complete Encoder-Decoder blueprint.
           </div>
-          <h4 className="text-lg font-bold text-white mt-1">
-            The Complete Transformer Decoder Block Architecture
-          </h4>
         </div>
-
-        <span className="text-[11px] text-purple-300 bg-purple-950/60 border border-purple-800/50 px-3 py-1 rounded-full font-sans">
-          Click any block to inspect tensor shapes &amp; mathematical equations
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <button onClick={reset} disabled={step === 0} className="p-2 text-slate-400 hover:text-white disabled:opacity-30">
+            <RotateCcw size={18} />
+          </button>
+          <button onClick={nextStep} disabled={step === totalSteps - 1} className="flex items-center gap-2 px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-lg disabled:opacity-30 disabled:hover:bg-purple-600 transition-colors">
+            {step === totalSteps - 1 ? 'Finished' : 'Next Step'}
+            <Play size={16} className="fill-current" />
+          </button>
+        </div>
       </div>
 
-      {/* Polish 3: High-Fidelity SVG Interactive Transformer Diagram + Deep Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        
-        {/* Left: Professional Vector SVG Transformer Stack (5 Cols) */}
-        <div className="lg:col-span-5 p-4 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/95 border border-slate-800 flex flex-col items-center justify-center relative shadow-inner">
-          <svg viewBox="0 0 340 440" className="w-full max-w-[320px] h-[400px]">
-            <defs>
-              <linearGradient id="mhaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#7e22ce" />
-                <stop offset="100%" stopColor="#a855f7" />
-              </linearGradient>
-              <linearGradient id="ffnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#047857" />
-                <stop offset="100%" stopColor="#10b981" />
-              </linearGradient>
-              <linearGradient id="outGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#be123c" />
-                <stop offset="100%" stopColor="#f43f5e" />
-              </linearGradient>
-              <linearGradient id="embGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0369a1" />
-                <stop offset="100%" stopColor="#38bdf8" />
-              </linearGradient>
-              <filter id="stackGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#c084fc" floodOpacity="0.6" />
-              </filter>
-            </defs>
+      <div className="text-slate-300 text-sm h-24 md:h-16 leading-relaxed bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono flex flex-col justify-center">
+        {stepsInfo[step]}
+      </div>
 
-            {/* Background Transformer Core Border */}
-            <rect x="35" y="65" width="270" height="280" rx="16" fill="#090d16" stroke="#334155" strokeWidth="1.5" strokeDasharray="4 4" />
-            <text x="50" y="85" fill="#64748b" fontSize="9" fontWeight="bold">N &times; TRANSFORMER BLOCKS</text>
+      {/* High-Fidelity Figure 1 Replica */}
+      <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col items-center justify-center relative shadow-inner overflow-hidden">
+        <svg viewBox="0 -160 600 800" className="w-full max-w-[500px] h-auto">
+          <defs>
+            <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#38bdf8" floodOpacity="0.8" />
+            </filter>
+            <filter id="glowPurple" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#c084fc" floodOpacity="0.8" />
+            </filter>
+            <filter id="glowOrange" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#f97316" floodOpacity="0.8" />
+            </filter>
+            <marker id="arrowB" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+            </marker>
+            <marker id="arrowP" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 8 5 L 0 9 z" fill="#c084fc" />
+            </marker>
+          </defs>
 
-            {/* BLOCK 5: OUTPUT PROBABILITIES */}
-            <g className="cursor-pointer" onClick={() => setActiveLayer('output')}>
-              <rect
-                x="60"
-                y="15"
-                width="220"
-                height="38"
-                rx="10"
-                fill={activeLayer === 'output' ? 'url(#outGrad)' : '#1e293b'}
-                stroke="#f43f5e"
-                strokeWidth={activeLayer === 'output' ? '2.5' : '1'}
-                filter={activeLayer === 'output' ? 'url(#stackGlow)' : 'none'}
-              />
-              <text x="170" y="32" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">5. Output Softmax &amp; Logits</text>
-              <text x="170" y="44" textAnchor="middle" fill={activeLayer === 'output' ? '#ffe4e6' : '#94a3b8'} fontSize="8">Next-Token Prediction</text>
-            </g>
+          {/* BACKGROUND BLOCKS (Nx) */}
+          <rect x="100" y="200" width="160" height="280" rx="10" fill="#0f172a" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" strokeDasharray="4 4" className="transition-all duration-500" />
+          <text x="180" y="220" textAnchor="middle" fill={visuals.encoderActive ? "#38bdf8" : "#475569"} fontSize="14" fontWeight="bold">Nx</text>
+          
+          <rect x="340" y="100" width="160" height="380" rx="10" fill="#0f172a" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" strokeDasharray="4 4" className="transition-all duration-500" />
+          <text x="420" y="120" textAnchor="middle" fill={visuals.decoderActive ? "#c084fc" : "#475569"} fontSize="14" fontWeight="bold">Nx</text>
 
-            {/* Connecting Arrow from FFN to Output */}
-            <line x1="170" y1="95" x2="170" y2="53" stroke="#64748b" strokeWidth="2" />
-            <polygon points="166,56 170,50 174,56" fill="#64748b" />
+          {/* =========================================================
+              ENCODER SIDE (Left)
+              ========================================================= */}
+          
+          {/* Inputs */}
+          <rect x="130" y="580" width="100" height="30" rx="4" fill="#1e293b" stroke={visuals.inputsActive ? "#f59e0b" : "#334155"} strokeWidth="2" />
+          <text x="180" y="600" textAnchor="middle" fill={visuals.inputsActive ? "#f59e0b" : "#475569"} fontSize="12" fontWeight="bold">Inputs</text>
+          <line x1="180" y1="580" x2="180" y2="550" stroke={visuals.inputsActive ? "#f59e0b" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* BLOCK 4: FEED FORWARD NETWORK */}
-            <g className="cursor-pointer" onClick={() => setActiveLayer('ffn')}>
-              <rect
-                x="60"
-                y="95"
-                width="220"
-                height="46"
-                rx="12"
-                fill={activeLayer === 'ffn' ? 'url(#ffnGrad)' : '#1e293b'}
-                stroke="#10b981"
-                strokeWidth={activeLayer === 'ffn' ? '2.5' : '1'}
-                filter={activeLayer === 'ffn' ? 'url(#stackGlow)' : 'none'}
-              />
-              <text x="170" y="117" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">4. Feed-Forward Network</text>
-              <text x="170" y="130" textAnchor="middle" fill={activeLayer === 'ffn' ? '#d1fae5' : '#94a3b8'} fontSize="8">Position-Wise MLP (GELU/SwiGLU)</text>
-            </g>
+          {/* Input Embedding */}
+          <rect x="110" y="520" width="140" height="30" rx="4" fill="#0c4a6e" stroke={visuals.inputsActive ? "#38bdf8" : "#334155"} strokeWidth="2" filter={visuals.inputsActive ? "url(#glowBlue)" : "none"} />
+          <text x="180" y="540" textAnchor="middle" fill="#e0f2fe" fontSize="12" fontWeight="bold">Input Embedding</text>
+          
+          <line x1="180" y1="520" x2="180" y2="460" stroke={visuals.inputsActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
+          
+          {/* Positional Encoding (Circle +) */}
+          <circle cx="180" cy="490" r="12" fill="#0f172a" stroke={visuals.inputsActive ? "#38bdf8" : "#334155"} strokeWidth="2" />
+          <text x="180" y="495" textAnchor="middle" fill={visuals.inputsActive ? "#38bdf8" : "#475569"} fontSize="16" fontWeight="bold">+</text>
+          
+          <circle cx="130" cy="490" r="16" fill="none" stroke={visuals.inputsActive ? "#38bdf8" : "#334155"} strokeWidth="1.5" />
+          <path d="M 118 490 Q 124 480 130 490 T 142 490" fill="none" stroke={visuals.inputsActive ? "#38bdf8" : "#334155"} strokeWidth="1.5" />
+          <line x1="146" y1="490" x2="168" y2="490" stroke={visuals.inputsActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* Residual Skip Line around FFN */}
-            <path d="M 50,185 L 30,185 L 30,85 L 170,85 L 170,95" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 3" />
-            <circle cx="170" cy="85" r="7" fill="#0f172a" stroke="#f59e0b" strokeWidth="1.5" />
-            <text x="170" y="88" textAnchor="middle" fill="#f59e0b" fontSize="8" fontWeight="bold">+</text>
+          {/* Multi-Head Attention (Encoder) */}
+          <rect x="120" y="390" width="120" height="40" rx="4" fill="#7c2d12" stroke={visuals.encoderActive ? "#f97316" : "#334155"} strokeWidth="2" filter={visuals.encoderActive ? "url(#glowOrange)" : "none"} />
+          <text x="180" y="408" textAnchor="middle" fill="#ffedd5" fontSize="11" fontWeight="bold">Multi-Head</text>
+          <text x="180" y="422" textAnchor="middle" fill="#ffedd5" fontSize="11" fontWeight="bold">Attention</text>
+          
+          <line x1="180" y1="390" x2="180" y2="350" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
+          
+          {/* Add & Norm */}
+          <rect x="120" y="320" width="120" height="30" rx="4" fill="#0f172a" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" />
+          <text x="180" y="340" textAnchor="middle" fill={visuals.encoderActive ? "#e0f2fe" : "#475569"} fontSize="12" fontWeight="bold">Add & Norm</text>
+          
+          <line x1="180" y1="320" x2="180" y2="280" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* BLOCK 3: ADD & LAYERNORM */}
-            <g className="cursor-pointer" onClick={() => setActiveLayer('norm1')}>
-              <rect
-                x="80"
-                y="155"
-                width="180"
-                height="30"
-                rx="8"
-                fill={activeLayer === 'norm1' ? '#78350f' : '#1e293b'}
-                stroke="#f59e0b"
-                strokeWidth={activeLayer === 'norm1' ? '2.5' : '1'}
-                filter={activeLayer === 'norm1' ? 'url(#stackGlow)' : 'none'}
-              />
-              <text x="170" y="174" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="bold">3. Add &amp; LayerNorm</text>
-            </g>
+          {/* Residual Connection 1 */}
+          <path d="M 180 445 L 105 445 L 105 335 L 120 335" fill="none" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* Connecting line MHA -> Add/Norm */}
-            <line x1="170" y1="205" x2="170" y2="185" stroke="#64748b" strokeWidth="2" />
+          {/* Feed Forward */}
+          <rect x="120" y="240" width="120" height="40" rx="4" fill="#064e3b" stroke={visuals.encoderActive ? "#34d399" : "#334155"} strokeWidth="2" />
+          <text x="180" y="258" textAnchor="middle" fill="#d1fae5" fontSize="11" fontWeight="bold">Feed</text>
+          <text x="180" y="272" textAnchor="middle" fill="#d1fae5" fontSize="11" fontWeight="bold">Forward</text>
 
-            {/* BLOCK 2: MULTI-HEAD ATTENTION */}
-            <g className="cursor-pointer" onClick={() => setActiveLayer('mha')}>
-              <rect
-                x="50"
-                y="205"
-                width="240"
-                height="60"
-                rx="14"
-                fill={activeLayer === 'mha' ? 'url(#mhaGrad)' : '#1e293b'}
-                stroke="#c084fc"
-                strokeWidth={activeLayer === 'mha' ? '3' : '1.5'}
-                filter={activeLayer === 'mha' ? 'url(#stackGlow)' : 'none'}
-              />
-              <text x="170" y="232" textAnchor="middle" fill="#ffffff" fontSize="13" fontWeight="bold">2. Multi-Head Attention</text>
-              <text x="170" y="248" textAnchor="middle" fill={activeLayer === 'mha' ? '#f3e8ff' : '#cbd5e1'} fontSize="9">
-                Query (Q) &bull; Key (K) &bull; Value (V)
-              </text>
-            </g>
+          <line x1="180" y1="240" x2="180" y2="180" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* Residual Skip Line around Attention */}
-            <path d="M 50,310 L 20,310 L 20,195 L 170,195 L 170,205" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 3" />
-            <circle cx="170" cy="195" r="7" fill="#0f172a" stroke="#f59e0b" strokeWidth="1.5" />
-            <text x="170" y="198" textAnchor="middle" fill="#f59e0b" fontSize="8" fontWeight="bold">+</text>
+          {/* Add & Norm 2 */}
+          <rect x="120" y="150" width="120" height="30" rx="4" fill="#0f172a" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" />
+          <text x="180" y="170" textAnchor="middle" fill={visuals.encoderActive ? "#e0f2fe" : "#475569"} fontSize="12" fontWeight="bold">Add & Norm</text>
 
-            {/* Connecting line Embed -> MHA */}
-            <line x1="170" y1="365" x2="170" y2="265" stroke="#64748b" strokeWidth="2" />
+          <line x1="180" y1="150" x2="180" y2="110" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* BLOCK 1: INPUT EMBEDDINGS + POSITIONAL ENCODING */}
-            <g className="cursor-pointer" onClick={() => setActiveLayer('embed')}>
-              <rect
-                x="60"
-                y="365"
-                width="220"
-                height="46"
-                rx="12"
-                fill={activeLayer === 'embed' ? 'url(#embGrad)' : '#1e293b'}
-                stroke="#38bdf8"
-                strokeWidth={activeLayer === 'embed' ? '2.5' : '1'}
-                filter={activeLayer === 'embed' ? 'url(#stackGlow)' : 'none'}
-              />
-              <text x="170" y="387" textAnchor="middle" fill="#ffffff" fontSize="11" fontWeight="bold">1. Input Embeddings</text>
-              <text x="170" y="400" textAnchor="middle" fill={activeLayer === 'embed' ? '#e0f2fe' : '#94a3b8'} fontSize="8">+ Positional Encodings (Sine / RoPE)</text>
-            </g>
+          {/* Residual Connection 2 */}
+          <path d="M 180 300 L 105 300 L 105 165 L 120 165" fill="none" stroke={visuals.encoderActive ? "#38bdf8" : "#334155"} strokeWidth="2" markerEnd="url(#arrowB)" />
 
-            {/* Input Words text below */}
-            <text x="170" y="430" textAnchor="middle" fill="#94a3b8" fontSize="10" fontStyle="italic">
-              &ldquo;tanker is late&rdquo; (Input Tokens)
-            </text>
-          </svg>
-        </div>
+          {/* =========================================================
+              DECODER SIDE (Right)
+              ========================================================= */}
+          
+          {/* Outputs (Shifted Right) */}
+          <rect x="370" y="580" width="100" height="30" rx="4" fill="#1e293b" stroke={visuals.decoderActive ? "#f59e0b" : "#334155"} strokeWidth="2" />
+          <text x="420" y="600" textAnchor="middle" fill={visuals.decoderActive ? "#f59e0b" : "#475569"} fontSize="12" fontWeight="bold">Outputs (Shifted Right)</text>
+          <line x1="420" y1="580" x2="420" y2="550" stroke={visuals.decoderActive ? "#f59e0b" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
 
-        {/* Right: Rich Layer Inspector Card (7 Cols) */}
-        <div className="lg:col-span-7 p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4 shadow-xl">
-          <div className="border-b border-slate-800 pb-3">
-            <span className="text-xs font-bold text-purple-400 uppercase tracking-wide">
-              Layer Deep-Dive Inspector
-            </span>
-            <h3 className="text-xl font-bold text-white mt-1">{selected.title}</h3>
-            <p className="text-xs text-slate-300 font-sans mt-0.5">{selected.subtitle}</p>
-          </div>
+          {/* Output Embedding */}
+          <rect x="350" y="520" width="140" height="30" rx="4" fill="#4c1d95" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" filter={visuals.decoderActive ? "url(#glowPurple)" : "none"} />
+          <text x="420" y="540" textAnchor="middle" fill="#f3e8ff" fontSize="12" fontWeight="bold">Output Embedding</text>
 
-          <div className="p-3.5 bg-slate-950 rounded-xl border border-slate-800 text-xs font-sans text-slate-300 leading-relaxed">
-            {selected.desc}
-          </div>
+          <line x1="420" y1="520" x2="420" y2="460" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="p-3 bg-slate-950 rounded-xl border border-purple-500/30 font-mono text-xs text-purple-300 space-y-1">
-              <span className="text-[10px] text-slate-500 uppercase block font-bold">Mathematical Operation:</span>
-              <code className="text-xs block font-bold text-white leading-relaxed">{selected.math}</code>
-            </div>
+          {/* Positional Encoding (Circle +) */}
+          <circle cx="420" cy="490" r="12" fill="#0f172a" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" />
+          <text x="420" y="495" textAnchor="middle" fill={visuals.decoderActive ? "#c084fc" : "#475569"} fontSize="16" fontWeight="bold">+</text>
 
-            <div className="p-3 bg-slate-950 rounded-xl border border-sky-500/30 font-mono text-xs text-sky-300 space-y-1">
-              <span className="text-[10px] text-slate-500 uppercase block font-bold">Tensor Dimension:</span>
-              <code className="text-xs block font-bold text-white leading-relaxed">{selected.tensorShape}</code>
-            </div>
-          </div>
+          <circle cx="470" cy="490" r="16" fill="none" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="1.5" />
+          <path d="M 458 490 Q 464 480 470 490 T 482 490" fill="none" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="1.5" />
+          <line x1="454" y1="490" x2="432" y2="490" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
 
-          <div className="p-3.5 bg-purple-950/30 rounded-xl border border-purple-800/40 text-xs font-sans text-purple-200 leading-relaxed">
-            <strong className="text-purple-300 font-mono block mb-1">Why This Layer Is Essential:</strong>
-            {selected.why}
-          </div>
-        </div>
+          {/* Masked Multi-Head Attention */}
+          <rect x="360" y="390" width="120" height="40" rx="4" fill="#831843" stroke={visuals.decoderActive ? "#f43f5e" : "#334155"} strokeWidth="2" filter={visuals.decoderActive ? "url(#glowOrange)" : "none"} />
+          <text x="420" y="408" textAnchor="middle" fill="#ffe4e6" fontSize="11" fontWeight="bold">Masked Multi-Head</text>
+          <text x="420" y="422" textAnchor="middle" fill="#ffe4e6" fontSize="11" fontWeight="bold">Attention</text>
 
+          <line x1="420" y1="390" x2="420" y2="350" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          {/* Add & Norm */}
+          <rect x="360" y="320" width="120" height="30" rx="4" fill="#0f172a" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" />
+          <text x="420" y="340" textAnchor="middle" fill={visuals.decoderActive ? "#f3e8ff" : "#475569"} fontSize="12" fontWeight="bold">Add & Norm</text>
+
+          {/* Residual Connection 1 Decoder */}
+          <path d="M 420 445 L 345 445 L 345 335 L 360 335" fill="none" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          {/* Cross Attention Bridge */}
+          <line x1="420" y1="320" x2="420" y2="280" stroke={visuals.decoderActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+          
+          <rect x="360" y="240" width="120" height="40" rx="4" fill="#7c2d12" stroke={visuals.crossAttentionActive ? "#f97316" : "#334155"} strokeWidth="2" filter={visuals.crossAttentionActive ? "url(#glowOrange)" : "none"} />
+          <text x="420" y="258" textAnchor="middle" fill="#ffedd5" fontSize="11" fontWeight="bold">Multi-Head</text>
+          <text x="420" y="272" textAnchor="middle" fill="#ffedd5" fontSize="11" fontWeight="bold">Attention</text>
+
+          {/* CROSS ATTENTION BRIDGE LINES FROM ENCODER */}
+          <path d="M 180 110 L 180 80 L 380 80 L 380 240" fill="none" stroke={visuals.crossAttentionActive ? "#38bdf8" : "#334155"} strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowB)" />
+          <path d="M 180 110 L 180 80 L 400 80 L 400 240" fill="none" stroke={visuals.crossAttentionActive ? "#38bdf8" : "#334155"} strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowB)" />
+          <text x="290" y="70" textAnchor="middle" fill={visuals.crossAttentionActive ? "#38bdf8" : "#475569"} fontSize="12" fontWeight="bold">Keys & Values</text>
+
+          {/* Add & Norm 2 Decoder */}
+          <line x1="420" y1="240" x2="420" y2="200" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          <rect x="360" y="170" width="120" height="30" rx="4" fill="#0f172a" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" />
+          <text x="420" y="190" textAnchor="middle" fill={visuals.crossAttentionActive ? "#f3e8ff" : "#475569"} fontSize="12" fontWeight="bold">Add & Norm</text>
+
+          {/* Residual Connection 2 Decoder */}
+          <path d="M 420 300 L 345 300 L 345 185 L 360 185" fill="none" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          {/* Feed Forward Decoder */}
+          <line x1="420" y1="170" x2="420" y2="150" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          <rect x="360" y="110" width="120" height="40" rx="4" fill="#064e3b" stroke={visuals.crossAttentionActive ? "#34d399" : "#334155"} strokeWidth="2" />
+          <text x="420" y="128" textAnchor="middle" fill="#d1fae5" fontSize="11" fontWeight="bold">Feed</text>
+          <text x="420" y="142" textAnchor="middle" fill="#d1fae5" fontSize="11" fontWeight="bold">Forward</text>
+
+          {/* Add & Norm 3 Decoder */}
+          <line x1="420" y1="110" x2="420" y2="90" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          <rect x="360" y="60" width="120" height="30" rx="4" fill="#0f172a" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" />
+          <text x="420" y="80" textAnchor="middle" fill={visuals.crossAttentionActive ? "#f3e8ff" : "#475569"} fontSize="12" fontWeight="bold">Add & Norm</text>
+
+          {/* Residual Connection 3 Decoder */}
+          <path d="M 420 160 L 345 160 L 345 75 L 360 75" fill="none" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          {/* =========================================================
+              OUTPUT (Top Right)
+              ========================================================= */}
+          
+          <line x1="420" y1="60" x2="420" y2="30" stroke={visuals.crossAttentionActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          <rect x="360" y="-10" width="120" height="40" rx="4" fill="#1e293b" stroke={visuals.outputActive ? "#f59e0b" : "#334155"} strokeWidth="2" filter={visuals.outputActive ? "url(#glowOrange)" : "none"} />
+          <text x="420" y="15" textAnchor="middle" fill={visuals.outputActive ? "#fde68a" : "#475569"} fontSize="14" fontWeight="bold">Linear</text>
+
+          <line x1="420" y1="-10" x2="420" y2="-40" stroke={visuals.outputActive ? "#f59e0b" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          <rect x="360" y="-80" width="120" height="40" rx="20" fill="#4c1d95" stroke={visuals.outputActive ? "#c084fc" : "#334155"} strokeWidth="2" filter={visuals.outputActive ? "url(#glowPurple)" : "none"} />
+          <text x="420" y="-55" textAnchor="middle" fill={visuals.outputActive ? "#f3e8ff" : "#475569"} fontSize="14" fontWeight="bold">Softmax</text>
+
+          <line x1="420" y1="-80" x2="420" y2="-110" stroke={visuals.outputActive ? "#c084fc" : "#334155"} strokeWidth="2" markerEnd="url(#arrowP)" />
+
+          <rect x="360" y="-140" width="120" height="30" rx="4" fill="#1e293b" stroke={visuals.outputActive ? "#34d399" : "#334155"} strokeWidth="2" filter={visuals.outputActive ? "url(#glowBlue)" : "none"} />
+          <text x="420" y="-120" textAnchor="middle" fill={visuals.outputActive ? "#a7f3d0" : "#475569"} fontSize="12" fontWeight="bold">Output Probabilities</text>
+
+        </svg>
       </div>
 
     </div>

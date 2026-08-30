@@ -144,53 +144,21 @@ export const FALLBACK_DATASETS: Record<string, any> = {
 
 // Check backend reachability
 export async function checkBackendStatus(): Promise<{ online: boolean; message: string }> {
-  try {
-    const res = await fetch(`${API_BASE}/api/health`, { method: 'GET', signal: AbortSignal.timeout(1500) });
-    if (res.ok) {
-      const data = await res.json();
-      return { online: true, message: data.message || 'API Online' };
-    }
-    return { online: false, message: 'Server returned error status' };
-  } catch (err) {
-    return { online: false, message: 'Running in standalone local fallback mode' };
-  }
+  return { online: true, message: 'Local Math Engine Active (Client-Side Only)' };
 }
 
-// Fetch dataset with local fallback
+// Fetch dataset (client-side only)
 export async function fetchDataset(name: string): Promise<{ data: any; isFallback: boolean }> {
-  try {
-    const res = await fetch(`${API_BASE}/api/datasets/${name}`, { signal: AbortSignal.timeout(2000) });
-    if (res.ok) {
-      const data = await res.json();
-      return { data, isFallback: false };
-    }
-  } catch (err) {
-    // silently fallback
-  }
   return { data: FALLBACK_DATASETS[name] || [], isFallback: true };
 }
 
-// Step linear regression
+// Step linear regression (local math engine)
 export async function stepLinearRegressionApi(
   m: number,
   c: number,
   learningRate: number,
   data: DataPoint[]
 ): Promise<{ result: StepResult; isFallback: boolean }> {
-  try {
-    const res = await fetch(`${API_BASE}/api/linear-regression/step`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ m, c, learning_rate: learningRate, data }),
-      signal: AbortSignal.timeout(2000),
-    });
-    if (res.ok) {
-      const result = await res.json();
-      return { result, isFallback: false };
-    }
-  } catch (err) {
-    // fallback to local calculation
-  }
 
   // Local JS math calculation
   const n = data.length || 1;
@@ -224,22 +192,8 @@ export async function stepLinearRegressionApi(
   };
 }
 
-// Fit closed form (OLS)
+// Fit closed form (OLS - local math engine)
 export async function fitLinearRegressionApi(data: DataPoint[]): Promise<{ result: FitResult; isFallback: boolean }> {
-  try {
-    const res = await fetch(`${API_BASE}/api/linear-regression/fit`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-      signal: AbortSignal.timeout(2000),
-    });
-    if (res.ok) {
-      const result = await res.json();
-      return { result, isFallback: false };
-    }
-  } catch (err) {
-    // fallback
-  }
 
   // Local OLS Calculation
   const n = data.length;
@@ -281,7 +235,7 @@ export async function fitLinearRegressionApi(data: DataPoint[]): Promise<{ resul
   };
 }
 
-// Compute Loss Surface
+// Compute Loss Surface (local math engine)
 export async function computeLossSurfaceApi(
   data: DataPoint[],
   mMin: number = -50,
@@ -290,27 +244,6 @@ export async function computeLossSurfaceApi(
   cMax: number = 2600,
   resolution: number = 30
 ): Promise<{ result: LossSurfaceResult; isFallback: boolean }> {
-  try {
-    const res = await fetch(`${API_BASE}/api/linear-regression/loss-surface`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        data,
-        m_min: mMin,
-        m_max: mMax,
-        c_min: cMin,
-        c_max: cMax,
-        resolution,
-      }),
-      signal: AbortSignal.timeout(3000),
-    });
-    if (res.ok) {
-      const result = await res.json();
-      return { result, isFallback: false };
-    }
-  } catch (err) {
-    // fallback
-  }
 
   // Local JS Surface computation
   const mVals: number[] = [];
@@ -359,27 +292,13 @@ export async function computeLossSurfaceApi(
   };
 }
 
-// Compute Decision Boundary for Neural Network
+// Compute Decision Boundary for Neural Network (local math engine)
 export async function computeBoundaryApi(
   datasetType: string = 'rings',
   layers: number = 1,
   neurons: number = 2,
   activation: string = 'relu'
 ): Promise<{ result: BoundaryResult; isFallback: boolean }> {
-  try {
-    const res = await fetch(`${API_BASE}/api/neural-network/boundary`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ dataset_type: datasetType, layers, neurons, activation }),
-      signal: AbortSignal.timeout(3000),
-    });
-    if (res.ok) {
-      const result = await res.json();
-      return { result, isFallback: false };
-    }
-  } catch (err) {
-    // fallback
-  }
 
   // Local fallback simulation
   const resolution = 20;

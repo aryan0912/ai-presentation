@@ -1,262 +1,306 @@
 'use client';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ShieldCheck, ArrowRight, Ban, Zap, Clock, Info, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, RotateCcw, Clock, FastForward, Pause } from 'lucide-react';
 
 export default function LstmGateFlowViz() {
-  const [activeGate, setActiveGate] = useState<'forget' | 'input' | 'output'>('forget');
+  const [step, setStep] = useState(0);
+  const totalSteps = 6;
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playTick, setPlayTick] = useState(0);
 
-  const gateData = {
-    forget: {
-      name: '1. Forget Gate (f_t)',
-      tag: 'Sigmoid Filter (\\sigma)',
-      color: '#f43f5e',
-      border: 'border-rose-500',
-      bg: 'bg-rose-950/40',
-      formula: 'f_t = sigmoid(W_f * [h[t-1], x_t] + b_f)',
-      purpose: 'Multiplies old cell state by a decimal between 0 (discard completely) and 1 (retain completely).',
-      analogy: 'Silences transient baseline CPU fluctuations so they do not trigger alert alarms.',
-    },
-    input: {
-      name: '2. Input & Candidate Gate (i_t, \\tilde{C}_t)',
-      tag: 'Sigmoid (\\sigma) + Tanh',
-      color: '#38bdf8',
-      border: 'border-sky-500',
-      bg: 'bg-sky-950/40',
-      formula: 'i_t = sigmoid(W_i * [h[t-1], x_t] + b_i)  and  C~_t = tanh(W_c * [h[t-1], x_t] + b_c)',
-      purpose: 'Decides what critical new information to write into the long-term cell state highway.',
-      analogy: 'Writes a confirmed critical chilling compressor breakdown into the incident log.',
-    },
-    output: {
-      name: '3. Output Gate (o_t)',
-      tag: 'Sigmoid Filter (\\sigma)',
-      color: '#34d399',
-      border: 'border-emerald-500',
-      bg: 'bg-emerald-950/40',
-      formula: 'o_t = sigmoid(W_o * [h[t-1], x_t] + b_o)  =>  h_t = o_t * tanh(C_t)',
-      purpose: 'Filters the permanent cell state to decide what immediate hidden vector h_t to emit.',
-      analogy: 'Dispatches an immediate alert page to on-call engineers while storing the root cause.',
-    },
+  const nextStep = () => {
+    setIsPlaying(false);
+    setStep((s) => Math.min(s + 1, totalSteps - 1));
+  };
+  const reset = () => {
+    setIsPlaying(false);
+    setPlayTick(0);
+    setStep(0);
   };
 
-  const current = gateData[activeGate];
+  const engTokens = [
+    'The', 'heavy', 'milk', 'tanker', 'is', 'unfortunately', 
+    'running', 'extremely', 'late', 'today', 'due', 'to', 'storm', 'traffic', '<EOS>'
+  ];
+  
+  const hinTokens = [
+    '<SOS>', 'भारी', 'दूध', 'का', 'टैंकर', 'आज', 'तूफान', 'के', 'ट्रैफिक', 'के', 'कारण', 'बहुत', 'देर', 'से', 'चल', 'रहा', 'है'
+  ];
+
+  const MAX_TICK = engTokens.length + hinTokens.length + 2;
+
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setPlayTick((prev) => {
+          if (prev >= MAX_TICK) {
+            setIsPlaying(false);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 500);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, MAX_TICK]);
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+    } else {
+      if (playTick >= MAX_TICK) setPlayTick(0);
+      setIsPlaying(true);
+    }
+  };
+
+  const stepsInfo = [
+    "Step 0: 1. Forget Gate (f_t). The sigmoid filter looks at the new word and old hidden state, and outputs a decimal (0 to 1) to multiply against the old cell state. It 'forgets' irrelevant filler words.",
+    "Step 1: 2. Input Gate & Candidate (i_t, C~_t). The input gate decides what new info to keep. The Tanh layer creates a vector of new candidate values from the current word.",
+    "Step 2: 3. Cell State Update (C_t). We multiply the old state by the Forget Gate, and add the Input * Candidate. This is the protected 'highway' that prevents memory decay!",
+    "Step 3: 4. Output Gate (o_t). A final sigmoid filter determines what part of the permanent cell state we need to focus on right now.",
+    "Step 4: 5. Hidden State (h_t). We squash the cell state with Tanh and multiply by the Output Gate to emit the final short-term hidden state for this time step.",
+    "Step 5: Machine Translation Success! Because the Highway protected the memory of 'tanker' across the entire sentence, the Context Vector is accurate. The Decoder correctly outputs 'टैंकर' (Tanker)!"
+  ];
+
+  const getDerivedState = () => {
+    if (isPlaying || playTick > 0) {
+      // Temporal animation active
+      if (playTick < engTokens.length) {
+        // Encoding
+        return { phase: 'encoder', highlightIdx: playTick, highwayActive: playTick >= 3, contextReady: false, playStatus: `Encoding: Token ${playTick+1}/${engTokens.length}` };
+      } else if (playTick >= engTokens.length && playTick < engTokens.length + 2) {
+        // Bottleneck pause
+        return { phase: 'bottleneck', highlightIdx: -1, highwayActive: true, contextReady: true, playStatus: `Context Vector Generated (Bottleneck)` };
+      } else {
+        // Decoding
+        const decTick = playTick - engTokens.length - 2;
+        return { phase: 'decoder', highlightIdx: decTick, highwayActive: true, contextReady: true, playStatus: `Decoding: Token ${decTick+1}/${hinTokens.length}` };
+      }
+    } else {
+      // Explanatory step active
+      const getStepVisuals = (stepIndex: number) => {
+        return {
+          forgetActive: stepIndex === 0 || stepIndex === 2,
+          inputActive: stepIndex === 1 || stepIndex === 2,
+          highwayActive: stepIndex === 2 || stepIndex === 5,
+          outputActive: stepIndex === 3 || stepIndex === 4,
+          hiddenActive: stepIndex === 4 || stepIndex === 5
+        };
+      };
+      return { phase: 'intro', highlightIdx: -1, contextReady: false, playStatus: '', ...getStepVisuals(step) };
+    }
+  };
+
+  const { phase, highlightIdx, highwayActive, contextReady, playStatus, forgetActive, inputActive, outputActive, hiddenActive } = getDerivedState() as any;
+
+  // Visual state overrides when playing
+  const isHighwayActive = isPlaying || playTick > 0 ? highwayActive : highwayActive;
+  const isHiddenActive = isPlaying || playTick > 0 ? (phase === 'encoder' || phase === 'decoder') : hiddenActive;
+  const isInputActive = isPlaying || playTick > 0 ? (phase === 'encoder') : inputActive;
+  const isOutputActive = isPlaying || playTick > 0 ? true : outputActive;
+  const isForgetActive = isPlaying || playTick > 0 ? true : forgetActive;
 
   return (
     <div className="p-6 md:p-8 rounded-3xl bg-slate-950/95 border border-purple-500/30 space-y-6 select-none font-mono text-xs shadow-2xl relative overflow-hidden">
       {/* Top neon indicator */}
       <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-purple-500 via-rose-500 to-sky-400 animate-pulse" />
 
-      {/* Header & Gate Buttons */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+      {/* Header & Controls */}
+      <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-ping" />
-            <span className="text-[11px] font-bold text-purple-400 uppercase tracking-wider">
-              Hop 2 · Gated Recurrent Architecture
-            </span>
-          </div>
-          <h4 className="text-lg font-bold text-white mt-1">
+          <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <span className="text-purple-400 font-mono">LSTM</span> Gate Flow
+          </h3>
+          <div className="text-slate-400 font-sans text-sm mt-1">
             LSTM Cell Highway: The Protected Long-Term Conveyor Belt
-          </h4>
+          </div>
         </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Temporal Player Controls */}
+          <button 
+            onClick={togglePlay}
+            className={`flex items-center gap-2 px-4 py-1.5 font-bold rounded-lg transition-colors ${isPlaying ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-[0_0_15px_rgba(217,119,6,0.5)]' : 'bg-slate-800 hover:bg-slate-700 text-purple-400 border border-slate-700'}`}
+          >
+            {isPlaying ? <Pause size={16} className="fill-current" /> : <FastForward size={16} className="fill-current" />}
+            {isPlaying ? 'Pause Sequence' : 'Play Full Sequence'}
+          </button>
+          
+          <div className="w-px h-6 bg-slate-700 mx-2" />
 
-        <div className="flex flex-wrap gap-2 text-[11px]">
-          {(['forget', 'input', 'output'] as const).map((gKey) => {
-            const g = gateData[gKey];
-            const isSelected = activeGate === gKey;
-            return (
-              <button
-                key={gKey}
-                onClick={() => setActiveGate(gKey)}
-                className={`px-3.5 py-1.5 rounded-xl font-bold transition-all ${
-                  isSelected
-                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30 scale-105'
-                    : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
-                }`}
-              >
-                {g.name.split('(')[0]}
-              </button>
-            );
-          })}
+          {/* Step Explainer Controls */}
+          <button onClick={reset} disabled={step === 0 && !isPlaying && playTick === 0} className="p-2 text-slate-400 hover:text-white disabled:opacity-30">
+            <RotateCcw size={18} />
+          </button>
+          <button onClick={nextStep} disabled={step === totalSteps - 1 || isPlaying || playTick > 0} className="flex items-center gap-2 px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-lg disabled:opacity-30 disabled:hover:bg-purple-600 transition-colors">
+            {step === totalSteps - 1 ? 'Finished' : 'Next Step'}
+            <Play size={16} className="fill-current" />
+          </button>
         </div>
       </div>
 
-      {/* Polish 2: High-Resolution Precision SVG Diagram of LSTM Interior */}
+      <div className="text-slate-300 text-sm h-24 md:h-16 leading-relaxed bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono flex flex-col justify-center">
+        {playStatus ? (
+          <div className="text-purple-400 font-bold flex items-center gap-2 animate-pulse">
+            <FastForward size={16} /> <span>{playStatus}</span>
+          </div>
+        ) : (
+          stepsInfo[step]
+        )}
+      </div>
+
+      {/* Sentence Previews */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 relative overflow-hidden">
+          {phase === 'encoder' && <div className="absolute inset-0 bg-sky-900/10 pointer-events-none" />}
+          <div className="text-sky-400 font-bold mb-2 uppercase tracking-wide text-[10px]">Source (English)</div>
+          <div className="flex flex-wrap gap-1 relative z-10">
+            {engTokens.map((t, i) => (
+              <span key={i} className={`px-1.5 py-0.5 rounded transition-all duration-300 ${phase === 'encoder' && highlightIdx === i ? 'bg-sky-500 text-white font-bold scale-110 shadow-lg' : i === 3 ? 'text-amber-400 font-bold' : 'text-slate-400'}`}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 relative overflow-hidden">
+          {phase === 'decoder' && <div className="absolute inset-0 bg-emerald-900/10 pointer-events-none" />}
+          <div className="text-emerald-400 font-bold mb-2 uppercase tracking-wide text-[10px]">Target (Hindi)</div>
+          <div className="flex flex-wrap gap-1 relative z-10">
+            {hinTokens.map((t, i) => {
+              const isRevealed = (isPlaying || playTick > 0) ? (phase === 'decoder' && i <= highlightIdx) : (step >= 5);
+              const isCurrent = phase === 'decoder' && highlightIdx === i;
+              
+              return (
+                <span key={i} className={`px-1.5 py-0.5 rounded transition-all duration-300 ${isCurrent ? 'bg-emerald-500 text-white font-bold scale-110 shadow-lg' : i === 4 ? 'text-emerald-400 font-bold underline' : 'text-slate-500'}`}>
+                  {isRevealed ? t : '???'}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* High-Resolution Precision SVG Diagram of LSTM Interior */}
       <div className="p-6 rounded-2xl bg-gradient-to-b from-slate-900/95 to-slate-950/95 border border-slate-800 flex flex-col items-center justify-center relative shadow-inner overflow-hidden">
         <svg viewBox="0 0 740 320" className="w-full max-w-[740px] h-[280px]">
           <defs>
-            <linearGradient id="cellHighwayGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#a855f7" />
-              <stop offset="100%" stopColor="#c084fc" />
-            </linearGradient>
-            <filter id="lstmGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor={current.color} floodOpacity="0.5" />
+            <filter id="glowForget" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#f43f5e" floodOpacity="0.8" />
+            </filter>
+            <filter id="glowInput" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#38bdf8" floodOpacity="0.8" />
+            </filter>
+            <filter id="glowOutput" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#34d399" floodOpacity="0.8" />
+            </filter>
+            <filter id="glowHighway" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#c084fc" floodOpacity="0.8" />
             </filter>
           </defs>
 
           {/* Main Outer LSTM Cell Container Box */}
-          <rect
-            x="80"
-            y="40"
-            width="580"
-            height="240"
-            rx="24"
-            fill="#090d16"
-            stroke="#334155"
-            strokeWidth="2"
-          />
-          <text x="105" y="70" fill="#64748b" fontSize="11" fontWeight="bold" letterSpacing="1">
-            LSTM CELL CORE (t)
-          </text>
+          <rect x="80" y="40" width="580" height="240" rx="24" fill="#090d16" stroke="#334155" strokeWidth="2" />
 
-          {/* Top Highway: Cell State Conveyor C_{t-1} -> C_t */}
-          <line x1="20" y1="90" x2="720" y2="90" stroke="url(#cellHighwayGrad)" strokeWidth="4" />
-          <polygon points="715,85 730,90 715,95" fill="#c084fc" />
-          <text x="30" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C<tspan baselineShift="sub" fontSize="9">t-1</tspan> (Past Long Memory)</text>
-          <text x="610" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C_t (New Long Memory)</text>
+          {/* Top Highway: Cell State Conveyor */}
+          <line x1="20" y1="90" x2="720" y2="90" stroke={isHighwayActive ? '#c084fc' : '#475569'} strokeWidth={isHighwayActive ? '4' : '2'} filter={isHighwayActive ? 'url(#glowHighway)' : 'none'} className="transition-all duration-300" />
+          <polygon points="715,85 730,90 715,95" fill={isHighwayActive ? '#c084fc' : '#475569'} />
+          
+          <text x="30" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C_{'{t-1}'} (Past Memory)</text>
+          <text x="610" y="78" fill="#c084fc" fontSize="11" fontWeight="bold">C_t (New Memory)</text>
 
-          {/* Bottom Hidden State Highway h_{t-1} -> h_t */}
-          <line x1="20" y1="250" x2="720" y2="250" stroke="#38bdf8" strokeWidth="2.5" strokeDasharray="4 4" />
-          <polygon points="715,246 728,250 715,254" fill="#38bdf8" />
-          <text x="30" y="272" fill="#38bdf8" fontSize="10" fontWeight="bold">h<tspan baselineShift="sub" fontSize="8">t-1</tspan> (Short Memory)</text>
-          <text x="640" y="272" fill="#38bdf8" fontSize="10" fontWeight="bold">h_t (Output State)</text>
+          {/* Bottom Hidden State Highway */}
+          <line x1="20" y1="250" x2="720" y2="250" stroke={isHiddenActive ? '#38bdf8' : '#475569'} strokeWidth="2.5" strokeDasharray="4 4" className="transition-all duration-300" />
+          <polygon points="715,246 728,250 715,254" fill={isHiddenActive ? '#38bdf8' : '#475569'} />
 
-          {/* Input Vector x_t coming up */}
+          {/* Input Vector x_t */}
           <line x1="140" y1="310" x2="140" y2="250" stroke="#94a3b8" strokeWidth="2" />
-          <circle cx="140" cy="305" r="12" fill="#0f172a" stroke="#94a3b8" strokeWidth="1.5" />
-          <text x="140" y="309" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="bold">x_t</text>
-
-          {/* Shared Input Bus [h_{t-1}, x_t] */}
-          <line x1="140" y1="250" x2="520" y2="250" stroke="#38bdf8" strokeWidth="2" />
+          <circle cx="140" cy="305" r="14" fill="#0f172a" stroke="#fbbf24" strokeWidth="2" />
+          <text x="140" y="309" textAnchor="middle" fill="#fbbf24" fontSize="10" fontWeight="bold">x_t</text>
+          {/* Dynamic text based on play tick */}
+          <text x="140" y="325" textAnchor="middle" fill="#fbbf24" fontSize="12" fontStyle="italic">
+            {phase === 'encoder' ? `"${engTokens[highlightIdx]}"` : (phase === 'decoder' ? `(Decoder)` : '')}
+          </text>
+          
+          {/* Shared Input Bus */}
+          <line x1="140" y1="250" x2="520" y2="250" stroke="#94a3b8" strokeWidth="2" />
 
           {/* GATE 1: FORGET GATE */}
-          <g transform="translate(200, 150)">
-            <line x1="0" y1="100" x2="0" y2="0" stroke="#f43f5e" strokeWidth="2" />
-            <line x1="0" y1="0" x2="0" y2="-60" stroke="#f43f5e" strokeWidth="2" />
+          <g transform="translate(200, 150)" className="transition-all duration-300">
+            <line x1="0" y1="100" x2="0" y2="0" stroke={isForgetActive ? '#f43f5e' : '#475569'} strokeWidth="2" />
+            <line x1="0" y1="0" x2="0" y2="-60" stroke={isForgetActive ? '#f43f5e' : '#475569'} strokeWidth="2" />
             <rect
-              x="-24"
-              y="-18"
-              width="48"
-              height="36"
-              rx="8"
-              fill={activeGate === 'forget' ? '#881337' : '#1e293b'}
-              stroke="#f43f5e"
+              x="-24" y="-18" width="48" height="36" rx="8"
+              fill={isForgetActive ? '#881337' : '#1e293b'}
+              stroke={isForgetActive ? '#f43f5e' : '#475569'}
               strokeWidth="2"
-              filter={activeGate === 'forget' ? 'url(#lstmGlow)' : 'none'}
+              filter={isForgetActive ? 'url(#glowForget)' : 'none'}
             />
             <text textAnchor="middle" dy="4" fill="#ffffff" fontSize="13" fontWeight="bold">&sigma;</text>
-            <text x="0" y="30" textAnchor="middle" fill="#f43f5e" fontSize="9" fontWeight="bold">Forget Gate</text>
-
-            {/* Pointwise Multiplication Node on Highway */}
-            <circle cx="0" cy="-60" r="14" fill="#0f172a" stroke="#f43f5e" strokeWidth="2.5" />
-            <text x="0" y="-56" textAnchor="middle" fill="#f43f5e" fontSize="14" fontWeight="bold">&times;</text>
+            <text x="0" y="30" textAnchor="middle" fill={isForgetActive ? '#f43f5e' : '#64748b'} fontSize="9" fontWeight="bold">Forget</text>
+            <circle cx="0" cy="-60" r="14" fill="#0f172a" stroke={isForgetActive ? '#f43f5e' : '#475569'} strokeWidth="2.5" />
+            <text x="0" y="-56" textAnchor="middle" fill={isForgetActive ? '#f43f5e' : '#64748b'} fontSize="14" fontWeight="bold">&times;</text>
           </g>
 
           {/* GATE 2: INPUT GATE & CANDIDATE */}
-          <g transform="translate(360, 150)">
-            {/* Input Gate (Sigmoid) */}
-            <line x1="-30" y1="100" x2="-30" y2="0" stroke="#38bdf8" strokeWidth="2" />
+          <g transform="translate(360, 150)" className="transition-all duration-300">
+            <line x1="-30" y1="100" x2="-30" y2="0" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="2" />
             <rect
-              x="-54"
-              y="-18"
-              width="48"
-              height="36"
-              rx="8"
-              fill={activeGate === 'input' ? '#0369a1' : '#1e293b'}
-              stroke="#38bdf8"
+              x="-54" y="-18" width="48" height="36" rx="8"
+              fill={isInputActive ? '#0369a1' : '#1e293b'}
+              stroke={isInputActive ? '#38bdf8' : '#475569'}
               strokeWidth="2"
-              filter={activeGate === 'input' ? 'url(#lstmGlow)' : 'none'}
+              filter={isInputActive ? 'url(#glowInput)' : 'none'}
             />
             <text x="-30" y="4" textAnchor="middle" fill="#ffffff" fontSize="13" fontWeight="bold">&sigma;</text>
-            <text x="-30" y="30" textAnchor="middle" fill="#38bdf8" fontSize="9" fontWeight="bold">Input Filter</text>
+            <text x="-30" y="30" textAnchor="middle" fill={isInputActive ? '#38bdf8' : '#64748b'} fontSize="9" fontWeight="bold">Input</text>
 
-            {/* Candidate State (Tanh) */}
-            <line x1="30" y1="100" x2="30" y2="0" stroke="#38bdf8" strokeWidth="2" />
+            <line x1="30" y1="100" x2="30" y2="0" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="2" />
             <rect
-              x="6"
-              y="-18"
-              width="48"
-              height="36"
-              rx="8"
-              fill={activeGate === 'input' ? '#0369a1' : '#1e293b'}
-              stroke="#38bdf8"
+              x="6" y="-18" width="48" height="36" rx="8"
+              fill={isInputActive ? '#0369a1' : '#1e293b'}
+              stroke={isInputActive ? '#38bdf8' : '#475569'}
               strokeWidth="2"
-              filter={activeGate === 'input' ? 'url(#lstmGlow)' : 'none'}
+              filter={isInputActive ? 'url(#glowInput)' : 'none'}
             />
             <text x="30" y="4" textAnchor="middle" fill="#ffffff" fontSize="10" fontWeight="bold">tanh</text>
-            <text x="30" y="30" textAnchor="middle" fill="#38bdf8" fontSize="9" fontWeight="bold">Candidate</text>
+            <text x="30" y="30" textAnchor="middle" fill={isInputActive ? '#38bdf8' : '#64748b'} fontSize="9" fontWeight="bold">Cand.</text>
 
-            {/* Multiplication of i_t * C~_t */}
-            <circle cx="0" cy="-25" r="11" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" />
-            <text x="0" y="-21" textAnchor="middle" fill="#38bdf8" fontSize="12" fontWeight="bold">&times;</text>
-            <line x1="-30" y1="-18" x2="-10" y2="-25" stroke="#38bdf8" strokeWidth="1.5" />
-            <line x1="30" y1="-18" x2="10" y2="-25" stroke="#38bdf8" strokeWidth="1.5" />
-            <line x1="0" y1="-36" x2="0" y2="-60" stroke="#38bdf8" strokeWidth="2" />
+            <circle cx="0" cy="-25" r="11" fill="#0f172a" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="2" />
+            <text x="0" y="-21" textAnchor="middle" fill={isInputActive ? '#38bdf8' : '#64748b'} fontSize="12" fontWeight="bold">&times;</text>
+            <line x1="-30" y1="-18" x2="-10" y2="-25" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="1.5" />
+            <line x1="30" y1="-18" x2="10" y2="-25" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="1.5" />
+            <line x1="0" y1="-36" x2="0" y2="-60" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="2" />
 
-            {/* Pointwise Addition Node on Highway */}
-            <circle cx="0" cy="-60" r="14" fill="#0f172a" stroke="#38bdf8" strokeWidth="2.5" />
-            <text x="0" y="-56" textAnchor="middle" fill="#38bdf8" fontSize="14" fontWeight="bold">+</text>
+            <circle cx="0" cy="-60" r="14" fill="#0f172a" stroke={isInputActive ? '#38bdf8' : '#475569'} strokeWidth="2.5" />
+            <text x="0" y="-56" textAnchor="middle" fill={isInputActive ? '#38bdf8' : '#64748b'} fontSize="14" fontWeight="bold">+</text>
           </g>
 
           {/* GATE 3: OUTPUT GATE */}
-          <g transform="translate(540, 150)">
-            <line x1="0" y1="100" x2="0" y2="0" stroke="#34d399" strokeWidth="2" />
+          <g transform="translate(540, 150)" className="transition-all duration-300">
+            <line x1="0" y1="100" x2="0" y2="0" stroke={isOutputActive ? '#34d399' : '#475569'} strokeWidth="2" />
             <rect
-              x="-24"
-              y="-18"
-              width="48"
-              height="36"
-              rx="8"
-              fill={activeGate === 'output' ? '#065f46' : '#1e293b'}
-              stroke="#34d399"
+              x="-24" y="-18" width="48" height="36" rx="8"
+              fill={isOutputActive ? '#065f46' : '#1e293b'}
+              stroke={isOutputActive ? '#34d399' : '#475569'}
               strokeWidth="2"
-              filter={activeGate === 'output' ? 'url(#lstmGlow)' : 'none'}
+              filter={isOutputActive ? 'url(#glowOutput)' : 'none'}
             />
             <text textAnchor="middle" dy="4" fill="#ffffff" fontSize="13" fontWeight="bold">&sigma;</text>
-            <text x="0" y="30" textAnchor="middle" fill="#34d399" fontSize="9" fontWeight="bold">Output Gate</text>
+            <text x="0" y="30" textAnchor="middle" fill={isOutputActive ? '#34d399' : '#64748b'} fontSize="9" fontWeight="bold">Output</text>
 
-            {/* Tanh squashing on Highway for emission to h_t */}
-            <line x1="-80" y1="-60" x2="40" y2="-60" stroke="#a855f7" strokeWidth="2" />
-            <line x1="40" y1="-60" x2="40" y2="50" stroke="#a855f7" strokeWidth="2" />
-            <rect x="22" y="32" width="36" height="24" rx="6" fill="#1e293b" stroke="#a855f7" strokeWidth="1.5" />
-            <text x="40" y="48" textAnchor="middle" fill="#c084fc" fontSize="9" fontWeight="bold">tanh</text>
+            <line x1="-80" y1="-60" x2="40" y2="-60" stroke={isHiddenActive ? '#a855f7' : '#475569'} strokeWidth="2" />
+            <line x1="40" y1="-60" x2="40" y2="50" stroke={isHiddenActive ? '#a855f7' : '#475569'} strokeWidth="2" />
+            <rect x="22" y="32" width="36" height="24" rx="6" fill="#1e293b" stroke={isHiddenActive ? '#a855f7' : '#475569'} strokeWidth="1.5" />
+            <text x="40" y="48" textAnchor="middle" fill={isHiddenActive ? '#c084fc' : '#64748b'} fontSize="9" fontWeight="bold">tanh</text>
 
-            {/* Output Multiplication Node to h_t */}
-            <circle cx="0" cy="70" r="12" fill="#0f172a" stroke="#34d399" strokeWidth="2" />
-            <text x="0" y="74" textAnchor="middle" fill="#34d399" fontSize="12" fontWeight="bold">&times;</text>
-            <line x1="0" y1="18" x2="0" y2="58" stroke="#34d399" strokeWidth="2" />
-            <line x1="40" y1="56" x2="12" y2="70" stroke="#a855f7" strokeWidth="1.5" />
-            <line x1="0" y1="82" x2="0" y2="100" stroke="#34d399" strokeWidth="2" />
+            <circle cx="0" cy="70" r="12" fill="#0f172a" stroke={isHiddenActive ? '#34d399' : '#475569'} strokeWidth="2" />
+            <text x="0" y="74" textAnchor="middle" fill={isHiddenActive ? '#34d399' : '#64748b'} fontSize="12" fontWeight="bold">&times;</text>
+            <line x1="0" y1="18" x2="0" y2="58" stroke={isHiddenActive ? '#34d399' : '#475569'} strokeWidth="2" />
+            <line x1="40" y1="56" x2="12" y2="70" stroke={isHiddenActive ? '#a855f7' : '#475569'} strokeWidth="1.5" />
+            <line x1="0" y1="82" x2="0" y2="100" stroke={isHiddenActive ? '#34d399' : '#475569'} strokeWidth="2" />
           </g>
         </svg>
-      </div>
-
-      {/* Gate Inspector Details */}
-      <div className={`p-5 rounded-2xl bg-slate-900/90 border ${current.border} space-y-3 transition-all`}>
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-bold text-white flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: current.color }} />
-            {current.name}
-          </span>
-          <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-slate-950 border border-slate-800 text-slate-300">
-            {current.tag}
-          </span>
-        </div>
-
-        <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs font-mono text-slate-300">
-          <code>{current.formula}</code>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-sans">
-          <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-slate-300">
-            <strong className="text-white block mb-0.5">Mathematical Function:</strong>
-            {current.purpose}
-          </div>
-          <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-purple-200">
-            <strong className="text-purple-300 block mb-0.5">IT Operations Analogy:</strong>
-            {current.analogy}
-          </div>
-        </div>
       </div>
 
       {/* The Unbreakable Sequential Ceiling */}
