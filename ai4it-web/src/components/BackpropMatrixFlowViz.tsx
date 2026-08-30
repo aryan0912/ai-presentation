@@ -1,157 +1,138 @@
 'use client';
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, RotateCcw, Activity } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, RotateCcw, Activity } from 'lucide-react';
 
 export default function BackpropMatrixFlowViz() {
-  const [stage, setStage] = useState<number>(1);
+  const [step, setStep] = useState(0);
+  const totalSteps = 5;
+
+  const nextStep = () => setStep((s) => Math.min(s + 1, totalSteps - 1));
+  const reset = () => setStep(0);
+
+  const stepsInfo = [
+    "Step 0: Forward Pass. The Hidden Layer sends signals forward through the weights (w1=0.7, w2=0.3) to make a Prediction.",
+    "Step 1: The Loss Function. The network compares its Prediction to the Reality. It computes an Error (e.g. +1120 over the actual value).",
+    "Step 2: Splitting the Blame. Backpropagation flows in reverse! The Error is multiplied by the weights to see who caused it. w1 gets 70% of the blame, w2 gets 30%.",
+    "Step 3: Calculating Gradients (Chain Rule). The blame travels all the way back to the inputs, creating a precise gradient map of exactly how every single weight needs to change.",
+    "Step 4: Gradient Descent (The Update). An Optimizer subtracts a tiny fraction of those gradients (Learning Rate) from the weights. The network has learned!"
+  ];
 
   return (
-    <div className="p-6 rounded-2xl bg-slate-950/95 border border-slate-800 space-y-6 select-none font-mono text-xs">
-      
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
-        <div>
-          <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">
-            3B.6 Deep-Dive · The Same Matrix, Read Backward
-          </span>
-          <h4 className="text-base font-bold text-white mt-0.5">
-            Backpropagation Across Layers: Error Flows Backward in Proportion to Connection Strength
-          </h4>
-        </div>
+    <div className="p-6 md:p-8 rounded-3xl bg-slate-950/95 border border-purple-500/30 space-y-6 select-none font-sans text-xs shadow-2xl relative overflow-hidden">
+      {/* Top neon indicator */}
+      <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-sky-500 via-rose-500 to-purple-500 animate-pulse" />
 
-        <div className="flex items-center gap-1.5 text-[11px]">
-          <button
-            onClick={() => setStage(1)}
-            className={`px-3 py-1 rounded transition-colors ${
-              stage === 1 ? 'bg-sky-600 text-white font-bold' : 'bg-slate-900 text-slate-400 hover:text-white'
-            }`}
-          >
-            1. Forward Pass (pred = 2,226)
+      {/* Header & Controls */}
+      <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-4">
+        <div>
+          <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <span className="text-emerald-400 font-mono">Backpropagation</span> Flow
+          </h3>
+          <div className="text-slate-400 font-sans text-sm mt-1">
+            How error flows backward in proportion to connection strength.
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={reset} disabled={step === 0} className="p-2 text-slate-400 hover:text-white disabled:opacity-30">
+            <RotateCcw size={18} />
           </button>
-          <button
-            onClick={() => setStage(2)}
-            className={`px-3 py-1 rounded transition-colors ${
-              stage === 2 ? 'bg-rose-600 text-white font-bold' : 'bg-slate-900 text-slate-400 hover:text-white'
-            }`}
-          >
-            2. Compute Error (∂Loss/∂pred)
-          </button>
-          <button
-            onClick={() => setStage(3)}
-            className={`px-3 py-1 rounded transition-colors ${
-              stage === 3 ? 'bg-purple-600 text-white font-bold' : 'bg-slate-900 text-slate-400 hover:text-white'
-            }`}
-          >
-            3. Split Blame Backward (70% / 30%)
+          <button onClick={nextStep} disabled={step === totalSteps - 1} className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg disabled:opacity-30 disabled:hover:bg-emerald-600 transition-colors">
+            {step === totalSteps - 1 ? 'Finished' : 'Next Step'}
+            <Play size={16} className="fill-current" />
           </button>
         </div>
+      </div>
+
+      <div className="text-slate-300 text-sm h-24 md:h-16 leading-relaxed bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono flex flex-col justify-center">
+        {stepsInfo[step]}
       </div>
 
       {/* Interactive Network Diagram with Animated Flow Lines */}
-      <div className="p-6 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center">
+      <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col items-center justify-center shadow-inner relative overflow-hidden">
         
-        <svg viewBox="0 0 480 200" className="w-full max-w-[480px] h-[190px]">
+        <svg viewBox="0 0 600 240" className="w-full max-w-[600px] h-[220px]">
+          <defs>
+            <marker id="arrowFwd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+            </marker>
+            <marker id="arrowBwd" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 8 5 L 0 9 z" fill="#f43f5e" />
+            </marker>
+            <filter id="glowFwd" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#38bdf8" floodOpacity="0.8" />
+            </filter>
+            <filter id="glowBwd" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#f43f5e" floodOpacity="0.8" />
+            </filter>
+          </defs>
+
           {/* Forward / Backward Connecting Lines */}
           {/* h1 -> pred (w_out = 0.70) */}
           <line
-            x1="120" y1="55" x2="360" y2="100"
-            stroke={stage >= 3 ? '#ec4899' : '#38bdf8'}
-            strokeWidth={stage >= 3 ? 4 : 3}
-            className="transition-all"
+            x1="160" y1="65" x2="420" y2="120"
+            stroke={step >= 2 ? '#f43f5e' : (step === 0 ? '#38bdf8' : '#334155')}
+            strokeWidth={step >= 2 ? 5 : (step === 0 ? 4 : 2)}
+            strokeDasharray={step >= 2 ? '5,5' : 'none'}
+            markerEnd={step === 0 ? 'url(#arrowFwd)' : (step >= 2 ? 'url(#arrowBwd)' : 'none')}
+            filter={step === 0 ? 'url(#glowFwd)' : (step >= 2 ? 'url(#glowBwd)' : 'none')}
+            className="transition-all duration-700"
           />
+          
           {/* h2 -> pred (w_out = 0.30) */}
           <line
-            x1="120" y1="145" x2="360" y2="100"
-            stroke={stage >= 3 ? '#ec4899' : '#34d399'}
-            strokeWidth={stage >= 3 ? 2.5 : 1.8}
-            className="transition-all"
+            x1="160" y1="175" x2="420" y2="120"
+            stroke={step >= 2 ? '#fda4af' : (step === 0 ? '#7dd3fc' : '#334155')}
+            strokeWidth={step >= 2 ? 3 : (step === 0 ? 2 : 2)}
+            strokeDasharray={step >= 2 ? '5,5' : 'none'}
+            markerEnd={step === 0 ? 'url(#arrowFwd)' : (step >= 2 ? 'url(#arrowBwd)' : 'none')}
+            className="transition-all duration-700"
           />
 
-          {/* Hidden Node h1 */}
-          <g transform="translate(120, 55)">
-            <circle r="22" fill="#0f172a" stroke="#38bdf8" strokeWidth="2.5" />
-            <text textAnchor="middle" dy="4" fill="#ffffff" fontSize="10" fontWeight="bold">h₁: 2,190</text>
-          </g>
+          {/* Hidden Layer Node 1 */}
+          <circle cx="120" cy="65" r="40" fill="#0f172a" stroke={step >= 3 ? '#f43f5e' : '#3b82f6'} strokeWidth="3" className="transition-all duration-500" />
+          <text x="120" y="60" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">h₁</text>
+          <text x="120" y="80" textAnchor="middle" fill="#94a3b8" fontSize="10">Act: 50</text>
+          
+          <rect x="250" y="45" width="60" height="20" rx="4" fill={step >= 4 ? '#10b981' : '#1e293b'} stroke={step >= 4 ? '#34d399' : '#475569'} />
+          <text x="280" y="58" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">w₁ = {step >= 4 ? '0.62' : '0.70'}</text>
 
-          {/* Hidden Node h2 */}
-          <g transform="translate(120, 145)">
-            <circle r="22" fill="#0f172a" stroke="#34d399" strokeWidth="2.5" />
-            <text textAnchor="middle" dy="4" fill="#ffffff" fontSize="10" fontWeight="bold">h₂: 2,310</text>
-          </g>
+          {/* Hidden Layer Node 2 */}
+          <circle cx="120" cy="175" r="40" fill="#0f172a" stroke={step >= 3 ? '#fda4af' : '#60a5fa'} strokeWidth="3" className="transition-all duration-500" />
+          <text x="120" y="170" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">h₂</text>
+          <text x="120" y="190" textAnchor="middle" fill="#94a3b8" fontSize="10">Act: 20</text>
+          
+          <rect x="250" y="155" width="60" height="20" rx="4" fill={step >= 4 ? '#10b981' : '#1e293b'} stroke={step >= 4 ? '#34d399' : '#475569'} />
+          <text x="280" y="168" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="bold">w₂ = {step >= 4 ? '0.28' : '0.30'}</text>
 
-          {/* Output Node (Prediction) */}
-          <g transform="translate(360, 100)">
-            <circle r="26" fill="#0f172a" stroke={stage >= 2 ? '#f43f5e' : '#a855f7'} strokeWidth="3" />
-            <text textAnchor="middle" dy="4" fill="#ffffff" fontSize="10" fontWeight="bold">
-              {stage >= 1 ? 'pred: 2,226' : 'ŷ'}
-            </text>
-          </g>
+          {/* Output Node */}
+          <circle cx="460" cy="120" r="40" fill="#0f172a" stroke={step >= 1 ? '#f43f5e' : '#38bdf8'} strokeWidth="3" className="transition-all duration-500" />
+          <text x="460" y="115" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold">Pred</text>
+          <text x="460" y="135" textAnchor="middle" fill={step >= 1 ? '#f43f5e' : '#38bdf8'} fontSize="12" fontWeight="bold">{step >= 4 ? '2180' : '2226'}</text>
 
-          {/* Weight Labels on Wire */}
-          <text x="210" y="65" fill={stage >= 3 ? '#ec4899' : '#38bdf8'} fontSize="10" fontWeight="bold">
-            w_out[0] = 0.70 {stage >= 3 ? '(takes 70% blame)' : ''}
-          </text>
-          <text x="210" y="145" fill={stage >= 3 ? '#ec4899' : '#34d399'} fontSize="10" fontWeight="bold">
-            w_out[1] = 0.30 {stage >= 3 ? '(takes 30% blame)' : ''}
-          </text>
+          {/* Error Injection */}
+          <AnimatePresence>
+            {step >= 1 && (
+              <g>
+                <line x1="560" y1="120" x2="510" y2="120" stroke="#f43f5e" strokeWidth="3" markerEnd="url(#arrowBwd)" className="animate-pulse" />
+                <rect x="520" y="80" width="80" height="30" rx="6" fill="#881337" stroke="#f43f5e" />
+                <text x="560" y="99" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="bold">Loss: +1120</text>
+              </g>
+            )}
+          </AnimatePresence>
 
-          {/* Flow Direction Indicator */}
-          {stage < 3 ? (
-            <g transform="translate(240, 100)">
-              <text textAnchor="middle" fill="#38bdf8" fontSize="11" fontWeight="bold">&rarr; Forward Flow &rarr;</text>
-            </g>
-          ) : (
-            <g transform="translate(240, 100)">
-              <text textAnchor="middle" fill="#ec4899" fontSize="11" fontWeight="bold">&larr; Error Flows Backward &larr;</text>
-            </g>
-          )}
+          {/* Blame Split Annotations */}
+          <AnimatePresence>
+            {step >= 2 && (
+              <g>
+                <text x="320" y="85" fill="#f43f5e" fontSize="12" fontWeight="bold" transform="rotate(-10 320 85)">-70% Blame</text>
+                <text x="320" y="165" fill="#fda4af" fontSize="11" fontWeight="bold" transform="rotate(10 320 165)">-30% Blame</text>
+              </g>
+            )}
+          </AnimatePresence>
+
         </svg>
-
       </div>
-
-      {/* Step Breakdown Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div className={`p-3.5 rounded-xl border transition-colors ${
-          stage === 1 ? 'bg-sky-950/40 border-sky-500 text-sky-200' : 'bg-slate-900 border-slate-800 text-slate-400'
-        }`}>
-          <strong className="text-white block mb-1">Step 1: Forward Prediction</strong>
-          <p className="text-[11px] leading-relaxed">
-            pred = (0.7 &times; 2,190) + (0.3 &times; 2,310) = 1,533 + 693 = <strong>2,226 Litres</strong>
-          </p>
-        </div>
-
-        <div className={`p-3.5 rounded-xl border transition-colors ${
-          stage === 2 ? 'bg-rose-950/40 border-rose-500 text-rose-200' : 'bg-slate-900 border-slate-800 text-slate-400'
-        }`}>
-          <strong className="text-white block mb-1">Step 2: Output Error Gradient</strong>
-          <p className="text-[11px] leading-relaxed">
-            Error = 2,226 - 2,850 = <strong>-624 Litres</strong>
-            <br />
-            ∂Loss/∂pred = 2 &times; (-624) = <strong>-1,248</strong>
-          </p>
-        </div>
-
-        <div className={`p-3.5 rounded-xl border transition-colors ${
-          stage === 3 ? 'bg-purple-950/40 border-purple-500 text-purple-200' : 'bg-slate-900 border-slate-800 text-slate-400'
-        }`}>
-          <strong className="text-white block mb-1">Step 3: Blame Distributed Backward</strong>
-          <p className="text-[11px] leading-relaxed">
-            ∂Loss/∂h₁ = -1,248 &times; 0.7 = <strong>-873.6 (70%)</strong>
-            <br />
-            ∂Loss/∂h₂ = -1,248 &times; 0.3 = <strong>-374.4 (30%)</strong>
-          </p>
-        </div>
-      </div>
-
-      {/* The 3Blue1Brown Insight Callout */}
-      <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/40 text-emerald-200 text-xs leading-relaxed">
-        <strong className="text-emerald-300 block mb-1">
-          Why It&rsquo;s Called &ldquo;Backpropagation&rdquo; &mdash; Same Numbers, Opposite Direction:
-        </strong>
-        Notice how <code>h₁</code> takes exactly 70% of the blame and <code>h₂</code> takes exactly 30% &mdash; in <em>precisely</em> the same ratio as the forward weights (0.7 / 0.3) that combined them! The network does not invent new math for backprop; it re-uses the forward connection weights in reverse to route credit and blame backward.
-      </div>
-
     </div>
   );
 }
