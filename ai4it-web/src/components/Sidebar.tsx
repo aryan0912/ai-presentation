@@ -36,8 +36,8 @@ export default function Sidebar() {
   const { isSidebarCollapsed, toggleSidebar } = usePresentation();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     'OPENING': true,
-    'DAY 1 · Patterns': true,
-    'DAY 2 · Memory & Attention': false,
+    'DAY 1 · Patterns': false,
+    'DAY 2 · Memory, Attention & LLMs': true,
   });
 
   const navGroups: NavGroup[] = [
@@ -53,7 +53,7 @@ export default function Sidebar() {
     },
     {
       title: 'DAY 1 · Patterns',
-      defaultOpen: true,
+      defaultOpen: false,
       items: [
         { href: '/day1/linear-regression', label: '1. Linear Regression', minutes: '65m' },
         { href: '/day1/neural-network', label: '2. Neural Networks', minutes: '75m' },
@@ -67,13 +67,12 @@ export default function Sidebar() {
       title: 'DAY 2 · Memory, Attention & LLMs',
       defaultOpen: true,
       items: [
-        { href: '/day2/nlp-intro', label: '1. NLP & MT Intro', minutes: '10m' },
-        { href: '/day2/rnn', label: '2. RNN: Model Memory', minutes: '15m' },
-        { href: '/day2/lstm', label: '3. LSTM: Gated Memory', minutes: '15m' },
-        { href: '/day2/transformer', label: '4. Transformers & Attention', minutes: '45m' },
-        { href: '/day2/embeddings', label: '5. Embeddings & Tokens', minutes: '20m' },
-        { href: '/day2/chatgpt-case-study', label: '6. Case Study: ChatGPT', minutes: '20m' },
-        { href: '/day2/hands-on', label: '7. Hands-On & Synthesis', minutes: '90m' },
+        { href: '/day2/nlp-intro', label: '0. NLP: Tokens & Embeddings', minutes: '25m' },
+        { href: '/day2/rnn', label: '1. Hop 1: RNN Memory Loop', minutes: '25m' },
+        { href: '/day2/lstm', label: '2. Hop 2: LSTM Gated Memory', minutes: '30m' },
+        { href: '/day2/transformer', label: '3. Hop 3: The Transformer (3B1B)', minutes: '120m' },
+        { href: '/day2/chatgpt-case-study', label: '4. Case Study: How ChatGPT Works', minutes: '20m' },
+        { href: '/day2/hands-on', label: '5. Hands-On: Ollama & HF Suite', minutes: '90m' },
       ],
     },
   ];
@@ -150,7 +149,7 @@ export default function Sidebar() {
       <div className="sidebar-footer">
         <div className="flex items-center gap-1.5 text-slate-400 font-mono text-xs">
           <Activity size={13} className="text-emerald-400" />
-          <span>Day 1: ~305 min teaching</span>
+          <span>Day 2: ~310 min teaching</span>
         </div>
         <Link href="/status" className="text-slate-500 hover:text-slate-300 font-mono text-[11px]">
           /status
@@ -159,4 +158,3 @@ export default function Sidebar() {
     </aside>
   );
 }
-

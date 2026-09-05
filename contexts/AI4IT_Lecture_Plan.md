@@ -41,28 +41,17 @@
 11. **POC vs. production, note #1** (10 min) — today's demo has no validation, retraining, or monitoring; a real deployment needs all three (quick flag, not a deep dive)
 
 ### Day 2 — Memory, Attention, and First Contact with LLMs
-1. Retrieval quiz (Day 1) — 5 min
-2. **RNN** (55 min)
- - Reveal: read one item at a time, carry a memory forward
- - Hidden-state memory-decay demo
- - Break it: forgets a festival effect from 3 weeks back
- - 🥛 Dairy angle: seasonal/festival demand is exactly this long-range problem
-3. **LSTM** (45 min)
- - Reveal: gates deciding what to keep/forget
- - Gate visualization demo
- - Relate to alert-suppression rules they already use
-4. *Break*
-5. **Transformer** (75 min)
- - Reveal: look at everything at once, weigh relevance ("attention")
- - Attention heatmap demo
- - Flag explicitly: this is what powers ChatGPT/Copilot — the pivot point of the course
-6. **You try it** (15 min) — type your own sentence into the attention demo, tweak the NN playground
-7. **Quick infra aside** (10 min) — 🧱 what actually runs these models: languages, frameworks, dev environment
-8. *Lunch*
-9. **Tokenization, Context Window, Embeddings** (30 min) — 2D embedding-space cluster map demo
-10. **AI Model Lifecycle, Inference Process, Key Terminology & Scenario Mapping** (20 min) — concise consolidation
-11. **Case study: "How is ChatGPT actually built from what you just learned?"** (30 min) — transformer + massive text + next-word prediction = LLM
-12. Homework brief (10 min)
+1. **Retrieval quiz (Day 1)** — 10 min
+2. **NLP Introduction: Tokens & Word Embeddings** (25 min) — why language needs math, the "Character vs Token" quiz, vector arithmetic (`King - Man + Woman = Queen`), and the "Almost-Orthogonal Vectors" mind-bender to explain high-dimensional capacity
+3. **Hop 1: Recurrent Neural Networks (RNN)** (25 min) — feedforward memorylessness, Seq2Seq Encoder-Decoder blueprint, and the RNN memory decay bottleneck
+4. **Hop 2: Long Short-Term Memory (LSTM)** (25 min) — the conveyor belt cell state highway and gating mechanics
+5. **Hop 3: The Transformer Deep Dive: The 3B1B Perspective** (120 min) — from next-token ambition to grammatical QKV routing ("Fluffy Blue Creature"), positional encoding, scaling via Multi-Head Attention, and distinguishing MLPs (factual storage) from Attention (routing context)
+6. *Lunch*
+7. **AI Model Lifecycle, Inference Process, Key Terminology & Scenario Mapping** (20 min) — concise consolidation
+8. **Case study: "How is ChatGPT actually built from what you just learned?"** (30 min) — pre-training, SFT, and RLHF on foundation transformers
+9. **Hands-On: Ollama, Hugging Face, OpenRouter** (75 min) — running local and API models with participant hands-on
+10. **Weekend 1 Closing Synthesis** (15 min) — making Saturday-to-Sunday progress visible
+11. Homework brief (10 min)
 
 **Gap Week 1 homework:** retrieval quiz mid-week + creative build — pick one small daily annoyance, describe it to Antigravity, let it build something (doesn't need to work or be useful). Bring it/a screenshot to Day 3.
 

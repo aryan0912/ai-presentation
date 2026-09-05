@@ -180,103 +180,6 @@ export default function LinearRegressionPage() {
       </ConceptBeat>
       </div>
 
-      {/* TAXONOMY CARD: Supervised / Unsupervised / GenAI (5 min) */}
-      <section className="p-8 rounded-3xl border border-purple-500/30 bg-purple-950/20 backdrop-blur-xl space-y-6">
-        <div>
-          <span className="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">
-            Module 1.2 Core Requirement · Taxonomy
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mt-1">
-            Traditional Machine Learning vs. Generative AI
-          </h2>
-          <p className="text-sm text-slate-300 mt-1">
-            Before touching regression equations, let's establish exact data science terminology:
-          </p>
-        </div>
-
-        {/* 3 Taxonomy Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="p-4 rounded-xl bg-slate-950/80 border border-slate-800"
-          >
-            <h4 className="text-sm font-bold text-blue-400 uppercase mb-1">1. Supervised Learning</h4>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              We have past pairs of inputs (<strong>features</strong>, e.g. Day number) and correct answers (<strong>labels</strong>, e.g. 2,140 Litres). The model adjusts until its error is minimized. <em>This is what we are doing today.</em>
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="p-4 rounded-xl bg-slate-950/80 border border-slate-800"
-          >
-            <h4 className="text-sm font-bold text-purple-400 uppercase mb-1">2. Unsupervised Learning</h4>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              No labeled right answers. The model clusters or groups data by geometric similarity. <em>(We will meet this on Day 2 with Vector Embeddings).</em>
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="p-4 rounded-xl bg-slate-950/80 border border-slate-800"
-          >
-            <h4 className="text-sm font-bold text-emerald-400 uppercase mb-1">3. Generative AI</h4>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Doesn't predict a single scalar number. Predicts the probability distribution of the next token in a sequence to generate text, code, or images. <em>(Days 3–6).</em>
-            </p>
-          </motion.div>
-        </div>
-
-        {/* 2-Column Contrast Table */}
-        <div className="overflow-x-auto pt-2">
-          <table className="w-full text-left border-collapse text-xs md:text-sm">
-            <thead>
-              <tr className="border-b border-purple-800/60 text-purple-300 font-mono">
-                <th className="py-2.5 px-4 bg-slate-950/80 rounded-tl-lg">Traditional ML (Days 1–2)</th>
-                <th className="py-2.5 px-4 bg-purple-950/60 rounded-tr-lg text-purple-200">
-                  Generative AI (Days 3–6)
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/80 font-mono text-xs">
-              <tr className="hover:bg-slate-900/40">
-                <td className="py-2.5 px-4 text-slate-300">Predicts a continuous number or discrete class</td>
-                <td className="py-2.5 px-4 text-purple-300">Produces conversational text, shell scripts, or code</td>
-              </tr>
-              <tr className="hover:bg-slate-900/40">
-                <td className="py-2.5 px-4 text-slate-300">Deterministic: same inputs &rarr; exact same output</td>
-                <td className="py-2.5 px-4 text-purple-300">Probabilistic: temperature creates variations each run</td>
-              </tr>
-              <tr className="hover:bg-slate-900/40">
-                <td className="py-2.5 px-4 text-slate-300">Wrongness is mathematically measurable (RMSE &plusmn;Litres)</td>
-                <td className="py-2.5 px-4 text-purple-300">Wrongness is a subjective human judgement call</td>
-              </tr>
-              <tr className="hover:bg-slate-900/40">
-                <td className="py-2.5 px-4 text-slate-300">Runs on low-power CPUs in sub-milliseconds ($0 cost)</td>
-                <td className="py-2.5 px-4 text-purple-300">Requires expensive GPU clusters or per-token API fees</td>
-              </tr>
-              <tr className="hover:bg-slate-900/40 bg-rose-950/10">
-                <td className="py-2.5 px-4 text-rose-300 font-bold">Fails visibly (obvious curve miss)</td>
-                <td className="py-2.5 px-4 text-rose-300 font-bold">Fails FLUENTLY (hallucinates with total confidence)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className="p-4 rounded-xl bg-slate-950 border border-purple-500/30 text-xs md:text-sm font-semibold text-purple-200 text-center">
-          "Both are 'AI'. Only one of them can tell you exactly how wrong it is. Keep that distinction in your head for the entire 6 days."
-        </div>
-      </section>
-
       {/* BEAT 2: Let the Room Guess with Direct Inline Plot (10 min) */}
       <ConceptBeat
         kind="guess"
@@ -416,6 +319,184 @@ export default function LinearRegressionPage() {
           <span>How does the line learn automatically? That story picks up in <strong>3B.4</strong> with Augustin-Louis Cauchy's 1847 downhill gradient calculus.</span>
         </div>
       </ConceptBeat>
+
+      {/* TAXONOMY & LEARNING METHODS: Supervised / Unsupervised / RL / GenAI */}
+      <section className="p-8 rounded-3xl border border-purple-500/30 bg-purple-950/20 backdrop-blur-xl space-y-6">
+        <div>
+          <span className="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider">
+            Module 1.2 Core Requirement · Taxonomy of Learning Methods
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mt-1">
+            The 4 Learning Paradigms &amp; How LLMs Unify Them
+          </h2>
+          <p className="text-sm text-slate-300 mt-1">
+            Now that you've seen how we predict from historical data, how does machine learning actually learn? Let's classify the entire AI landscape:
+          </p>
+        </div>
+
+        {/* 4 Taxonomy Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="p-4 rounded-xl bg-slate-950/80 border border-blue-500/30 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-sm font-bold text-blue-400 uppercase">1. Supervised</h4>
+                <span className="text-[10px] font-mono bg-blue-950/80 text-blue-300 px-2 py-0.5 rounded border border-blue-800/50">Inputs + Labels</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed mt-2">
+                We have past pairs of inputs (<strong>features</strong>, e.g. Day number) and correct ground-truth answers (<strong>labels</strong>, e.g. 2,140 Litres). The algorithm optimizes weights until error is minimized.
+              </p>
+            </div>
+            <div className="mt-3 pt-2 border-t border-slate-800 text-[11px] font-mono text-blue-300">
+              Today's Focus (Linear Regression &amp; NNs)
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="p-4 rounded-xl bg-slate-950/80 border border-purple-500/30 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-sm font-bold text-purple-400 uppercase">2. Unsupervised</h4>
+                <span className="text-[10px] font-mono bg-purple-950/80 text-purple-300 px-2 py-0.5 rounded border border-purple-800/50">No Labels</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed mt-2">
+                No labeled teacher answers. The algorithm clusters, organizes, and discovers latent geometry directly from raw structure.
+              </p>
+            </div>
+            <div className="mt-3 pt-2 border-t border-slate-800 text-[11px] font-mono text-purple-300">
+              Day 2 (Vector Embeddings &amp; Pre-training)
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="p-4 rounded-xl bg-slate-950/80 border border-amber-500/30 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-sm font-bold text-amber-400 uppercase">3. Reinforcement</h4>
+                <span className="text-[10px] font-mono bg-amber-950/80 text-amber-300 px-2 py-0.5 rounded border border-amber-800/50">Rewards / Penalties</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed mt-2">
+                An <strong>agent</strong> takes actions in an environment, receiving scalar <strong>rewards</strong> or penalties to learn optimal policy strategies via trial and error.
+              </p>
+            </div>
+            <div className="mt-3 pt-2 border-t border-slate-800 text-[11px] font-mono text-amber-300">
+              Days 2 &amp; 5 (RLHF &amp; Agent Loops)
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.25 }}
+            className="p-4 rounded-xl bg-slate-950/80 border border-emerald-500/30 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <h4 className="text-sm font-bold text-emerald-400 uppercase">4. Generative AI</h4>
+                <span className="text-[10px] font-mono bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/50">Next-Token Gen</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed mt-2">
+                Instead of predicting a single scalar number or category, predicts the probability distribution of the next sequence token to generate rich text, code, or images.
+              </p>
+            </div>
+            <div className="mt-3 pt-2 border-t border-slate-800 text-[11px] font-mono text-emerald-300">
+              Days 3–6 (LLMs, Copilots &amp; Agents)
+            </div>
+          </motion.div>
+        </div>
+
+        {/* The LLM Synthesis Callout: How LLMs use Supervised + Unsupervised + Reinforcement Learning */}
+        <div className="p-6 rounded-2xl bg-gradient-to-r from-purple-950/80 via-slate-950 to-blue-950/80 border border-purple-400/40 space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+            <h4 className="text-sm font-mono font-bold text-white uppercase tracking-wider">
+              The Grand Synthesis: How Modern LLMs (like ChatGPT &amp; Claude) Use All Three
+            </h4>
+          </div>
+          <p className="text-xs text-slate-300 leading-relaxed">
+            People often ask: <em>"Is ChatGPT supervised, unsupervised, or reinforcement learning?"</em> The breakthrough answer is that modern foundation models stack <strong>all three in sequence</strong>:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-purple-500/30 space-y-1">
+              <span className="text-[11px] font-mono font-bold text-purple-300 block">Stage 1: Unsupervised / Self-Supervised</span>
+              <strong className="text-white text-xs block">Raw Web Pre-training</strong>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Ingests trillions of unlabeled tokens. The model predicts masked/future words, creating foundational linguistic geometry.
+              </p>
+            </div>
+            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-blue-500/30 space-y-1">
+              <span className="text-[11px] font-mono font-bold text-blue-300 block">Stage 2: Supervised Learning (SFT)</span>
+              <strong className="text-white text-xs block">Instruction Fine-Tuning</strong>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Expert humans write high-quality (Prompt, Answer) pairs so the model learns how to converse as an assistant rather than just completing raw text.
+              </p>
+            </div>
+            <div className="p-3.5 rounded-xl bg-slate-900/90 border border-amber-500/30 space-y-1">
+              <span className="text-[11px] font-mono font-bold text-amber-300 block">Stage 3: Reinforcement Learning (RLHF)</span>
+              <strong className="text-white text-xs block">Human Preference Alignment</strong>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                A reward model rates outputs; reinforcement learning steers the policy away from toxic, evasive, or hallucinatory answers toward helpful truth.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 2-Column Contrast Table */}
+        <div className="overflow-x-auto pt-2">
+          <table className="w-full text-left border-collapse text-xs md:text-sm">
+            <thead>
+              <tr className="border-b border-purple-800/60 text-purple-300 font-mono">
+                <th className="py-2.5 px-4 bg-slate-950/80 rounded-tl-lg">Traditional ML (Days 1–2)</th>
+                <th className="py-2.5 px-4 bg-purple-950/60 rounded-tr-lg text-purple-200">
+                  Generative AI (Days 3–6)
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/80 font-mono text-xs">
+              <tr className="hover:bg-slate-900/40">
+                <td className="py-2.5 px-4 text-slate-300">Predicts a continuous number or discrete class</td>
+                <td className="py-2.5 px-4 text-purple-300">Produces conversational text, shell scripts, or code</td>
+              </tr>
+              <tr className="hover:bg-slate-900/40">
+                <td className="py-2.5 px-4 text-slate-300">Deterministic: same inputs &rarr; exact same output</td>
+                <td className="py-2.5 px-4 text-purple-300">Probabilistic: temperature creates variations each run</td>
+              </tr>
+              <tr className="hover:bg-slate-900/40">
+                <td className="py-2.5 px-4 text-slate-300">Wrongness is mathematically measurable (RMSE &plusmn;Litres)</td>
+                <td className="py-2.5 px-4 text-purple-300">Wrongness is a subjective human judgement call</td>
+              </tr>
+              <tr className="hover:bg-slate-900/40">
+                <td className="py-2.5 px-4 text-slate-300">Runs on low-power CPUs in sub-milliseconds ($0 cost)</td>
+                <td className="py-2.5 px-4 text-purple-300">Requires expensive GPU clusters or per-token API fees</td>
+              </tr>
+              <tr className="hover:bg-slate-900/40 bg-rose-950/10">
+                <td className="py-2.5 px-4 text-rose-300 font-bold">Fails visibly (obvious curve miss)</td>
+                <td className="py-2.5 px-4 text-rose-300 font-bold">Fails FLUENTLY (hallucinates with total confidence)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div className="p-4 rounded-xl bg-slate-950 border border-purple-500/30 text-xs md:text-sm font-semibold text-purple-200 text-center">
+          "Both are 'AI'. Only one of them can tell you exactly how wrong it is. Keep that distinction in your head for the entire 6 days."
+        </div>
+      </section>
 
       {/* BEAT 3B: What "Best Fit" Actually Means — The Deep Dive (~71 min) */}
       <ConceptBeat

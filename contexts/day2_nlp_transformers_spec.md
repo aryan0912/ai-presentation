@@ -57,11 +57,24 @@ Weekend 1 ends today. The goal is not "cover the material" — it's that the roo
 
 ---
 
-## 4. Hop 3 — LSTM → Transformer: Look at Everything at Once (15 min)
+## 4. Hop 3 — The Transformer Deep Dive: The 3B1B Perspective (~120 min)
 
-**Reveal:** instead of reading one word at a time and carrying a fading summary, look at every word simultaneously and weigh how relevant each one is to every other one — "attention." This directly solves both of LSTM's problems at once: nothing has to travel step by step to be remembered, and because every position is processed together, the computation is no longer sequential.
+**Redesigned for intuition-first pedagogy, directly incorporating the mental models from Grant Sanderson's (3Blue1Brown) video.**
 
-**The parallelism payoff, made concrete, not asserted:** *"Remember `Wx+b` from Saturday — one matrix multiply, computing many neurons' outputs at once, in parallel? Attention over an entire sentence is the exact same trick: one matrix operation across every word simultaneously, instead of LSTM's one-word-at-a-time crawl. That's not a new idea. That's the same reason a hidden layer with 4 neurons isn't 4 times slower than one with 1 neuron — you already knew this, just not that it was about to explain why transformers are fast."*
+The module is structured as a continuous narrative:
+1. **Act 1: The Goal & The Hook:** Establishing that a chatbot is simply a next-token predictor wrapped in a user-assistant template. Introduce the Temperature ($T$) slider to show how randomness adds natural flow.
+2. **Act 2: Data Representation (Tokens & Embeddings):**
+   - *The "Character vs Token" Quiz:* Why not break text into individual characters? (Answer: Context window bloat and semantic loss).
+   - *The Mind-Bender (Vector Space Superposition):* Quiz 1: How many mutually perpendicular vectors fit in $n$-D space? (Answer: $n$). Quiz 2: How many if they only have to be "almost" perpendicular (88°-92°)? (Answer: Capacity grows exponentially). This explains how a 12,288-dimensional space can store millions of rich concepts.
+3. **Act 3: The Mechanics of Attention (Q, K, V):**
+   - *The Fluffy Blue Creature:* Visualizing grammatical routing. The noun "creature" (Query) asks "Are there any adjectives in front of me?". The adjectives "fluffy" and "blue" (Keys) respond.
+   - *Dot Product Alignment & Softmax:* Measuring how well Queries and Keys align, and normalizing with Softmax to behave like weights.
+   - *The Causal Mask:* Setting future values to $-\infty$ so tokens cannot cheat during autoregressive training.
+   - *Value Update:* Moving the actual payload via a low-rank transformation and applying it via a residual connection (adding $\Delta E$ to the original embedding).
+4. **Act 4: Scaling Up (Multi-Head & MLPs):**
+   - *Multi-Head Attention:* The adjective-noun relationship is just one "head". We run dozens in parallel for grammar, adverbs, etc.
+   - *Attention vs MLPs:* The critical division of labor. Attention blocks *route* contextual information. MLP blocks *store* factual world knowledge (e.g., knowing Michael Jordan plays basketball). Repeating this cycle (Attention $\rightarrow$ MLP) up to 96 times enriches the vectors continuously.
+5. **Act 5: Core Takeaways:** GPU parallelizability, unsupervised pre-training, and multimodality.
 
 ---
 

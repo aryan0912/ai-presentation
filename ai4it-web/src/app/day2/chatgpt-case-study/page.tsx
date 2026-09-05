@@ -13,23 +13,39 @@ export default function ChatGptCaseStudyPage() {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2 text-xs font-mono text-purple-400 bg-purple-950/40 border border-purple-800/40 px-3 py-1 rounded-full w-fit mb-3">
-          <span>Day 2 Core Topic · §8 Architecture Case Study</span>
+          <span>Day 2 Core Topic · Case Study (~20 min)</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-          5. Case Study: How Is ChatGPT Actually Built?
+          4. Case Study: How Is ChatGPT Actually Built?
         </h1>
         <p className="text-lg text-slate-400 mt-2 max-w-3xl leading-relaxed">
-          Transformer architecture + next-token prediction at planetary scale — and naming the Transformer&rsquo;s &ldquo;current problem&rdquo; that bridges to Day 4 RAG.
+          Transformer architecture + next-token prediction at planetary scale—and naming the Transformer&rsquo;s &ldquo;current problem&rdquo; that bridges to Day 4 RAG.
         </p>
 
         <InstructorNote
           timing="~20 minutes total"
-          aloudQuestion="How does a model trained on general internet text become a helpful assistant? And what happens when you ask it about internal NDDB chilling center SOPs?"
+          aloudQuestion="Same story as Saturday morning. Different scale. Not a different idea. How does a model trained on general internet text become a helpful assistant? And what happens when you ask it about internal NDDB chilling center SOPs?"
           expectedWrongAnswers={[
             "Believing LLMs have live database access or reasoning minds. Clarify that base LLMs are probability engines trained to predict the next token, frozen at training time."
           ]}
-          instructorTip="Emphasize that LLMs are trained by the exact same downhill gradient descent from Saturday! Then end on Hop 4: naming that the model does NOT know internal NDDB SOPs, which directly bridges to Day 4 RAG."
+          instructorTip="Point out that GPT literally stands for Generative Pre-trained Transformer—they've been saying the architecture name the entire time! Then end on Hop 4: naming that the model does NOT know internal NDDB SOPs, directly bridging to Day 4 RAG."
         />
+      </div>
+
+      {/* The Name Payoff Banner */}
+      <div className="p-6 rounded-2xl bg-gradient-to-r from-purple-950/40 to-slate-900 border border-purple-500/40 flex items-center gap-4">
+        <div className="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-xl shrink-0">
+          GPT
+        </div>
+        <div>
+          <span className="text-xs font-mono text-purple-400 uppercase font-bold tracking-wider">The Name Payoff</span>
+          <h3 className="text-xl font-bold text-white">
+            <span className="text-purple-300">G</span>enerative <span className="text-sky-300">P</span>re-trained <span className="text-emerald-300">T</span>ransformer
+          </h3>
+          <p className="text-xs text-slate-300 font-sans mt-0.5">
+            &ldquo;You've been saying the name of what you just spent the morning learning, this whole time!&rdquo;
+          </p>
+        </div>
       </div>
 
       {/* The 3-Stage Pipeline */}
@@ -84,20 +100,20 @@ export default function ChatGptCaseStudyPage() {
           </div>
 
           <p>
-            &ldquo;Everything you&rsquo;ve learned today explains how a model like ChatGPT or Llama thinks. <strong>It does not explain how it would know anything about NDDB&rsquo;s own chilling-center SOPs or private incident tickets — because it doesn&rsquo;t.</strong> It was frozen at training time, and it will be confidently wrong about anything private to your organization.&rdquo;
+            &ldquo;Everything today explains how a model like ChatGPT or Claude thinks. <strong>It does not explain how it would know anything about NDDB&rsquo;s own chilling-center SOPs, BMC sensor codes, or private incident tickets—because it doesn&rsquo;t.</strong> It was frozen at training time, and it will be confidently wrong about anything private to your organization.&rdquo;
           </p>
 
           <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-purple-300">
             <strong>The Direct Bridge to Day 4:</strong>
-            &ldquo;That is not a flaw we leave unfixed — that is exactly the problem <strong>Retrieval-Augmented Generation (RAG)</strong> solves on Day 4: dynamically retrieving your private SOP documents and feeding them into the context window before the model answers!&rdquo;
+            &ldquo;That is not a flaw we leave unfixed—that is exactly the problem <strong>Retrieval-Augmented Generation (RAG)</strong> solves on Day 4: dynamically retrieving your private SOP documents and feeding them into the context window before the model answers!&rdquo;
           </div>
         </div>
       </ConceptBeat>
 
       {/* Next Hop Link */}
       <div className="pt-6 border-t border-slate-800/80 flex items-center justify-between">
-        <Link href="/day2/embeddings" className="text-slate-400 hover:text-white font-mono text-xs flex items-center gap-1.5">
-          &larr; Back to Embeddings &amp; Tokenization
+        <Link href="/day2/transformer" className="text-slate-400 hover:text-white font-mono text-xs flex items-center gap-1.5">
+          &larr; Back to Hop 3: The Transformer
         </Link>
         <Link
           href="/day2/hands-on"
