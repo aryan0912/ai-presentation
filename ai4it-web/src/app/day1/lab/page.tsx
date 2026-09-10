@@ -17,6 +17,7 @@ import {
 import InstructorNote from '@/components/InstructorNote';
 import Chart from '@/components/Chart';
 import { FALLBACK_DATASETS, fitLinearRegressionApi } from '@/lib/api';
+import HandsOnDatasetSection from '@/components/HandsOnDatasetSection';
 
 export default function LabPage() {
   const ticketData = FALLBACK_DATASETS['tickets'];
@@ -262,6 +263,9 @@ Forecast for Week 9:  243.07 tickets`}
           </div>
         </div>
       </section>
+
+      {/* Part 3: Official NDDB Bulk Chilling Center Dataset & Practice Exercises */}
+      <HandsOnDatasetSection />
 
       {/* Bridge */}
       <div className="p-8 rounded-2xl border border-blue-500/30 bg-blue-950/20 flex flex-col md:flex-row items-center justify-between gap-6">

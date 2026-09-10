@@ -30,10 +30,11 @@ That's the gap this plan closes. But there's a second, bigger opportunity here t
 | 3B.6 | Backprop Through Layers: the Same Matrix, Read Backward | 18 min | reveal | LR's "downhill" metaphor, now multi-layer, via the transposed forward weights |
 | 3B.7 | Initialization Actually Matters Now | 8 min | reveal | Delivers on LR 3B.6's explicit foreshadow |
 | 3B.8 | Recap: The Expanded Pipeline | 5 min | recap | Mirrors LR 3B.8 |
+| 3B.9 | Vendor Pitch Decoder: Classification, Metrics & Training Jargon | 8 min | context | Bridges regression to classification boundary, demystifies accuracy/precision/recall/F1 & batches/epochs |
 | C | Decision Boundary Playground (now earned) | 15 min | hands-on | — |
 | D | Closing the Cliffhanger — the Numbers, Reconciled | 10 min | apply | Resolves Beat 1 with real, consistent numbers |
 | E | Break It — No Concept of Time | 10 min | break | Bridges to Day 2 |
-| | **Total** | **~141 min (~2h 21m)** | | |
+| | **Total** | **~149 min (~2h 29m)** | | |
 
 Same philosophy as the Linear Regression rebuild: depth over speed, schedule reconciled separately at the Day 1 level.
 

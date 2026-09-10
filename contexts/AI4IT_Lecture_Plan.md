@@ -29,8 +29,9 @@
  - Break it: show a curved pattern where a straight line fails
  - 🥛 Dairy angle: this is the simplest real forecasting a chilling center could use today
 5. *Break*
-6. **Neural Networks** (75 min)
+6. **Neural Networks** (80 min)
  - Reveal as the fix: stack several bent trendlines together
+ - **Interlude: Vendor Pitch Decoder** — Regression (milk volume) vs Classification (adulteration), the "99% Accuracy" trap (Precision, Recall, F1-Score in RFPs), and training jargon (Batches, Epochs, Iterations via the textbook analogy)
  - Decision-boundary playground demo — boundary bends as layers/neurons added
  - Apply: predicting with multiple factors at once (temp + day + festival)
  - 🥛 Dairy angle: multi-factor demand forecasting already used in supply chain planning

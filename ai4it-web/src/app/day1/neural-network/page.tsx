@@ -28,6 +28,9 @@ import Formula from '@/components/Formula';
 import { DairyAngle, InfraAngle } from '@/components/DomainAngles';
 import NeuralNetworkDemo from './NeuralNetworkDemo';
 import CompleteNeuralNetworkViz from '@/components/CompleteNeuralNetworkViz';
+import VendorJargonDecoder from '@/components/VendorJargonDecoder';
+import ActivationFunctionViz from '@/components/ActivationFunctionViz';
+import SingleNeuronAnatomy from '@/components/SingleNeuronAnatomy';
 
 export default function NeuralNetworkPage() {
   const [reluInput, setReluInput] = useState<number>(0);
@@ -161,6 +164,9 @@ export default function NeuralNetworkPage() {
             },
           ]}
         />
+        
+        <ActivationFunctionViz />
+        <SingleNeuronAnatomy />
       </ConceptBeat>
 
       {/* BEAT 3: Comprehensive Architecture & Component Breakdown (45 min) */}
@@ -174,6 +180,20 @@ export default function NeuralNetworkPage() {
       >
         <CompleteNeuralNetworkViz />
       </ConceptBeat>
+
+      {/* INTERLUDE: Vendor Pitch Decoder (Classification vs Regression, Metrics & Training Jargon) */}
+      <section className="space-y-4">
+        <InstructorNote
+          timing="~8 minutes total (Keep It Light & Practical)"
+          aloudQuestion="When an AI startup pitches NDDB saying: 'Our deep learning model achieved 98% accuracy on milk adulteration testing with batch size 32 across 100 epochs', how do you evaluate if that is actually good or a catastrophic trap?"
+          expectedWrongAnswers={[
+            "Accepting 98% accuracy at face value. Emphasize that if adulteration occurs in only 2% of samples, a model that marks everything as 'Pure' gets 98% accuracy while letting all contaminated milk through!"
+          ]}
+          instructorTip="Frame this as an 'RFP Defense Kit'. Demystify Regression (predicting milk litres) vs Classification (the red/blue dots below). Explain why Precision & Recall matter more than Accuracy for rare defects, and use the textbook analogy for Batches and Epochs."
+        />
+
+        <VendorJargonDecoder />
+      </section>
 
       {/* SECTION C: Decision Boundary Playground, Now Earned (15 min) */}
       <section className="space-y-4">
