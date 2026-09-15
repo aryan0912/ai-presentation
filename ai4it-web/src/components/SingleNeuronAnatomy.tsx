@@ -408,11 +408,11 @@ export default function SingleNeuronAnatomy() {
               <div className="text-xs font-semibold px-3 py-1.5 rounded-lg w-full">
                 {isFired ? (
                   <span className="text-rose-300 bg-rose-950/80 border border-rose-800/60 block py-1 rounded">
-                    🚨 TRIGGER ALARM: SPOILED
+                    TRIGGER ALARM: SPOILED
                   </span>
                 ) : (
                   <span className="text-emerald-300 bg-emerald-950/80 border border-emerald-800/60 block py-1 rounded">
-                    ✅ PASS: TANKER ACCEPTED
+                    PASS: TANKER ACCEPTED
                   </span>
                 )}
               </div>

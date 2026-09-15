@@ -3,6 +3,7 @@ import React from 'react';
 import { ArrowRight, Scale, Filter, Search, FileCheck } from 'lucide-react';
 import Link from 'next/link';
 import HybridSearchVisualizer from '@/components/HybridSearchVisualizer';
+import AdvancedRetrievalComparator from '@/components/AdvancedRetrievalComparator';
 
 export default function RetrievalQualityPage() {
   return (
@@ -20,6 +21,11 @@ export default function RetrievalQualityPage() {
           How do we improve the results of our search? And more importantly, how do we prove to our stakeholders that the RAG pipeline is actually grounded in reality and not just hallucinating fluently?
         </p>
       </div>
+
+      {/* Primary Interactive Workbench: Multi-Query, Hybrid, and RAGAS */}
+      <section className="space-y-6">
+        <AdvancedRetrievalComparator />
+      </section>
 
       {/* Hybrid Search */}
       <section className="space-y-6">

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { Copy, CheckCircle, TerminalSquare, Settings2, ShieldCheck, HelpCircle, Braces } from 'lucide-react';
+import PromptWorkbench from '@/components/PromptWorkbench';
 
 const CopyBlock = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
@@ -55,7 +56,13 @@ export default function PromptingFrameworkPage() {
 
       {/* R-C-I-I-O-C Framework */}
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-white border-b border-slate-800 pb-2">1. The R-C-I-I-O-C Framework</h2>
+        <h2 className="text-2xl font-bold text-white border-b border-slate-800 pb-2">1. The R-C-I-I-O-C Framework & Interactive Workbench</h2>
+        <PromptWorkbench />
+      </section>
+
+      {/* Manual Step Inspection */}
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-white border-b border-slate-800 pb-2">2. Step-by-Step Prompt Stripping</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           <div className="space-y-4">
@@ -146,7 +153,7 @@ export default function PromptingFrameworkPage() {
             <div className="p-4 bg-slate-950 rounded-lg text-sm text-slate-300 italic border border-slate-800">
               "Based on the logs provided, it looks like the Mehsana-Rural chiller went offline at 14:02. The probable cause is a grid failure, though the temperature spike might also indicate..."
             </div>
-            <p className="text-xs font-mono text-rose-400/80 bg-rose-950/30 p-2 rounded">❌ Impossible to feed into a Python automation script.</p>
+            <p className="text-xs font-mono text-rose-400/80 bg-rose-950/30 p-2 rounded">Error: Cannot feed into automated systemsto a Python automation script.</p>
           </div>
 
           <div className="p-6 bg-slate-900 border border-emerald-900/50 rounded-2xl space-y-4">
@@ -159,7 +166,7 @@ export default function PromptingFrameworkPage() {
   "confidence": 0.95
 }`}
             </div>
-            <p className="text-xs font-mono text-emerald-400/80 bg-emerald-950/30 p-2 rounded">✅ Ready for `json.loads()` and automated ticket creation.</p>
+            <p className="text-xs font-mono text-emerald-400/80 bg-emerald-950/30 p-2 rounded">Production-ready: `json.loads()` and automated ticket creation.</p>
           </div>
         </div>
       </section>

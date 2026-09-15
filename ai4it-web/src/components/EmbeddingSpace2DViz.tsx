@@ -110,10 +110,10 @@ export default function EmbeddingSpace2DViz() {
 
           {/* Cluster Label Backgrounds */}
           <rect x="40" y="40" width="160" height="30" rx="6" fill="#0369a1" fillOpacity="0.1" stroke="#0284c7" strokeWidth="1" strokeDasharray="2 2" />
-          <text x="50" y="60" fill="#38bdf8" fontSize="11" fontWeight="bold">🥛 Dairy / Cold-Chain</text>
+          <text x="50" y="60" fill="#38bdf8" fontSize="11" fontWeight="bold">Dairy / Cold-Chain</text>
 
           <rect x="300" y="430" width="160" height="30" rx="6" fill="#047857" fillOpacity="0.1" stroke="#059669" strokeWidth="1" strokeDasharray="2 2" />
-          <text x="310" y="450" fill="#34d399" fontSize="11" fontWeight="bold">💻 IT / Infrastructure</text>
+          <text x="310" y="450" fill="#34d399" fontSize="11" fontWeight="bold">IT / Infrastructure</text>
 
           {/* Vector Arrows from Origin (250, 250) for Selected Words */}
           <line

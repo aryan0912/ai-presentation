@@ -2,6 +2,7 @@
 import React from 'react';
 import { Sparkles, Route, Building2 } from 'lucide-react';
 import TeamOf50Exercise from '@/components/TeamOf50Exercise';
+import EnterpriseArchitectureSandbox from '@/components/EnterpriseArchitectureSandbox';
 import Link from 'next/link';
 
 export default function DecisionExercisePage() {
@@ -20,6 +21,11 @@ export default function DecisionExercisePage() {
           That conversation you are about to have — that is the job. Not building it. Deciding whether it should be built that way.
         </p>
       </div>
+
+      {/* Interactive Architecture Simulator */}
+      <section className="space-y-6">
+        <EnterpriseArchitectureSandbox />
+      </section>
 
       {/* The Exercise */}
       <section className="space-y-6">

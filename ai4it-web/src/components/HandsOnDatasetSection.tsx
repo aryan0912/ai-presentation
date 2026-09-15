@@ -256,7 +256,7 @@ print(classification_report(y_test, y_pred, target_names=['Safe (0)', 'Spoil Ale
                   <td className="p-2.5 text-center">
                     {row.is_festival === 1 ? (
                       <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
-                        🎉 Festival
+                        Festival
                       </span>
                     ) : (
                       <span className="text-slate-600">—</span>
@@ -267,7 +267,7 @@ print(classification_report(y_test, y_pred, target_names=['Safe (0)', 'Spoil Ale
                   <td className="p-2.5 text-center">
                     {row.quality_alert === 1 ? (
                       <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold border border-rose-500/40 animate-pulse">
-                        🚨 SPOIL ALERT
+                        SPOIL ALERT
                       </span>
                     ) : (
                       <span className="text-emerald-400 font-bold text-[10px]">NORMAL (0)</span>

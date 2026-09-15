@@ -160,7 +160,7 @@ export default function DairyAiPage() {
                 <span className="text-xs font-bold text-white leading-tight">{stage.name}</span>
                 {stage.isHero && (
                   <span className="mt-1.5 text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30">
-                    Course Focus 🥛
+                    Course Focus
                   </span>
                 )}
               </div>
@@ -186,7 +186,7 @@ export default function DairyAiPage() {
             </div>
             {current.isHero && (
               <span className="text-xs font-mono px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/40 font-semibold">
-                ★ The Running Thread of This Workshop
+                The Running Thread of This Workshop
               </span>
             )}
           </div>

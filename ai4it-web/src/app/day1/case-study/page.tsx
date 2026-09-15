@@ -349,7 +349,7 @@ export default function CaseStudyPage() {
           />
 
           <div className="p-4 rounded-xl bg-purple-950/30 border border-purple-500/40 text-xs md:text-sm text-purple-200 leading-relaxed">
-            <strong className="text-purple-300 block mb-1">★ The Golden Rule of IT Forecasting:</strong>
+            <strong className="text-purple-300 block mb-1">The Golden Rule of IT Forecasting:</strong>
             "The model line doesn't get more wrong the further out you project — it gets <strong>less certain</strong>. The confidence band widens cone-like into the future. Any vendor or automated tool presenting a 12-month prediction as a single thin line is lying to your executive team."
           </div>
         </div>

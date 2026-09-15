@@ -10,6 +10,7 @@ import {
   SplitSquareHorizontal
 } from 'lucide-react';
 import Link from 'next/link';
+import RagPipelineVisualizer from '@/components/RagPipelineVisualizer';
 
 export default function RagPlumbingPage() {
   return (
@@ -70,6 +71,9 @@ export default function RagPlumbingPage() {
             How do we fix the walls above? We connect the LLM to a searchable database of our own documents. Here are the 6 mechanical steps that make it happen.
           </p>
         </div>
+
+        {/* Interactive 6-Stage Visualizer */}
+        <RagPipelineVisualizer />
 
         <div className="space-y-4 relative">
           {/* Vertical Connecting Line */}

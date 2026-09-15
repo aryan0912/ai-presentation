@@ -11,7 +11,7 @@ export function DairyAngle({ title = 'Dairy & Cooperative Context', children, cl
   return (
     <div className={`p-4 rounded-xl border border-sky-500/30 bg-sky-950/20 backdrop-blur-sm my-4 ${className}`}>
       <div className="flex items-center gap-2 mb-1.5">
-        <span className="text-lg">🥛</span>
+        <span className="text-xs font-mono font-bold text-sky-400 uppercase bg-sky-950/60 px-1.5 py-0.5 rounded border border-sky-800/50">Dairy</span>
         <h4 className="text-sm font-bold uppercase tracking-wider text-sky-400">{title}</h4>
       </div>
       <div className="text-xs md:text-sm text-sky-100/90 leading-relaxed pl-7">{children}</div>
@@ -29,7 +29,7 @@ export function InfraAngle({ title = 'IT Infrastructure & Operations Context', c
   return (
     <div className={`p-4 rounded-xl border border-amber-500/30 bg-amber-950/20 backdrop-blur-sm my-4 ${className}`}>
       <div className="flex items-center gap-2 mb-1.5">
-        <span className="text-lg">🧱</span>
+        <span className="text-xs font-mono font-bold text-amber-400 uppercase bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-800/50">Infra</span>
         <h4 className="text-sm font-bold uppercase tracking-wider text-amber-400">{title}</h4>
       </div>
       <div className="text-xs md:text-sm text-amber-100/90 leading-relaxed pl-7">{children}</div>

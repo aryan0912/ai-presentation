@@ -138,8 +138,8 @@ export default function SequenceProblemPage() {
               <span className="text-slate-400 uppercase font-bold block mb-1">Human Perception:</span>
               <p className={isShuffled ? 'text-rose-300 font-bold' : 'text-slate-200'}>
                 {isShuffled
-                  ? '❌ "This looks like wild, noisy static! The upward trend is completely destroyed."'
-                  : '✓ "Clear upward momentum (+42 L/day). I expect tomorrow to rise."'
+                  ? '"This looks like wild, noisy static! The upward trend is completely destroyed."'
+                  : '"Clear upward momentum (+42 L/day). I expect tomorrow to rise."'
                 }
               </p>
             </div>

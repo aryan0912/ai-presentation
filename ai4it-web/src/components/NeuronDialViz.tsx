@@ -151,11 +151,11 @@ export default function NeuronDialViz() {
           <div className="text-[11px] text-slate-400 font-sans leading-relaxed">
             {z < 0 && useActivation ? (
               <span className="text-rose-400 font-bold">
-                ⛔ Signal is negative ($z = {z}$). Diode blocks the current! Activation remains zero ($a = 0$).
+                Signal is negative ($z = {z}$). Diode blocks the current! Activation remains zero ($a = 0$).
               </span>
             ) : (
               <span className="text-emerald-400 font-bold">
-                ⚡ Signal is positive ($z = {z}$). Diode conducts fully! Activation passes untouched ($a = {a}$).
+                Signal is positive ($z = {z}$). Diode conducts fully! Activation passes untouched ($a = {a}$).
               </span>
             )}
           </div>

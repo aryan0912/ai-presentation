@@ -135,7 +135,7 @@ export default function CocktailPartyViz() {
                   </div>
                 </div>
 
-                <div className="text-slate-600 font-mono text-xl">🤝</div>
+                <div className="text-slate-500 font-mono text-xs uppercase tracking-wider font-semibold">Matched</div>
 
                 {/* Key Listener */}
                 <div className="w-full md:w-1/2 p-5 rounded-xl bg-amber-950/20 border border-amber-500/40 space-y-2">

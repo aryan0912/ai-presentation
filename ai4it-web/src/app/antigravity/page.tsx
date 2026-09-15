@@ -91,15 +91,15 @@ export default function AntigravityPage() {
             <h4 className="text-xs font-bold font-mono uppercase text-rose-400 mb-2">What This is NOT</h4>
             <ul className="space-y-3 text-sm text-slate-200">
               <li className="flex items-start gap-2">
-                <span className="text-rose-400 font-bold">✕</span>
+                <span className="text-rose-400 font-bold">[No]</span>
                 <span>Learning syntax, memorizing semicolons, or learning to code from scratch.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-rose-400 font-bold">✕</span>
+                <span className="text-rose-400 font-bold">[No]</span>
                 <span>Reading the generated code line by line like a compiler.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-rose-400 font-bold">✕</span>
+                <span className="text-rose-400 font-bold">[No]</span>
                 <span>Blindly trusting whatever the model outputs without testing.</span>
               </li>
             </ul>
@@ -149,7 +149,7 @@ export default function AntigravityPage() {
           </div>
           {allComplete && (
             <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
-              ✓ Setup Verified Complete
+              Setup Verified Complete
             </span>
           )}
         </div>

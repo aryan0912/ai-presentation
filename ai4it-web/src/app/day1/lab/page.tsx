@@ -199,7 +199,7 @@ Calculate the slope (weight), intercept (bias), RMSE, and predict Week 9 tickets
 
             {revealed && (
               <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 text-xs font-mono text-emerald-300">
-                ✓ <strong>Closed-Form OLS Solution:</strong> m = 12.76, c = 128.21, Optimal RMSE = ± 3.42 tickets.
+                <strong>Closed-Form OLS Solution:</strong> m = 12.76, c = 128.21, Optimal RMSE = ± 3.42 tickets.
               </div>
             )}
           </div>

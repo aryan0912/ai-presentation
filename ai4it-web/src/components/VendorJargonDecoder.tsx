@@ -215,22 +215,22 @@ export default function VendorJargonDecoder() {
                     {taskMode === 'regression' ? (
                       <>
                         <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800/80 text-slate-300 flex items-start gap-2">
-                          <span className="text-sky-400 font-bold font-mono">🥛 Dairy:</span>
+                          <span className="text-sky-400 font-bold font-mono">Dairy Domain:</span>
                           <span>&ldquo;How many litres of milk will the Anand chilling center receive tomorrow?&rdquo; (e.g. 2,850 L)</span>
                         </div>
                         <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800/80 text-slate-300 flex items-start gap-2">
-                          <span className="text-sky-400 font-bold font-mono">💻 IT Ops:</span>
+                          <span className="text-sky-400 font-bold font-mono">IT Ops Domain:</span>
                           <span>&ldquo;What will the average CPU utilization % be on the ERP database server at 2:00 PM?&rdquo; (e.g. 78.4%)</span>
                         </div>
                       </>
                     ) : (
                       <>
                         <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800/80 text-slate-300 flex items-start gap-2">
-                          <span className="text-purple-400 font-bold font-mono">🥛 Dairy:</span>
+                          <span className="text-purple-400 font-bold font-mono">Dairy Domain:</span>
                           <span>&ldquo;Is this milk tanker Pure or Adulterated with starch/detergent?&rdquo; (Binary: 0 or 1)</span>
                         </div>
                         <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800/80 text-slate-300 flex items-start gap-2">
-                          <span className="text-purple-400 font-bold font-mono">💻 IT Ops:</span>
+                          <span className="text-purple-400 font-bold font-mono">IT Ops Domain:</span>
                           <span>&ldquo;Is this firewall traffic packet Benign or a DDoS Attack?&rdquo; (Categorical / Anomaly)</span>
                         </div>
                       </>
@@ -271,7 +271,7 @@ export default function VendorJargonDecoder() {
                 </div>
 
                 <div className="p-3 rounded-lg bg-sky-950/30 border border-sky-800/40 text-xs text-sky-200">
-                  <strong>💡 The Bridge to Section C:</strong> In the Decision Boundary Playground below, you are running a <strong>Classification</strong> model—learning to draw non-linear borders separating Class 0 (Blue dots) from Class 1 (Purple dots)!
+                  <strong>Key Insight for Section C:</strong> In the Decision Boundary Playground below, you are running a <strong>Classification</strong> model—learning to draw non-linear borders separating Class 0 (Blue dots) from Class 1 (Purple dots)!
                 </div>
               </div>
 
@@ -478,7 +478,7 @@ export default function VendorJargonDecoder() {
 
               {/* Vendor Defense Note */}
               <div className="mt-4 p-4 rounded-lg bg-sky-950/20 border border-sky-800/40 text-xs text-sky-200 leading-relaxed font-sans">
-                <strong>🛡️ What to put in your NDDB AI RFP:</strong> Never accept a vendor bid stating only <em>"Model achieves 95%+ Accuracy"</em>. (The Lazy model gets 95% just by passing everything!). 
+                <strong>Specification for NDDB AI RFP:</strong> Never accept a vendor bid stating only <em>"Model achieves 95%+ Accuracy"</em>. (The Lazy model gets 95% just by passing everything!). 
                 Demand: <strong>"Minimum 80% Recall on rare defects, with F1-Score &gt; 0.75."</strong> This guarantees the model is actually looking for the rare 5 adulterated tankers, not just rubber-stamping the 95 pure ones.
               </div>
             </div>
@@ -674,7 +674,7 @@ export default function VendorJargonDecoder() {
               </div>
 
               <div className="text-[11px] text-slate-400 italic">
-                📌 <strong>Takeaway:</strong> More epochs does not always mean better. If you read the same textbook 500 times, you start memorizing the exact typos instead of the concepts (Overfitting!).
+                <strong>Takeaway:</strong> More epochs does not always mean better. If you read the same textbook 500 times, you start memorizing the exact typos instead of the concepts (Overfitting!).
               </div>
             </div>
           </motion.div>
