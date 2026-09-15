@@ -75,6 +75,26 @@ export default function Sidebar() {
         { href: '/day2/hands-on', label: '5. Hands-On: Ollama & HF Suite', minutes: '90m' },
       ],
     },
+    {
+      title: 'DAY 3 · Prompting & RAG',
+      defaultOpen: true,
+      items: [
+        { href: '/day3/industry-use-cases', label: '1. Where AI Lives in IT', minutes: '105m' },
+        { href: '/day3/prompting-framework', label: '2. The Prompting Framework', minutes: '120m' },
+        { href: '/day3/rag-plumbing', label: '3. Hitting the Wall: RAG', minutes: '90m' },
+        { href: '/day3/langflow-build', label: '4. Live Build: RAG Pipeline', minutes: '75m' },
+      ],
+    },
+    {
+      title: 'DAY 4 · Production Architecture',
+      defaultOpen: true,
+      items: [
+        { href: '/day4/messy-data', label: '1. Messy Data & Code', minutes: '105m' },
+        { href: '/day4/production-architecture', label: '2. Production Architecture', minutes: '120m' },
+        { href: '/day4/retrieval-quality', label: '3. Retrieval Quality & Eval', minutes: '90m' },
+        { href: '/day4/decision-exercise', label: '4. Judgment & Scale', minutes: '75m' },
+      ],
+    },
   ];
 
   const toggleGroup = (title: string) => {
