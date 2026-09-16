@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { Copy, CheckCircle, TerminalSquare, Settings2, ShieldCheck, HelpCircle, Braces } from 'lucide-react';
+import Link from 'next/link';
+import { Copy, CheckCircle, TerminalSquare, Settings2, ShieldCheck, HelpCircle, Braces, ArrowRight } from 'lucide-react';
 import PromptWorkbench from '@/components/PromptWorkbench';
 
 const CopyBlock = ({ text }: { text: string }) => {
@@ -215,6 +216,42 @@ export default function PromptingFrameworkPage() {
         </div>
       </section>
 
+      {/* The Limitation Reveal: Bridge to Langflow & RAG */}
+      <section className="p-8 rounded-3xl bg-gradient-to-r from-rose-950/40 via-slate-900 to-amber-950/30 border border-rose-900/50 space-y-6">
+        <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-rose-400 font-bold">
+          <span>The Limitation Reveal · The Bridge to Langflow</span>
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-white">
+          "Now ask your tool about your internal plant SOP..."
+        </h2>
+        <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-3xl">
+          Try this in ChatGPT, Claude, or Gemini: <em>"What is the exact escalation procedure when Anand Chilling Center Tank #3 temperature exceeds 8°C?"</em>
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+            <h4 className="font-bold text-rose-400 text-sm">What Happens:</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              The model either hallucinates generic refrigeration advice or admits it doesn't know. No amount of "role playing" or "chain of thought" can summon documents it was never trained on.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+            <h4 className="font-bold text-emerald-400 text-sm">The Core Takeaway:</h4>
+            <p className="text-xs text-slate-400 leading-relaxed italic">
+              "You cannot prompt your way out of missing knowledge. Missing knowledge requires architecture."
+            </p>
+          </div>
+        </div>
+
+        <div className="pt-4 flex justify-end">
+          <Link href="/day3/langflow-intro" className="button-primary flex items-center gap-2 text-sm">
+            Transition to Langflow Pipelines <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
+
     </div>
   );
 }
+

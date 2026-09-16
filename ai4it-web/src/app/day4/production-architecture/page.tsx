@@ -104,6 +104,65 @@ export default function ProductionArchitecturePage() {
         </div>
       </section>
 
+      {/* Production Defenses: RBAC & Guardrails */}
+      <section className="space-y-6 pt-12 border-t border-slate-800">
+        <div>
+          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+            <KeyRound className="text-rose-400" />
+            4. Production Defenses: RBAC & Out-of-Domain Guardrails
+          </h2>
+          <p className="text-slate-400 mt-1 max-w-3xl text-sm">
+            Two major enterprise vulnerabilities: unauthorized users accessing confidential executive data, and adversarial/irrelevant prompts causing hallucinations.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+            <h3 className="font-bold text-white text-lg flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-rose-400" />
+              A. Metadata Pre-Filtering (RBAC)
+            </h3>
+            <p className="text-sm text-slate-300">
+              When a junior technician asks: <em>"What is the executive bonus policy?"</em>, standard vector search will retrieve confidential HR chunks if they are in the same vector space.
+            </p>
+            <div className="p-3 bg-slate-950 rounded-xl font-mono text-xs text-sky-300 border border-slate-800">
+              {`// Ingest with metadata tags:
+{ "file": "exec_bonus.pdf", "clearance": "Level_3" }
+
+// Query pre-filtered by user session:
+retriever.get_relevant_documents(
+  query, 
+  filter={"clearance": {"$lte": user_session.clearance}}
+)`}
+            </div>
+            <p className="text-xs text-slate-400">
+              The database filters out forbidden chunks <strong>before</strong> similarity search occurs. No unauthorized tokens ever reach the LLM.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+            <h3 className="font-bold text-white text-lg flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              B. Out-of-Domain Guardrails & Refusal
+            </h3>
+            <p className="text-sm text-slate-300">
+              When a user asks: <em>"Who won the 2024 IPL final?"</em> or tries a prompt injection attack, a naive RAG pipeline searches milk plant SOPs and hallucinates bizarre answers.
+            </p>
+            <div className="p-3 bg-slate-950 rounded-xl font-mono text-xs text-amber-300 border border-slate-800">
+              {`Role: Authorized NDDB Operational Assistant
+Constraints:
+- You ONLY answer questions grounded in the context.
+- If the question is outside plant operations or missing:
+  Respond: "Information not found in authorized operational manuals."
+- NEVER answer from general world knowledge.`}
+            </div>
+            <p className="text-xs text-slate-400">
+              Enforce a strict refusal boundary at the prompt template level, or use a lightweight classifier gate before triggering vector retrieval.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Bridge to Retrieval Quality */}
       <div className="p-8 rounded-2xl border border-blue-500/30 bg-blue-950/20 flex flex-col md:flex-row items-center justify-between gap-6 mt-12">
         <div>

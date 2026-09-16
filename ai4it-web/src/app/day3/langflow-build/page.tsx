@@ -20,58 +20,72 @@ export default function LangflowBuildPage() {
   const nodes = [
     {
       id: 1,
-      title: 'Document Loader',
+      title: '1. Document Loader',
       icon: <FileText size={20} className="text-sky-400" />,
-      description: 'Point Langflow to the sample document (or your own if ready).',
+      description: 'Point Langflow to the sample document (PDF/TXT/Markdown). If using local files, provide the local file path or upload directly into the canvas.',
+      config: 'File: sample_sop_anand_chilling.txt (or upload your 3-page PDF)',
       gate: false
     },
     {
       id: 2,
-      title: 'Chunker Node',
+      title: '2. Recursive Chunker',
       icon: <SplitSquareHorizontal size={20} className="text-sky-400" />,
-      description: 'Set chunk size. Remember the tradeoff: too small loses context, too large dilutes relevance.',
-      gate: true
+      description: 'Split document into manageable semantic chunks. Chunk size 500 characters, overlap 50 characters to prevent cutting sentences in half.',
+      config: 'Chunk Size: 500 | Chunk Overlap: 50 | Separators: ["\\n\\n", "\\n", " "]',
+      gate: true,
+      gateAction: 'Stop here. Raise your hand when chunker is wired to Document Loader. Observe how text is chopped before embedding.'
     },
     {
       id: 3,
-      title: 'Embedder Node',
+      title: '3. Embedder Node',
       icon: <Layers size={20} className="text-purple-400" />,
-      description: 'Connect to an OpenRouter-hosted embedding model (e.g., text-embedding-3-small).',
+      description: 'Converts chunks to dense vectors. On 16GB laptops without GPU, use local Ollama embeddings (nomic-embed-text) for 100% offline execution with zero memory strain.',
+      config: 'Provider: Ollama Embeddings (http://localhost:11434) | Model: nomic-embed-text (or text-embedding-3-small via OpenRouter)',
       gate: false
     },
     {
       id: 4,
-      title: 'Vector Store Node',
+      title: '4. Vector Store Node',
       icon: <Database size={20} className="text-indigo-400" />,
-      description: 'Create the database to hold your embedded chunks.',
-      gate: true
+      description: 'ChromaDB or In-Memory Vector Store. Ingests chunked text documents and calculates vector embeddings.',
+      config: 'Collection: nddb_sop_store | Distance: Cosine Similarity',
+      gate: true,
+      gateAction: 'Stop here. Raise your hand when Vector Store is connected to both Chunker and Embedder. Vector database is now populated!'
     },
     {
       id: 5,
-      title: 'Retriever Node',
+      title: '5. Retriever Node',
       icon: <Search size={20} className="text-emerald-400" />,
-      description: 'Wire the Vector Store to the Retriever to pull the nearest neighbors.',
+      description: 'Queries the Vector Store using approximate nearest neighbor search to pull the top-k most relevant chunks.',
+      config: 'Search Type: Similarity | Search Kwargs (k): 4',
       gate: false
     },
     {
       id: 6,
-      title: 'Prompt Template Node',
+      title: '6. Prompt Template Node',
       icon: <LayoutTemplate size={20} className="text-amber-400" />,
-      description: 'Look at what this node wants: Role, Context, Instruction. This is exactly the R-C-I-I-O-C framework from this morning! The Context field is now filled automatically by the Retriever.',
-      gate: true
+      description: 'The Climax: Connect the Retriever output into {context}! This is the exact R-C-I-I-O-C template from this morning, now populated automatically.',
+      config: `Role: You are an authorized NDDB technical operations assistant.
+Context: Use ONLY the following retrieved operational passages: {context}
+Instruction: Answer the user question: {question}
+Constraints: If the answer is not in the context, say "Information not found in authorized documents."`,
+      gate: true,
+      gateAction: 'The Grand Connection! Verify that Retriever output connects to {context} socket. Raise your hand to celebrate.'
     },
     {
       id: 7,
-      title: 'LLM Node',
+      title: '7. LLM Chat Node',
       icon: <Cpu size={20} className="text-rose-400" />,
-      description: 'Connect to an OpenRouter chat model (e.g., GPT-4o-mini or Claude 3 Haiku).',
+      description: 'Inference model that synthesizes the grounded answer. Use Ollama (llama3.2:3b / phi3:mini) for local execution or OpenRouter.',
+      config: 'Provider: Ollama (http://localhost:11434) | Model: llama3.2:3b (or phi3:mini) | Temperature: 0.1',
       gate: false
     },
     {
       id: 8,
-      title: 'Chat Output',
+      title: '8. Chat Interface',
       icon: <MessageSquare size={20} className="text-rose-400" />,
-      description: 'Run it via Langflow\'s chat interface. Ask it something the source document actually answers.',
+      description: 'Test grounding and refusal. Ask questions present in the SOP to test citations, then ask unanswerable questions to verify refusal.',
+      config: 'Playground Chat: Test with "What is the threshold for Tank #3?"',
       gate: false
     }
   ];
@@ -141,8 +155,8 @@ export default function LangflowBuildPage() {
                 <AlertOctagon className="text-rose-400 shrink-0 mt-0.5" size={20} />
                 <div>
                   <h4 className="font-bold text-rose-400">Checkpoint Gate</h4>
-                  <p className="text-sm text-rose-300/70 mt-1">
-                    Stop here. Raise your hand when this node is connected and configured. We do not move to step {activeNode + 1} until the whole room is synced.
+                  <p className="text-sm text-rose-300/80 mt-1">
+                    {nodes[activeNode - 1].gateAction || `Stop here. Raise your hand when this node is connected and configured. We do not move to step ${activeNode + 1} until the whole room is synced.`}
                   </p>
                 </div>
               </div>
@@ -153,18 +167,28 @@ export default function LangflowBuildPage() {
                 {React.cloneElement(nodes[activeNode - 1].icon as React.ReactElement<any>, { size: 32 })}
               </div>
               <div>
-                <h2 className="text-3xl font-bold text-white">{nodes[activeNode - 1].title}</h2>
-                <span className="text-sm font-mono text-slate-500 uppercase tracking-widest">Node {activeNode} of 8</span>
+                <h2 className="text-2xl md:text-3xl font-bold text-white">{nodes[activeNode - 1].title}</h2>
+                <span className="text-xs font-mono text-slate-500 uppercase tracking-widest">Step {activeNode} of 8</span>
               </div>
             </div>
 
-            <p className="text-lg text-slate-300 leading-relaxed flex-1">
+            <p className="text-base text-slate-300 leading-relaxed mb-6">
               {nodes[activeNode - 1].description}
             </p>
 
+            {/* Node Configuration Details */}
+            {nodes[activeNode - 1].config && (
+              <div className="mb-6">
+                <span className="text-xs font-mono uppercase tracking-wider text-slate-500 block mb-1">Canvas Configuration</span>
+                <pre className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 whitespace-pre-wrap">
+                  {nodes[activeNode - 1].config}
+                </pre>
+              </div>
+            )}
+
             {/* Special Highlight for Node 6 */}
             {activeNode === 6 && (
-              <div className="mt-6 p-5 rounded-xl bg-amber-950/20 border border-amber-900/50">
+              <div className="p-5 rounded-xl bg-amber-950/20 border border-amber-900/50">
                 <h4 className="font-bold text-amber-400 mb-2">The Moment It Ties Together</h4>
                 <p className="text-sm text-slate-300 italic">
                   "You already know how to write this node. You learned it before lunch. The only thing that's new is that the Context field is now filled dynamically by the Retriever instead of by you pasting it."

@@ -42,14 +42,81 @@ export default function MessyDataPage() {
         <div>
           <h2 className="text-2xl font-bold text-white flex items-center gap-2">
             <Code2 className="text-indigo-400" />
-            LangChain-as-Code Literacy
+            1. LangChain-as-Code Literacy: Under the Hood
           </h2>
           <p className="text-slate-400 mt-1 max-w-3xl text-sm">
-            You didn't write this Python code from scratch, and you aren't about to become a Python developer. But you can read it now and know what every line is responsible for. That's the actual skill: <strong>specify, inspect, judge.</strong>
+            Exporting your Day 3 Langflow visual flow reveals standard LangChain Expression Language (LCEL) code. You don't need to write this from scratch, but you must know how to inspect and judge it.
           </p>
         </div>
         
         <InteractiveCodeAnnotator />
+
+        {/* The LangChain Reality Check */}
+        <div className="mt-8 p-6 rounded-2xl bg-slate-900 border border-amber-900/40 space-y-4">
+          <div className="flex items-center gap-2 text-amber-400 font-mono text-xs uppercase tracking-widest font-bold">
+            <span>Critical Reality Check · Where LangChain Breaks in Production</span>
+          </div>
+          <p className="text-sm text-slate-300 italic">
+            "LangChain is fantastic for prototyping in an afternoon, but you must know where it bites you in an enterprise IT environment."
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+              <h4 className="font-bold text-white text-sm">Leaky Abstractions</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Simple operations are wrapped in 7 layers of inheritance. When an API call fails, stack traces are 40 lines deep into framework internals.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+              <h4 className="font-bold text-white text-sm">Hidden Prompts & Bloat</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Pre-built chains inject undocumented system prompts behind your back, silently burning token quotas and inflating monthly bills.
+              </p>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+              <h4 className="font-bold text-white text-sm">Brittle Updates</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Frequent breaking API changes between minor versions can break CI/CD pipelines. For production microservices, many teams prefer raw database SDKs and direct REST calls.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Document Lifecycle & Re-ingestion Section */}
+      <section className="space-y-6 pt-12 border-t border-slate-800">
+        <div>
+          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+            <ShieldAlert className="text-emerald-400" />
+            2. Re-ingestion & Document Lifecycle
+          </h2>
+          <p className="text-slate-400 mt-1 max-w-3xl text-sm">
+            What happens next month when Plant SOP v1.2 is released? Wiping the entire database to re-embed 2,000 files takes hours and costs thousands.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-sky-950 text-sky-400 font-mono font-bold flex items-center justify-center text-sm border border-sky-800">1</div>
+            <h4 className="font-bold text-white text-sm">Content Hashing</h4>
+            <p className="text-xs text-slate-400">Compute a SHA-256 hash of each document during initial ingestion.</p>
+          </div>
+          <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-950 text-emerald-400 font-mono font-bold flex items-center justify-center text-sm border border-emerald-800">2</div>
+            <h4 className="font-bold text-white text-sm">Change Detection</h4>
+            <p className="text-xs text-slate-400">If the hash matches the database catalog, skip embedding entirely (0 token cost).</p>
+          </div>
+          <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-amber-950 text-amber-400 font-mono font-bold flex items-center justify-center text-sm border border-amber-800">3</div>
+            <h4 className="font-bold text-white text-sm">Purge & Replace</h4>
+            <p className="text-xs text-slate-400">If the hash differs, delete only that document's chunk IDs, re-embed, and upsert.</p>
+          </div>
+          <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+            <div className="w-8 h-8 rounded-lg bg-rose-950 text-rose-400 font-mono font-bold flex items-center justify-center text-sm border border-rose-800">4</div>
+            <h4 className="font-bold text-white text-sm">Tombstoning</h4>
+            <p className="text-xs text-slate-400">Flag deleted files with a tombstone so obsolete operational rules are purged from vector memory.</p>
+          </div>
+        </div>
       </section>
 
       {/* Bridge to Production Architecture */}

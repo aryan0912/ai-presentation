@@ -79,10 +79,11 @@ export default function Sidebar() {
       title: 'DAY 3 · Prompting & RAG',
       defaultOpen: true,
       items: [
-        { href: '/day3/industry-use-cases', label: '1. Where AI Lives in IT', minutes: '105m' },
-        { href: '/day3/prompting-framework', label: '2. The Prompting Framework', minutes: '120m' },
-        { href: '/day3/rag-plumbing', label: '3. Hitting the Wall: RAG', minutes: '90m' },
-        { href: '/day3/langflow-build', label: '4. Live Build: RAG Pipeline', minutes: '75m' },
+        { href: '/day3/industry-use-cases', label: '1. Where AI Lives in IT', minutes: '60m' },
+        { href: '/day3/prompting-framework', label: '2. Prompting & Structured JSON', minutes: '60m' },
+        { href: '/day3/langflow-intro', label: '3. Meet Langflow (Pre-Lunch)', minutes: '120m' },
+        { href: '/day3/rag-plumbing', label: '4. Hitting the Wall: RAG Architecture', minutes: '60m' },
+        { href: '/day3/langflow-build', label: '5. Live Build: 8-Node RAG Bot', minutes: '120m' },
       ],
     },
     {

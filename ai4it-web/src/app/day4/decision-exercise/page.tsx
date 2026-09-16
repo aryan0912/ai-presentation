@@ -27,12 +27,83 @@ export default function DecisionExercisePage() {
         <EnterpriseArchitectureSandbox />
       </section>
 
-      {/* The Exercise */}
+      {/* Deconstructing the Giants */}
       <section className="space-y-6">
         <div>
           <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Route className="text-sky-400" />
-            1. The Team of 50 Exercise
+            <Sparkles className="text-sky-400" />
+            1. Deconstructing the Giants: Microsoft Copilot & Google NotebookLM
+          </h2>
+          <p className="text-slate-400 mt-1 max-w-3xl text-sm">
+            There is no magic in commercial enterprise RAG. When you use Microsoft 365 Copilot or Google NotebookLM, you are seeing this exact architecture at hyperscale.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+            <h3 className="font-bold text-sky-400 text-lg flex items-center gap-2">
+              Microsoft 365 Copilot
+            </h3>
+            <p className="text-sm text-slate-300">
+              Uses the <strong>Microsoft Graph Semantic Index</strong> to pre-filter your emails, Teams chats, and SharePoint docs.
+            </p>
+            <ul className="text-xs text-slate-400 space-y-2 list-disc pl-4">
+              <li><strong>Metadata RBAC:</strong> Exactly like our clearance filter — queries only search documents your Azure AD role has read-access to.</li>
+              <li><strong>Hybrid Indexing:</strong> Combines Bing/SharePoint keyword search with dense vectors.</li>
+            </ul>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+            <h3 className="font-bold text-purple-400 text-lg flex items-center gap-2">
+              Google NotebookLM
+            </h3>
+            <p className="text-sm text-slate-300">
+              Grounds answers strictly inside your uploaded Google Docs, PDFs, and copied text.
+            </p>
+            <ul className="text-xs text-slate-400 space-y-2 list-disc pl-4">
+              <li><strong>Source Grounding:</strong> Numbered citation brackets <code>[1]</code> map directly to chunk metadata and highlighted PDF passages.</li>
+              <li><strong>Intelligent OCR:</strong> Uses deep layout parsing identical to Docling to extract tables and multi-column manuals.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Vector DB Landscape: Dedicated vs pgvector */}
+      <section className="space-y-6 pt-12 border-t border-slate-800">
+        <div>
+          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+            <Building2 className="text-emerald-400" />
+            2. The Vector Database Landscape: The Pragmatic Choice
+          </h2>
+          <p className="text-slate-400 mt-1 max-w-3xl text-sm">
+            When vendors pitch vector databases, they push shiny new standalone systems. In enterprise IT, simplicity and data integrity win.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+            <h4 className="font-bold text-slate-300 text-base">Dedicated Vector DBs (Chroma, Milvus, Qdrant, Pinecone)</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              <strong>Pros:</strong> Built from the ground up for billions of vectors, advanced sharding, and ultra-high QPS.<br/>
+              <strong>Cons:</strong> Another database to patch, back up, monitor, and secure. Separate network hop.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-emerald-950/20 border border-emerald-800/50 space-y-2">
+            <h4 className="font-bold text-emerald-400 text-base">Relational / Search Extensions (pgvector, Elasticsearch)</h4>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              <strong>Why IT departments love this:</strong> If NDDB already runs PostgreSQL, adding the <code>pgvector</code> extension handles hundreds of thousands of documents with ACID transactions, existing role permissions, and zero extra vendor licensing.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* The Exercise */}
+      <section className="space-y-6 pt-12 border-t border-slate-800">
+        <div>
+          <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+            <Route className="text-amber-400" />
+            3. The Team of 50 Exercise
           </h2>
           <p className="text-slate-400 mt-1 max-w-3xl text-sm">
             Read the scenario below. Work with your group to decide the architecture. Commit to your answers before revealing the reference solutions.
