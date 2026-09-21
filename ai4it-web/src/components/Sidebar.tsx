@@ -37,7 +37,11 @@ export default function Sidebar() {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     'OPENING': true,
     'DAY 1 · Patterns': false,
-    'DAY 2 · Memory, Attention & LLMs': true,
+    'DAY 2 · Memory, Attention & LLMs': false,
+    'DAY 3 · Prompting & RAG': false,
+    'DAY 4 · Production Architecture': false,
+    'DAY 5 · Tool Calling & Agents': true,
+    'DAY 6 · Governance & Capstone': true,
   });
 
   const navGroups: NavGroup[] = [
@@ -65,7 +69,7 @@ export default function Sidebar() {
     },
     {
       title: 'DAY 2 · Memory, Attention & LLMs',
-      defaultOpen: true,
+      defaultOpen: false,
       items: [
         { href: '/day2/nlp-intro', label: '0. NLP: Tokens & Embeddings', minutes: '25m' },
         { href: '/day2/rnn', label: '1. Hop 1: RNN Memory Loop', minutes: '25m' },
@@ -77,7 +81,7 @@ export default function Sidebar() {
     },
     {
       title: 'DAY 3 · Prompting & RAG',
-      defaultOpen: true,
+      defaultOpen: false,
       items: [
         { href: '/day3/industry-use-cases', label: '1. Where AI Lives in IT', minutes: '60m' },
         { href: '/day3/prompting-framework', label: '2. Prompting & Structured JSON', minutes: '60m' },
@@ -88,12 +92,36 @@ export default function Sidebar() {
     },
     {
       title: 'DAY 4 · Production Architecture',
-      defaultOpen: true,
+      defaultOpen: false,
       items: [
         { href: '/day4/messy-data', label: '1. Messy Data & Code', minutes: '105m' },
         { href: '/day4/production-architecture', label: '2. Production Architecture', minutes: '120m' },
         { href: '/day4/retrieval-quality', label: '3. Retrieval Quality & Eval', minutes: '90m' },
         { href: '/day4/decision-exercise', label: '4. Judgment & Scale', minutes: '75m' },
+      ],
+    },
+    {
+      title: 'DAY 5 · Tool Calling & Agents',
+      defaultOpen: true,
+      items: [
+        { href: '/day5', label: 'Overview: Giving Copilot Hands', minutes: '20m' },
+        { href: '/day5/tool-calling-reveal', label: '1. Tool Calling & The Reveal', minutes: '65m' },
+        { href: '/day5/the-five-rungs', label: '2. Calculator & Agentic RAG', minutes: '60m' },
+        { href: '/day5/sql-guardrails', label: '3. SQL Guardrails & Break-It', minutes: '60m' },
+        { href: '/day5/scale-theory', label: '4. Scale Theory & Percentiles', minutes: '50m' },
+        { href: '/day5/mcp-and-n8n', label: '5. MCP & n8n Ecosystem', minutes: '65m' },
+      ],
+    },
+    {
+      title: 'DAY 6 · Governance & Capstone',
+      defaultOpen: true,
+      items: [
+        { href: '/day6', label: 'Overview: Full Power & Capstone', minutes: '20m' },
+        { href: '/day6/the-harness', label: '1. The Harness Reveal', minutes: '50m' },
+        { href: '/day6/fine-tuning-vs-rag', label: '2. Fine-Tuning vs RAG', minutes: '45m' },
+        { href: '/day6/multi-agent-rca', label: '3. Multi-Agent RCA & Cascade', minutes: '75m' },
+        { href: '/day6/red-teaming-governance', label: '4. Red-Teaming & Governance', minutes: '60m' },
+        { href: '/day6/enterprise-roadmap', label: '5. Capstone: Enterprise Roadmap', minutes: '75m' },
       ],
     },
   ];
@@ -170,7 +198,21 @@ export default function Sidebar() {
       <div className="sidebar-footer">
         <div className="flex items-center gap-1.5 text-slate-400 font-mono text-xs">
           <Activity size={13} className="text-emerald-400" />
-          <span>Day 2: ~310 min teaching</span>
+          <span>
+            {pathname.startsWith('/day1')
+              ? 'Day 1: ~215m · Patterns'
+              : pathname.startsWith('/day2')
+              ? 'Day 2: ~310m · Attention & LLMs'
+              : pathname.startsWith('/day3')
+              ? 'Day 3: ~420m · Prompt & RAG'
+              : pathname.startsWith('/day4')
+              ? 'Day 4: ~390m · Architecture'
+              : pathname.startsWith('/day5')
+              ? 'Day 5: ~320m · Tools & Agents'
+              : pathname.startsWith('/day6')
+              ? 'Day 6: ~315m · Capstone'
+              : 'NDDB ICT · 6-Day Program'}
+          </span>
         </div>
         <Link href="/status" className="text-slate-500 hover:text-slate-300 font-mono text-[11px]">
           /status

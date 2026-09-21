@@ -20,8 +20,8 @@ import {
 } from 'lucide-react';
 import InstructorNote from '@/components/InstructorNote';
 
-// Currently teaching Day 1
-const CURRENT_DAY = 1;
+// Currently active workshop progression
+const CURRENT_DAY = 6;
 
 interface CapabilityCardData {
   id: string;
