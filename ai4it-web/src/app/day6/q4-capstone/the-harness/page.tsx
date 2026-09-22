@@ -1,4 +1,4 @@
-import HarnessTraceInspector from '../components/HarnessTraceInspector';
+import HarnessTraceInspector from '../../components/HarnessTraceInspector';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -25,10 +25,10 @@ export default function TheHarnessPage() {
       <HarnessTraceInspector />
 
       <div className="flex justify-between pt-8">
-        <Link href="/day6" className="button-secondary">
-          <ArrowLeft size={16} /> Back to Day 6
+        <Link href="/day6/q4-capstone" className="button-secondary">
+          <ArrowLeft size={16} /> Back to Q4 Capstone
         </Link>
-        <Link href="/day6/fine-tuning-vs-rag" className="button-primary">
+        <Link href="/day6/q2-scale-layer/fine-tuning-vs-rag" className="button-primary">
           Next: Fine-Tuning vs RAG <ArrowRight size={16} />
         </Link>
       </div>

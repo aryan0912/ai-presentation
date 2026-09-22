@@ -59,8 +59,8 @@ export default function Day6ConnectorsPage() {
         <Link href="/day6" className="button-secondary">
           <ArrowLeft size={16} /> Back to Day 6 Overview
         </Link>
-        <Link href="/day6/multi-agent-rca" className="button-primary">
-          Next: Multi-Agent RCA & Cascade <ArrowRight size={16} />
+        <Link href="/day6/q3-reality-layer" className="button-primary">
+          Next: Q3 Reality Layer <ArrowRight size={16} />
         </Link>
       </div>
     </div>

@@ -116,11 +116,10 @@ export default function Sidebar() {
       defaultOpen: true,
       items: [
         { href: '/day6', label: 'Overview: Enterprise Hardening', minutes: '20m' },
-        { href: '/day6/n8n-connectors', label: '1. n8n Enterprise Connectors', minutes: '50m' },
-        { href: '/day6/multi-agent-rca', label: '2. Multi-Agent RCA & Cascade', minutes: '65m' },
-        { href: '/day6/red-teaming-governance', label: '3. Red-Teaming & Governance CTF', minutes: '60m' },
-        { href: '/day6/scale-and-deployment', label: '4. Scale & Hardware Sizing', minutes: '50m' },
-        { href: '/day6/enterprise-roadmap', label: '5. The Capstone Roadmap', minutes: '75m' },
+        { href: '/day6/q1-trust-layer', label: 'Q1. The Trust Layer', minutes: '75m' },
+        { href: '/day6/q2-scale-layer', label: 'Q2. The Scale Layer', minutes: '75m' },
+        { href: '/day6/q3-reality-layer', label: 'Q3. The Reality Layer', minutes: '75m' },
+        { href: '/day6/q4-capstone', label: 'Q4. Capstone & Roadmap', minutes: '75m' },
       ],
     },
   ];

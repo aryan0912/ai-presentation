@@ -57,11 +57,11 @@ export default function FineTuningVsRagPage() {
       </div>
 
       <div className="flex justify-between pt-8">
-        <Link href="/day6/the-harness" className="button-secondary">
+        <Link href="/day6/q4-capstone/the-harness" className="button-secondary">
           <ArrowLeft size={16} /> Back
         </Link>
-        <Link href="/day6/multi-agent-rca" className="button-primary">
-          Next: Multi-Agent RCA <ArrowRight size={16} />
+        <Link href="/day6/q3-reality-layer" className="button-primary">
+          Next: Q3 Reality Layer <ArrowRight size={16} />
         </Link>
       </div>
     </div>
