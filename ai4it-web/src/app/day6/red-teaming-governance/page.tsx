@@ -34,10 +34,10 @@ export default function RedTeamingGovernancePage() {
 
       <div className="flex justify-between pt-8">
         <Link href="/day6/multi-agent-rca" className="button-secondary">
-          <ArrowLeft size={16} /> Back
+          <ArrowLeft size={16} /> Back: Multi-Agent RCA
         </Link>
-        <Link href="/day6/enterprise-roadmap" className="button-primary">
-          Next: Enterprise Roadmap <ArrowRight size={16} />
+        <Link href="/day6/scale-and-deployment" className="button-primary">
+          Next: Scale & Deployment Hardware <ArrowRight size={16} />
         </Link>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function MultiAgentRcaPage() {
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8 pb-16">
       <div>
         <span className="text-blue-400 font-mono text-sm font-bold uppercase tracking-wider">Day 6 • Block 2</span>
         <h1 className="text-3xl font-bold text-white mt-2 mb-4">
@@ -27,12 +27,12 @@ export default function MultiAgentRcaPage() {
         </p>
       </div>
 
-      <div className="flex justify-between pt-8">
-        <Link href="/day6/fine-tuning-vs-rag" className="button-secondary">
-          <ArrowLeft size={16} /> Back
+      <div className="flex justify-between pt-8 border-t border-slate-800">
+        <Link href="/day6/n8n-connectors" className="button-secondary">
+          <ArrowLeft size={16} /> Back: n8n Connectors
         </Link>
         <Link href="/day6/red-teaming-governance" className="button-primary">
-          Next: Red-Teaming <ArrowRight size={16} />
+          Next: Red-Teaming & Governance <ArrowRight size={16} />
         </Link>
       </div>
     </div>

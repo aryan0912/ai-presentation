@@ -45,8 +45,8 @@ export default function EnterpriseRoadmapPage() {
       </div>
 
       <div className="flex justify-between pt-8">
-        <Link href="/day6/red-teaming-governance" className="button-secondary">
-          <ArrowLeft size={16} /> Back
+        <Link href="/day6/scale-and-deployment" className="button-secondary">
+          <ArrowLeft size={16} /> Back: Scale & Deployment Hardware
         </Link>
         <Link href="/" className="button-primary">
           Finish Course & Return to Home

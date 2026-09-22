@@ -40,8 +40,8 @@ export default function Sidebar() {
     'DAY 2 · Memory, Attention & LLMs': false,
     'DAY 3 · Prompting & RAG': false,
     'DAY 4 · Production Architecture': false,
-    'DAY 5 · Tool Calling & Agents': true,
-    'DAY 6 · Governance & Capstone': true,
+    'DAY 5 · The Full Agentic Stack': true,
+    'DAY 6 · Hardening & Capstone': true,
   });
 
   const navGroups: NavGroup[] = [
@@ -101,27 +101,26 @@ export default function Sidebar() {
       ],
     },
     {
-      title: 'DAY 5 · Tool Calling & Agents',
+      title: 'DAY 5 · The Full Agentic Stack',
       defaultOpen: true,
       items: [
-        { href: '/day5', label: 'Overview: Giving Copilot Hands', minutes: '20m' },
-        { href: '/day5/tool-calling-reveal', label: '1. Tool Calling & The Reveal', minutes: '65m' },
-        { href: '/day5/the-five-rungs', label: '2. Calculator & Agentic RAG', minutes: '60m' },
-        { href: '/day5/sql-guardrails', label: '3. SQL Guardrails & Break-It', minutes: '60m' },
-        { href: '/day5/scale-theory', label: '4. Scale Theory & Percentiles', minutes: '50m' },
-        { href: '/day5/mcp-and-n8n', label: '5. MCP & n8n Ecosystem', minutes: '65m' },
+        { href: '/day5', label: 'Overview: 4 Quarters', minutes: '20m' },
+        { href: '/day5/q1-tool-factory', label: 'Q1. The Tool Factory', minutes: '105m' },
+        { href: '/day5/q2-agentic-rag', label: 'Q2. Agentic RAG', minutes: '105m' },
+        { href: '/day5/q3-mcp-revolution', label: 'Q3. The MCP Revolution', minutes: '105m' },
+        { href: '/day5/q4-scaling-security', label: 'Q4. Scaling & Security', minutes: '105m' },
       ],
     },
     {
-      title: 'DAY 6 · Governance & Capstone',
+      title: 'DAY 6 · Hardening & Capstone',
       defaultOpen: true,
       items: [
-        { href: '/day6', label: 'Overview: Full Power & Capstone', minutes: '20m' },
-        { href: '/day6/the-harness', label: '1. The Harness Reveal', minutes: '50m' },
-        { href: '/day6/fine-tuning-vs-rag', label: '2. Fine-Tuning vs RAG', minutes: '45m' },
-        { href: '/day6/multi-agent-rca', label: '3. Multi-Agent RCA & Cascade', minutes: '75m' },
-        { href: '/day6/red-teaming-governance', label: '4. Red-Teaming & Governance', minutes: '60m' },
-        { href: '/day6/enterprise-roadmap', label: '5. Capstone: Enterprise Roadmap', minutes: '75m' },
+        { href: '/day6', label: 'Overview: Enterprise Hardening', minutes: '20m' },
+        { href: '/day6/n8n-connectors', label: '1. n8n Enterprise Connectors', minutes: '50m' },
+        { href: '/day6/multi-agent-rca', label: '2. Multi-Agent RCA & Cascade', minutes: '65m' },
+        { href: '/day6/red-teaming-governance', label: '3. Red-Teaming & Governance CTF', minutes: '60m' },
+        { href: '/day6/scale-and-deployment', label: '4. Scale & Hardware Sizing', minutes: '50m' },
+        { href: '/day6/enterprise-roadmap', label: '5. The Capstone Roadmap', minutes: '75m' },
       ],
     },
   ];

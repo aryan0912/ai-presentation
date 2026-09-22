@@ -196,8 +196,8 @@ export default function CourseMapPage() {
               Autonomous agent reasoning loops. Tool calling, automated incident triage, DPDPA compliance, and on-prem hardware sizing.
             </p>
             <div className="pt-3 border-t border-slate-800 text-xs text-slate-400 space-y-1 font-mono">
-              <div>• Day 5: Agent Loops, Tools &amp; Security</div>
-              <div>• Day 6: Hardware, Governance &amp; Roadmap</div>
+              <div>• Day 5: Tools, MCP Creation, LangGraph &amp; Skills</div>
+              <div>• Day 6: n8n, Multi-Agent RCA, Security CTF, Hardware Sizing &amp; Roadmap</div>
             </div>
           </motion.div>
         </div>
