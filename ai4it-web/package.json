@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@chenglou/pretext": "^0.0.8",
+    "@neondatabase/serverless": "^1.1.0",
     "@types/katex": "^0.16.8",
     "animejs": "^3.2.2",
     "framer-motion": "^13.1.1",
