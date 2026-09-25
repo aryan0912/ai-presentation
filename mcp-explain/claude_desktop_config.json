@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "nddb-hr-portal": {
+      "command": "python",
+      "args": [
+        "d:\\part2\\ai-presentation\\mcp-explain\\server.py"
+      ],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
