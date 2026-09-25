@@ -200,12 +200,12 @@ export default function Page() {
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-between pt-8 border-t border-slate-800">
-        <Link href="/day5/q3-mcp-revolution" className="button-secondary">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-slate-800">
+        <Link href="/day5/q3-mcp-revolution" className="button-secondary w-full sm:w-auto">
           <ArrowLeft size={16} /> Prev: Q3 The MCP Revolution
         </Link>
-        <Link href="/day6" className="button-primary">
-          Continue to Day 6: Production &amp; Scale <ArrowRight size={16} />
+        <Link href="/day5/langgraph-deep-dive" className="button-primary w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500">
+          Special: LangGraph Agentic Engine <ArrowRight size={16} />
         </Link>
       </div>
     </div>

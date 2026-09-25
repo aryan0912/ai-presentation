@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, AlertTriangle, Calculator, Network, Database, ShieldAlert, GitFork } from 'lucide-react';
+import { ArrowRight, AlertTriangle, Calculator, Network, Database, ShieldAlert, GitFork, GitBranch } from 'lucide-react';
 
 export default function Day5Page() {
   return (
@@ -56,8 +56,32 @@ export default function Day5Page() {
           </div>
         </Link>
       </div>
+
+      {/* Special Feature: LangGraph Agentic Engine */}
+      <Link href="/day5/langgraph-deep-dive" className="glass-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-slate-900 to-purple-950/40 hover:border-indigo-400 transition-all group">
+        <div className="flex items-center gap-4">
+          <div className="p-3.5 rounded-2xl bg-indigo-900/50 text-indigo-300 border border-indigo-500/30 group-hover:scale-105 transition-transform">
+            <GitBranch size={26} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-indigo-900/80 text-indigo-300 border border-indigo-700">Special Capstone</span>
+              <h3 className="text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">LangGraph Agentic Engine Deep-Dive</h3>
+            </div>
+            <p className="text-xs text-slate-300 font-sans max-w-2xl">
+              State Machines for Modern Agents: Explore how LangGraph implements cyclic self-reflection loops, checkpointing, and Human-in-the-Loop breakpoints for the NDDB 2-Stage Text-to-SQL architecture.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-indigo-400 group-hover:translate-x-1 transition-transform self-end sm:self-center">
+          Open Deep-Dive <ArrowRight size={16} />
+        </div>
+      </Link>
       
-      <div className="flex justify-end pt-4">
+      <div className="flex justify-between items-center pt-4">
+        <Link href="/day5/langgraph-deep-dive" className="text-xs font-mono text-indigo-400 hover:text-indigo-300">
+          Jump directly to LangGraph Deep-Dive &rarr;
+        </Link>
         <Link href="/day5/q1-tool-factory" className="button-primary">
           Start Day 5: Quarter 1 <ArrowRight size={16} />
         </Link>
