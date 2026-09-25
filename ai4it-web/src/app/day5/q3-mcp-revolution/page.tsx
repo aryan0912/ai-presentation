@@ -19,7 +19,7 @@ export default function Page() {
           Q3: The MCP Revolution &amp; Enterprise Integration with n8n
         </h1>
         <p className="text-slate-300 text-lg leading-relaxed">
-          Solving the $N \times M$ plumbing crisis. Just as ODBC unified database connectivity in the 1990s and USB-C unified hardware peripherals, Anthropic&apos;s Model Context Protocol (MCP) creates an open standard for AI tools and resources.
+          Solving the N × M plumbing crisis. Just as ODBC unified database connectivity in the 1990s and USB-C unified hardware peripherals, Anthropic&apos;s Model Context Protocol (MCP) creates an open standard for AI tools and resources.
         </p>
       </div>
 
@@ -30,7 +30,7 @@ export default function Page() {
             <Cable size={22} />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">The $N \times M$ Plumbing Crisis</h2>
+            <h2 className="text-xl font-bold text-white">The N × M Plumbing Crisis</h2>
             <p className="text-xs text-slate-400">Why bespoke point-to-point tool adapters collapse in production</p>
           </div>
         </div>
